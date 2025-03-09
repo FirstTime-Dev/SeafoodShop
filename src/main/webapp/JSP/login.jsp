@@ -18,11 +18,15 @@
         <form action="">
             <h1>Login</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <label>
+                    <input type="text" placeholder="Username" required>
+                </label>
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <label>
+                    <input type="password" placeholder="Password" required>
+                </label>
                 <i class='bx bxs-lock'></i>
             </div>
             <div class="forgot-link">
@@ -42,15 +46,21 @@
         <form action="">
             <h1>Registration</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <label>
+                    <input type="text" placeholder="Username" required>
+                </label>
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
-                <input type="email" placeholder="Email" required>
+                <label>
+                    <input type="email" placeholder="Email" required>
+                </label>
                 <i class='bx bxs-envelope'></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <label>
+                    <input type="password" placeholder="Password" required>
+                </label>
                 <i class='bx bxs-lock'></i>
             </div>
             <button type="submit" class="btn">Register</button>
@@ -62,7 +72,7 @@
             </div>
         </form>
     </div>
-ddd
+
     <div class="toggle-box">
         <div class="toggle-panel toggle-left">
             <h1>Hello, Welcome</h1>
