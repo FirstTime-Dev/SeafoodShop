@@ -127,6 +127,7 @@ form {
     margin: 30px 0;
 }
 
+
 .social-icons a {
     display: inline-flex;
     padding: 10px;
@@ -136,6 +137,11 @@ form {
     color: #333;
     text-decoration: none;
     margin: 0 8px;
+}
+
+.social-icons a:hover{
+    transition: background-color .5s;
+    background-color: #7494ec;
 }
 
 .toggle-box {
