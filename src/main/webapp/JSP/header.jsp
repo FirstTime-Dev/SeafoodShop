@@ -21,8 +21,8 @@
             <li class="menu_list"><a href="#">About</a></li>
             <li class="menu_list"><a href="#">Product</a></li>
             <li class="menu_list"><a href="#">Search</a></li>
-            <button type="button" class="signIn_btn">Sign in</button>
         </ul>
+        <button type="button" class="signIn_btn">Sign in</button>
     </header>
 </div>
 </body>

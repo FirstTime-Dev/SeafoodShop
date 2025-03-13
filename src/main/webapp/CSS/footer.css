@@ -1,85 +1,45 @@
-footer {
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+header{
     background-color: teal;
-    color: white;
     padding: 20px 9%;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
     font-family: sans-serif;
 }
-
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.logo{
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color:#fff;
 }
-
-.footer-section {
-    flex: 1;
-    margin: 10px;
-    min-width: 250px;
+.menu_list{
+    display: inline-block;
+    margin:0px 20px;
 }
-
-.footer-section h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
+.menu_list a{
+    color:#fff;
+    font-size: 18px;
+    font-weight: 400;
 }
-
-.footer-section p, .footer-section ul {
-    font-size: 16px;
-    line-height: 1.5;
+.menu_list a:hover{
+    color: #000;
 }
-
-.footer-section ul {
-    padding: 0;
-}
-
-.footer-section ul li {
-    list-style: none;
-    margin-bottom: 8px;
-}
-
-.footer-section ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-.footer-section ul li a:hover {
-    color: lightgray;
-}
-
-.footer-bottom {
-    margin-top: 20px;
-    border-top: 1px solid lightgray;
-    padding-top: 10px;
-    font-size: 14px;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.social-links a img {
-    width: 32px;
-    height: 32px;
-    transition: transform 0.3s ease;
-}
-
-.social-links a img:hover {
-    transform: scale(1.1);
-}
-.social-links .facebook,.instagram{
+.signIn_btn{
+    width: 90px;
+    background-color: #000;
     color: #fff;
-}
-.social-links .facebook i{
-    width: 30px;
-    height: 30px;
-    font-size: 30px;
-
-}
-.social-links .instagram i{
-    width: 30px;
-    height: 30px;
-    font-size: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 6px;
+    border-radius: 12px;
+    cursor: pointer;
 }
