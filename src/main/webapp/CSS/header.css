@@ -1,0 +1,44 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+header{
+    background-color: teal;
+    padding: 20px 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+}
+.logo{
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color:#fff;
+}
+.menu_list{
+    display: inline-block;
+}
+.menu_list a{
+    color:#fff;
+    font-size: 18px;
+    font-weight: 400;
+    margin-right: 20px;
+}
+.menu_list a:hover{
+    color: #000;
+}
+.signIn_btn{
+    width: 90px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 6px;
+    border-radius: 12px;
+    cursor: pointer;
+}
