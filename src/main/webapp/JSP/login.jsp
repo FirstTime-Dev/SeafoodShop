@@ -1,18 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Tan
-  Date: 3/9/2025
-  Time: 3:32 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
-    <link rel="stylesheet" href="../CSS/login.css"/>
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/login.css"/>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet"/>
 </head>
 <body>
+<%--<img src="../IMG/login-background.png" id="login-background-img">--%>
 <div class="container">
     <div class="form-box login">
         <form action="">
