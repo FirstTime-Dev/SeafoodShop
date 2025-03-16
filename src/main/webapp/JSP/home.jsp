@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="../CSS/home.css">
 </head>
 <body>
+
+<jsp:include page="header.jsp"/>
+
 <!-- Phần giới thiệu đầu trang -->
 <section class="intro-section">
     <div class="intro-content">
@@ -43,6 +46,8 @@
         <p style="margin-top: -5px">280,000đ/Kg</p>
     </div>
 </section>
+
+<jsp:include page="footer.jsp"/>
 
 </body>
 </html>

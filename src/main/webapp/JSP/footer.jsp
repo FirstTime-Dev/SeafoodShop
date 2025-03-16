@@ -5,11 +5,11 @@
   Time: 1:45 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Footer</title>
-    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
