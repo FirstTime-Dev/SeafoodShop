@@ -1,13 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Tan
-  Date: 3/12/2025
-  Time: 2:59 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <script src="<%= request.getContextPath() %>/JS/home.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hải Sản Tươi Sống - Chất Lượng Từ Đại Dương</title>
@@ -51,22 +45,6 @@
 </section>
 
 </body>
-<script>
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    });
-
-    const elements = document.getElementsByClassName('.product-content');
-    document.querySelectorAll(".product-content").forEach(el => {
-        const animationClass = el.dataset.animation;
-        el.classList.add(animationClass); // Thêm class animation ban đầu
-        observer.observe(el);
-    });
-</script>
 </html>
 
 
