@@ -63,7 +63,11 @@
     justify-content: center;
     flex-direction: column;
     padding: 20px;
+    animation: appear 1s linear;
+    animation-timeline: view();
+    animation-range: 0% cover 40%;
 }
+
 .product-content.animate {
     animation: appear 1s linear;
 }
