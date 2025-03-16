@@ -6,6 +6,7 @@
     <title>Cart</title>
 </head>
 <body>
+<jsp:include page="header.jsp" />
 <div class="container">
     <h1>Your cart</h1>
     <div class="product-container">
@@ -89,5 +90,6 @@
         <button id="checkout-button">Proceed to Checkout</button>
     </div>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
 </html>
