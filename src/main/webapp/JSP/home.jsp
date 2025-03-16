@@ -9,7 +9,9 @@
 </head>
 <body>
 
+
 <jsp:include page="header.jsp"/>
+
 
 <!-- Phần giới thiệu đầu trang -->
 <section class="intro-section">
