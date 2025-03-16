@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
+
 <div class="footer-container">
     <footer>
         <div class="footer-container">
@@ -48,5 +49,6 @@
         </div>
     </footer>
 </div>
+
 </body>
 </html>
