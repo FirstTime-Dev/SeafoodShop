@@ -1,4 +1,4 @@
-/* Reset mặc định */
+/* Cấu hình chung */
 html, body {
     height: 100%;
     margin: 0;
@@ -9,29 +9,12 @@ html, body {
     flex-direction: column;
 }
 
-/* Header */
-.header {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    font-size: 20px;
-}
-
-/* Footer */
-.footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 20px; /* Tạo khoảng cách giữa container và footer */
-}
-
 /* Container chính */
 .container {
     width: 80%;
-    margin: 20px auto; /* Căn giữa */
+    margin: auto;
+    margin-top: 80px; /* Không bị che bởi header */
+    margin-bottom: 20px; /* Giữ khoảng cách với footer */
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -88,13 +71,15 @@ h2 {
 /* Danh sách đơn hàng */
 .order-list {
     flex: 1;
-    max-height: 60vh; /* Giữ cố định chiều cao */
-    overflow-y: auto; /* Chỉ cuộn danh sách đơn hàng */
+    min-height: 400px;
+    max-height: 400px;
+    overflow-y: auto; /* Chỉ cuộn khi cần */
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
+/* Sản phẩm */
 .order-item {
     background: #fff;
     padding: 15px;
