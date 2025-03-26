@@ -29,9 +29,9 @@
             <button type="submit" class="btn">Login</button>
             <p>Or login with social platforms</p>
             <div class="social-icons">
-                <a href="#"><i class='bx bxl-google'></i></a>
-                <a href="#"><i class='bx bxl-facebook'></i></a>
-                <a href="#"><i class='bx bxl-github'></i></a>
+                <a id="googleSignInBtn" ><i class='bx bxl-google'></i></a>
+                <a ><i class='bx bxl-facebook'></i></a>
+                <a ><i class='bx bxl-github'></i></a>
             </div>
         </form>
     </div>
