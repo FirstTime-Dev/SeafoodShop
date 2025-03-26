@@ -21,7 +21,13 @@
             <version>4.0.1</version> <!-- Hoặc 3.1.0 nếu dùng Tomcat 8 -->
             <scope>provided</scope>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>12.2.0.jre11</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>SeafoodShop</finalName>
