@@ -13,7 +13,9 @@
 <body>
     <div class="container">
         <form action="">
-            
+            <div class="info-container">
+                
+            </div>
         </form>
     </div>
 </body>
