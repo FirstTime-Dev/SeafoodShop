@@ -7,6 +7,14 @@
     <version>1.0-SNAPSHOT</version>
     <name>SeafoodShop Maven Webapp</name>
     <url>http://maven.apache.org</url>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.3</version> <!-- Đặt phiên bản phù hợp với dự án của bạn -->
+        <relativePath/> <!-- Cần thiết nếu bạn không dùng Spring Boot Initializr -->
+    </parent>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -21,6 +29,13 @@
             <version>4.0.1</version> <!-- Hoặc 3.1.0 nếu dùng Tomcat 8 -->
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>3.2.3</version> <!-- Cập nhật theo version mới nhất -->
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
