@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/CSS/purchase.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/purchase.css">
     <script defer src="<%=request.getContextPath()%>/JS/purchase.js"></script> <!-- Thêm defer để tránh lỗi tải script -->
     <title>Purchase</title>
 </head>
