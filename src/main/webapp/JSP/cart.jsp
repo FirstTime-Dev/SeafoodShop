@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/cart.css">
@@ -12,8 +13,8 @@
 <div class="container">
     <h1>Your cart</h1>
     <div class="product-container">
-        <button id="delete-button" formaction="delete">X</button>
-        <input id="choose-butotn" type="checkbox" >
+        <button id="delete-button" formaction="delete" type="button">X</button>
+        <input id="choose-button" type="checkbox" >
         <div class="product-info-container">
             <img src="../IMG/login-background.png" id="img-description">
             <div class="product-info-description">
@@ -89,7 +90,7 @@
             </div>
         </div>
         <div id="grand-total">Grand Total: 1.500.000VNĐ</div>
-        <button id="checkout-button">Proceed to Checkout</button>
+        <button id="checkout-button"><a href="<%= request.getContextPath() %>/JSP/payment.jsp">Proceed to Checkout</a></button>
     </div>
 </div>
 <jsp:include page="footer.jsp" />
