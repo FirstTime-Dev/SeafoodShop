@@ -17,11 +17,10 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 30px;
+    padding: 0 30px;
     background: rgb(148, 214, 236);
     font-size: 14px;
     border-bottom: 1px #484848 solid ;
-    transition: transform 0.6s ease;
 }
 .language-currency {
     width: 250px;
@@ -45,11 +44,11 @@ a {
 #search-bar{
     background-color: #fff;
     border-radius: 30px;
-    padding: 0px;
+    padding: 0;
     border: 1px #484848 solid;
-    margin-left: 300px;
-    height: 40px;
+    height: 30px;
     display: flex;
+    margin-top: 10px;
 }
 
 #search-bar #search-text{
@@ -57,23 +56,23 @@ a {
     outline: none;
     background-color: #fff;
     padding:0;
-    font-size: 18px;
-    width: 0px;
+    font-size: 14px;
+    width: 0;
     transition: all 0.25s ease-in-out;
 }
 #search-bar:hover #search-text, #search-bar #search-text:valid{
     width: 300px;
-    padding: 10px 10px 10px 0px;
+    padding: 10px 10px 10px 0;
     margin-left: 20px;
 }
 #search-bar #search-btn{
     background-color:#fff;
-    border: 0px;
+    border: 0;
     padding: 7px 10px;
-    margin: 0px;
+    margin: 0;
     cursor: pointer;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 14px;
 }
 header {
     position: fixed;
@@ -93,19 +92,18 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 30px;
     background: rgb(148, 214, 236);
     transition: transform 0.6s ease;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
+    margin: 20px 0 20px 30px;
+
 }
-
-
 .logo span {
     color: red;
 }
@@ -137,14 +135,14 @@ header {
     top: 0;
     width: 100%;
     z-index: 1000;
-    transform: translate(-100%,-0%);
-    opacity: 0;
-    transition: opacity .6s ease-in-out,transform 0.6s ease;
+    transform: translatey(0%);
+    transition: opacity .6s ease;
+    background: rgba(148, 214, 236,0.8);
 }
 
 /* Khi ẩn top-bar */
 .hidden {
-    transform: translate(0%,-100%)
+    transform: translate(-100%);
 }
 .header_icon-list li{
     font-size: 20px;
