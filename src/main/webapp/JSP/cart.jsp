@@ -1,12 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/cart.css">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/cart.css">
     <script src="<%= request.getContextPath() %>/JS/cart.js"></script>
     <title>Cart</title>
 </head>
 <body>
+
 <jsp:include page="header.jsp" />
+
 <div class="container">
     <h1>Your cart</h1>
     <div class="product-container">

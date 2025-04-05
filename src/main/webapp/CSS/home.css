@@ -63,7 +63,7 @@
     flex-direction: column;
     padding: 20px;
     animation: appear 5s linear;
-    animation-timeline: view();
+    /*animation-timeline: view();*/
     animation-range: entry 0% cover 40%;
 }
 /*.product-content.animate {*/
