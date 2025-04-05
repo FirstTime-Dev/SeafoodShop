@@ -36,7 +36,8 @@ h1 {
     border-radius: 5px;
     width: 25px;
     height: 24px;
-
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .product-info-container {
@@ -159,7 +160,7 @@ h1 {
 #checkout-button:hover {
     background: #218838;
 }
-#choose-butotn {
+#choose-button{
     transform: scale(2); /* Phóng to checkbox */
     cursor: pointer;
     margin-left: 20px;

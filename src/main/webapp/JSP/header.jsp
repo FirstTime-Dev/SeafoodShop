@@ -27,8 +27,8 @@
 
             <div class="contact-auth">
                 <span>+1 234 567 890</span>
-                <a href="#">Sign In</a>
-                <a href="#">Register</a>
+                <a href="<%= request.getContextPath()%>/JSP/login.jsp">Sign In</a>
+                <a href="<%= request.getContextPath()%>/JSP/login.jsp">Register</a>
             </div>
         </div>
         <!-- header chính -->
@@ -57,7 +57,7 @@
                 <li class="tag-name"><a href="#">SHRIMP</a></li>
                 <li class="tag-name"><a href="#">SQUID</a></li>
                 <ul class="header_icon-list">
-                    <li class="shopping-icon"><a href=""><i class="fa-solid fa-cart-shopping"></a></i></li>
+                    <li class="shopping-icon"><a href="<%= request.getContextPath() %>/JSP/cart.jsp"><i class="fa-solid fa-cart-shopping"></i></a></li>
                     </li>
                 </ul>
             </ul>

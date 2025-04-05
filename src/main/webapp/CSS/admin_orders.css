@@ -1,0 +1,93 @@
+/* admin_orders.css */
+
+/* Cấu trúc chính của trang */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+/* Đặt container cho các phần nội dung */
+.container {
+    display: flex;
+    height: fit-content;
+}
+
+/* Nội dung chính */
+.admin-content {
+    margin-left: 250px; /* Dành khoảng trống cho thanh điều hướng từ CSS của admin_nav */
+    padding: 20px;
+    flex-grow: 1;
+    background-color: #fff;
+    border-left: 1px solid #ddd;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề trong admin-content */
+.admin-content h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Bảng đơn hàng */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Các nút hành động */
+.btn {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-confirm {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}
+
+/* Hiệu ứng cho admin-content khi hover */
+.admin-content:hover {
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Đảm bảo khi màn hình nhỏ, thanh điều hướng vẫn cố định */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .admin-content {
+        margin-left: 0;
+    }
+}

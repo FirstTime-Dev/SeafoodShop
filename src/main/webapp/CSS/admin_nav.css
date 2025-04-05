@@ -1,0 +1,68 @@
+/* admin_nav.css */
+
+/* Đảm bảo thanh điều hướng admin luôn nằm bên trái */
+.nav-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1000; /* Đảm bảo thanh nav luôn nằm trên các phần tử khác */
+}
+
+/* Đảm bảo các liên kết hoặc các mục trong thanh điều hướng có thể định dạng */
+.nav-container a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.nav-container a:hover {
+    background-color: #555;
+}
+
+/* Các mục trong nav-container */
+.nav-container h2 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* Đảm bảo nội dung bên phải không bị chồng lên thanh điều hướng */
+body {
+    margin-left: 250px; /* Tạo khoảng trống bên trái cho thanh điều hướng */
+    font-family: Arial, sans-serif;
+}
+
+/* Nội dung chính */
+.admin-content {
+    margin-left: 20px; /* Dành khoảng trống cho các phần tử bên trái của nội dung */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+}
+
+/* Đảm bảo khi màn hình nhỏ thanh điều hướng vẫn cố định */
+@media (max-width: 768px) {
+    .nav-container {
+        width: 200px;
+        height: auto;
+        position: relative;
+    }
+
+    body {
+        margin-left: 0;
+    }
+
+    .admin-content {
+        margin-left: 0;
+    }
+}

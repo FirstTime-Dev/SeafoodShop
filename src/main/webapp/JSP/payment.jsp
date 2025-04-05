@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" class="flexbox">
 <head>
     <title>Seafood Shop</title>
@@ -96,7 +96,7 @@
                     <div class="order-summary-sections">
                         <div class="order-summary-section order-summary-section-discount"
                              data-order-summary-section="discount">
-                            <form id="form_discount_add" accept-charset="UTF-8" method="post">
+                            <form id="form_discount_add1" accept-charset="UTF-8" method="post">
                                 <input name="utf8" type="hidden" value="✓">
 
                                 <div class="fieldset">
@@ -107,7 +107,7 @@
                                                 <input placeholder="Mã giảm giá" class="field-input"
                                                        data-discount-field="true" autocomplete="false"
                                                        autocapitalize="off" spellcheck="false" size="30" type="text"
-                                                       id="discount.code" name="discount.code" value=""/>
+                                                       id="discount.code1" name="discount.code" value=""/>
                                             </div>
                                             <button type="submit" class="field-input-btn btn btn-default btn-disabled">
                                                 <span class="btn-content">Sử dụng</span>
@@ -252,14 +252,14 @@
 
                     </div>
                 </a>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="/cart">Giỏ hàng</a>
-                    </li>
-                    <li class="breadcrumb-item breadcrumb-item-current">
-                        Thông tin giao hàng
-                    </li>
-                </ul>
+                <%--                <ul class="breadcrumb">--%>
+                <%--                    <li class="breadcrumb-item">--%>
+                <%--                        <a href="/cart">Giỏ hàng</a>--%>
+                <%--                    </li>--%>
+                <%--                    <li class="breadcrumb-item breadcrumb-item-current">--%>
+                <%--                        Thông tin giao hàng--%>
+                <%--                    </li>--%>
+                <%--                </ul>--%>
             </div>
             <div class="main-content">
                 <div id="checkout_order_information_changed_error_message" class="hidden" style="margin-bottom:15px">
@@ -292,7 +292,6 @@
 
 
 													</span>
-
                     </p>
                 </div>
                 <div class="step">
@@ -302,11 +301,6 @@
                                 <h2 class="section-title">Thông tin giao hàng</h2>
                             </div>
                             <div class="section-content section-customer-information no-mb">
-                                <p class="section-content-text">
-                                    Bạn đã có tài khoản?
-                                    <a href="/account/login?urlredirect=%2Fcheckouts%2Fb0f5454f852d4a8a9bfdb60baf1fb2d7%3Fstep%3D1">Đăng
-                                        nhập</a>
-                                </p>
                                 <div class="fieldset">
                                     <div class="field field-required  ">
                                         <div class="field-input-wrapper">
@@ -427,16 +421,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </form>
-
                                 </div>
-
                             </div>
                             <div id="change_pick_location_or_shipping">
-
-
                                 <div id="section-shipping-rate">
                                     <div class="order-checkout__loading--box">
                                         <div class="order-checkout__loading--circle"></div>
@@ -445,7 +434,6 @@
                                         <h2 class="section-title">Phương thức vận chuyển</h2>
                                     </div>
                                     <div class="section-content">
-
                                         <div class="content-box  blank-slate">
                                             <i class="blank-slate-icon icon icon-closed-box "></i>
                                             <p>Vui lòng chọn tỉnh / thành để có danh sách phương thức vận chuyển.</p>
@@ -453,7 +441,6 @@
 
                                     </div>
                                 </div>
-
                                 <div id="section-payment-method" class="section">
                                     <div class="order-checkout__loading--box">
                                         <div class="order-checkout__loading--circle"></div>
@@ -463,8 +450,6 @@
                                     </div>
                                     <div class="section-content">
                                         <div class="content-box">
-
-
                                             <div class="radio-wrapper content-box-row">
                                                 <label class="radio-label" for="payment_method_id_502444">
                                                     <div class="radio-input payment-method-checkbox">
@@ -478,14 +463,10 @@
                                                         <div>
                                                             <span class="radio-label-primary">Thanh toán khi giao hàng (COD)</span>
                                                             <span class='quick-tagline hidden'></span>
-
-
                                                         </div>
                                                     </div>
                                                 </label>
                                             </div>
-
-
                                             <div class="radio-wrapper content-box-row">
                                                 <label class="radio-label" for="payment_method_id_1002918822">
                                                     <div class="radio-input payment-method-checkbox">
@@ -499,13 +480,10 @@
                                                         <div>
                                                             <span class="radio-label-primary">Chuyển khoản qua ngân hàng</span>
                                                             <span class='quick-tagline hidden'></span>
-
-
                                                         </div>
                                                     </div>
                                                 </label>
                                             </div>
-
                                             <div class="radio-wrapper content-box-row content-box-row-secondary hidden"
                                                  for="payment_method_id_1002918822">
                                                 <div class="blank-slate">
@@ -513,20 +491,13 @@
                                                     vấn liên hệ và hướng dẫn quý khách thanh toán.
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
-
                     </div>
                     <div class="step-footer" id="step-footer-checkout">
-
-
                         <form id="form_next_step" accept-charset="UTF-8" method="post">
                             <input name="utf8" type="hidden" value="✓">
                             <button type="submit" class="step-footer-continue-btn btn">
@@ -534,14 +505,11 @@
                                 <i class="btn-spinner icon icon-button-spinner"></i>
                             </button>
                         </form>
-                        <a class="step-footer-previous-link" href="/cart">
+                        <a class="step-footer-previous-link" href="<%= request.getContextPath()%>/JSP/cart.jsp">
                             Giỏ hàng
                         </a>
-
-
                     </div>
                 </div>
-
             </div>
             <div class="hrv-coupons-popup">
                 <div class="hrv-title-coupons-popup">
@@ -558,15 +526,11 @@
                     <div class="hrv-discount-code-web">
                     </div>
                     <div class="hrv-discount-code-external">
-
                     </div>
                 </div>
             </div>
-            <div class="hrv-coupons-popup-site-overlay"></div>
-            <div class="main-footer footer-powered-by">Powered by Haravan</div>
         </div>
     </div>
-
 </div>
 </body>
 </html>
