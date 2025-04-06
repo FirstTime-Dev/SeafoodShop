@@ -7,6 +7,7 @@
 </head>
 <body>
 <%--<img src="../IMG/login-background.png" id="login-background-img">--%>
+
 <div class="container">
     <div class="form-box login">
         <form action="">
@@ -41,7 +42,7 @@
             <h1>Registration</h1>
             <div class="input-box">
                 <label>
-                    <input type="text" placeholder="Username" required>
+                    <input class="username" type="text" placeholder="Username" required>
                 </label>
                 <i class='bx bxs-user'></i>
             </div>
@@ -80,6 +81,6 @@
         </div>
     </div>
 </div>
-<script src="../JS/login.js"></script>
+<script src="<%= request.getContextPath() %>/JS/login.js"></script>
 </body>
 </html>
