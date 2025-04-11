@@ -8,12 +8,6 @@
     <name>SeafoodShop Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.3</version> <!-- Đặt phiên bản phù hợp với dự án của bạn -->
-        <relativePath/> <!-- Cần thiết nếu bạn không dùng Spring Boot Initializr -->
-    </parent>
 
     <dependencies>
         <dependency>
@@ -30,11 +24,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-            <version>3.2.3</version> <!-- Cập nhật theo version mới nhất -->
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
@@ -43,8 +32,22 @@
             <version>12.2.0.jre11</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230227</version>
+        </dependency>
     </dependencies>
+
     <build>
         <finalName>SeafoodShop</finalName>
+        <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.1.2</version>
+        </plugin>
+        </plugins>
     </build>
 </project>
