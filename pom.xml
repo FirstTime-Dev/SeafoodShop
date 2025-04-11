@@ -7,6 +7,8 @@
     <version>1.0-SNAPSHOT</version>
     <name>SeafoodShop Maven Webapp</name>
     <url>http://maven.apache.org</url>
+
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -21,6 +23,8 @@
             <version>4.0.1</version> <!-- Hoặc 3.1.0 nếu dùng Tomcat 8 -->
             <scope>provided</scope>
         </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -28,8 +32,22 @@
             <version>12.2.0.jre11</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230227</version>
+        </dependency>
     </dependencies>
+
     <build>
         <finalName>SeafoodShop</finalName>
+        <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.1.2</version>
+        </plugin>
+        </plugins>
     </build>
 </project>

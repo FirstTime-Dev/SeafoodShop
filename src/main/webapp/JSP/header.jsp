@@ -30,7 +30,7 @@
 
             <div class="contact-auth">
                 <span>+1 234 567 890</span>
-                <a href="#">Sign In</a>
+                <a href="login.jsp">Sign In</a>
                 <a href="#">Register</a>
             </div>
         </div>
