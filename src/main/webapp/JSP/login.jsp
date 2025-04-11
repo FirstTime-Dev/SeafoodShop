@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="form-box login">
-        <form action="">
+        <form action="login.jsp">
             <h1>Login</h1>
             <div class="input-box">
                 <label>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="form-box register">
-        <form action="">
+        <form action="login.jsp">
             <h1>Registration</h1>
             <div class="input-box">
                 <label>
