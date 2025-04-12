@@ -10,7 +10,7 @@
         <jsp:include page="admin_nav.jsp"/>
     </div>
     <div class="admin-content">
-
+        <h2>Log</h2>
     </div>
 </div>
 </body>

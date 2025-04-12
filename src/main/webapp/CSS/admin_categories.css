@@ -1,6 +1,5 @@
 html, body {
     height: 100%;
-    overflow-y: auto;
 }
 
 body {
@@ -120,4 +119,20 @@ th {
 .add-customer-btn:hover {
     background-color: #218838;
     transform: translateY(-2px);
+}
+
+.hidden-product {
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.hidden-product td {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.hidden-product .toggle-visibility {
+    pointer-events: auto !important;
+    opacity: 1;
 }

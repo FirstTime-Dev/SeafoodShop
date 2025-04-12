@@ -66,3 +66,23 @@ body {
         margin-left: 0;
     }
 }
+
+.overview-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+.alert-img {
+    width: 24px;
+    height: 24px;
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
