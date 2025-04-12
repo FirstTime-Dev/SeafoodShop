@@ -11,6 +11,13 @@
     <title>Iventory handle</title>
 </head>
 <body>
-
+<div class="container">
+    <div class="nav-container">
+        <jsp:include page="admin_nav.jsp"/>
+    </div>
+    <div class="admin-content">
+        <h2>Inventory</h2>
+    </div>
+</div>
 </body>
 </html>

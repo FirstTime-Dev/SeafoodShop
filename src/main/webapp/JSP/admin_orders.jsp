@@ -13,7 +13,9 @@
         <jsp:include page="admin_nav.jsp"/>
     </div>
     <div class="admin-content">
-        <h2>Orders</h2>
+        <div class="header-add-container">
+            <h2>Quản lý đơn hàng</h2>
+        </div>
         <table>
             <thead>
             <tr>
@@ -30,9 +32,9 @@
                 <td>Nguyễn Văn A</td>
                 <td>1.200.000đ</td>
                 <td>Chờ xác nhận</td>
-                <td>
-                    <button class="btn btn-confirm">Xác nhận</button>
-                    <button class="btn btn-cancel">Hủy</button>
+                <td class="actions">
+                    <button class="confirm">Xác nhận</button>
+                    <button class="cancel">Hủy</button>
                 </td>
             </tr>
             <tr>
@@ -40,9 +42,9 @@
                 <td>Trần Thị B</td>
                 <td>850.000đ</td>
                 <td>Chờ xác nhận</td>
-                <td>
-                    <button class="btn btn-confirm">Xác nhận</button>
-                    <button class="btn btn-cancel">Hủy</button>
+                <td class="actions">
+                    <button class="confirm">Xác nhận</button>
+                    <button class="cancel">Hủy</button>
                 </td>
             </tr>
             <!-- Thêm các đơn hàng khác ở đây -->

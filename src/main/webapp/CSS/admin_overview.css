@@ -1,3 +1,8 @@
+html, body {
+    height: 100%;
+    overflow-y: auto;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,36 +10,82 @@ body {
     background-color: #f4f4f9;
 }
 
-/* Đặt container cho các phần nội dung */
 .container {
     display: flex;
-    height: fit-content;
+    min-height: 100vh;
 }
 
-/* Nội dung chính */
 .admin-content {
-    margin-left: 250px; /* Dành khoảng trống cho thanh điều hướng từ CSS của admin_nav */
-    padding: 20px;
     flex-grow: 1;
+    padding: 20px;
     background-color: #fff;
     border-left: 1px solid #ddd;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
-/* Tiêu đề trong admin-content */
 .admin-content h2 {
     font-size: 24px;
     color: #333;
-    font-weight: bold;
-    margin-bottom: 24px;
 }
 
- .grid {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-     gap: 20px;
-     margin-top: 20px;
- }
+.revenue-hot-products {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.revenue-box {
+    background-color: #fff;
+    padding: 20px;
+    border-left: 6px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.revenue-table, .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.revenue-table th, .revenue-table td,
+.info-table th, .info-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.revenue-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.info-pair {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.hot-products-box, .delivered-orders-box {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-left: 6px solid #28a745;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hot-products-box h3, .delivered-orders-box h3 {
+    margin-bottom: 10px;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
 
 .box-link {
     text-decoration: none;
@@ -61,4 +112,56 @@ body {
 
 .low-stock {
     color: orange;
+}
+
+.overview-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #333;
+}
+
+    .alert-img {
+        width: 24px;
+        height: 24px;
+        animation: pulse 1.2s infinite;
+    }
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    color: black;
+    font-size: 0.85em;
+}
+
+.label {
+    display: inline-block;
+    width: 80px;
+}
+
+.badge {
+    display: inline-block;
+    min-width: 30px;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+}
+
+.stock-out {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.stock-low {
+    background-color: #f1c40f;
+    color: black;
 }

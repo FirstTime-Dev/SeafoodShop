@@ -161,3 +161,146 @@ CREATE TABLE Reviews (
     FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
+
+-- Sample Data for Users
+INSERT INTO Users (FullName, Username, Password, Email, PhoneNumber, BirthDate, Address, Role, State)
+VALUES 
+(N'Nguy?n V?n A', 'usera', 'hashedpassword0', 'a@example.com', '0900000001', '1999-03-13', N'Hà N?i', 1, 1),
+(N'Tr?n Th? B', 'userb', 'hashedpassword1', 'b@example.com', '0900000002', '2001-01-14', N'TP. HCM', 2, 1),
+(N'Lê V?n C', 'userc', 'hashedpassword2', 'c@example.com', '0900000003', '1998-06-15', N'?à N?ng', 3, 1),
+(N'Ph?m Th? D', 'userd', 'hashedpassword3', 'd@example.com', '0900000004', '1997-09-21', N'H?i Phòng', 1, 1),
+(N'Hoàng V?n E', 'usere', 'hashedpassword4', 'e@example.com', '0900000005', '2000-11-10', N'C?n Th?', 1, 1);
+
+-- Categories
+INSERT INTO Categories (CategoryName, Description, State)
+VALUES 
+(N'H?i s?n t??i s?ng', N'Cá, tôm, cua... t??i s?ng', 1),
+(N'H?i s?n ?ông l?nh', N'B?o qu?n nhi?t ?? th?p', 1),
+(N'H?i s?n nh?p kh?u', N'Nh?p t? n??c ngoài', 1),
+(N'??c s?n vùng mi?n', N'S?n ph?m ??a ph??ng n?i b?t', 1),
+(N'S?n ph?m ch? bi?n s?n', N'?óng gói, ?n li?n', 1);
+
+-- Suppliers
+INSERT INTO Suppliers (SupplierName, ContactName, Phone, Email, Address, State)
+VALUES 
+(N'Công ty TNHH Bi?n Xanh', N'Tr?n V?n H?i', '0911222333', 'contact@bienxanh.vn', N'Qu?ng Ninh', 1),
+(N'Cty CP H?i S?n Mi?n Nam', N'Lê Th? Tuy?t', '0933444555', 'info@haisansouth.vn', N'Cà Mau', 1),
+(N'Seafood Japan Ltd.', N'Yamamoto Kenta', '0812345678', 'export@seafood.jp', N'Tokyo, Japan', 1),
+(N'SeaFresh Co.', N'Nguy?n V?n Hùng', '0909988776', 'seafresh@vn.com', N'?à N?ng', 1),
+(N'H?i S?n Vina', N'Tr?n Kim Ngân', '0977554433', 'sales@haisanvina.vn', N'TP. HCM', 1);
+
+-- Products
+INSERT INTO Products (Name, CategoryID, Price, StockQuantity, SupplierID, Description, Origin, StorageCondition, ExpiryDate, Weight, State)
+VALUES 
+(N'Tôm Sú T??i', 1, 250000, 120, 1, N'Tôm sú ?ánh b?t trong ngày.', N'Vi?t Nam', N'0 - 4°C', '2025-08-01', 0.5, 1),
+(N'Cua Hoàng ??', 1, 1200000, 30, 3, N'Cua nh?p kh?u Alaska.', N'M?', N'-18°C', '2025-12-31', 1.8, 1),
+(N'Cá H?i Phi Lê', 2, 380000, 60, 3, N'Cá h?i Na Uy phi lê s?n.', N'Na Uy', N'-18°C', '2025-07-15', 1.2, 1),
+(N'M?c M?t N?ng', 4, 450000, 45, 4, N'M?c ph?i 1 n?ng t? Phan Thi?t.', N'Vi?t Nam', N'-18°C', '2025-09-01', 0.7, 1),
+(N'Ch? M?c H? Long', 5, 320000, 100, 5, N'Ch? m?c ??c s?n H? Long.', N'Vi?t Nam', N'B?o qu?n ?ông l?nh', '2025-10-30', 0.3, 1);
+
+-- Images
+INSERT INTO Images (ProductID, ImageURL)
+VALUES 
+(1, 'images/tom_su.jpg'),
+(2, 'images/cua_hoang_de.jpg'),
+(3, 'images/ca_hoi_file.jpg'),
+(4, 'images/muc_mot_nang.jpg'),
+(5, 'images/cha_muc.jpg');
+
+-- Orders
+INSERT INTO Orders (UserID, TotalAmount, Status, ShippingStatus)
+VALUES 
+(1, 750000, 'Completed', 'Shipped'),
+(2, 1200000, 'Pending', 'Processing'),
+(3, 320000, 'Cancelled', 'Not Shipped');
+
+-- OrderDetails
+INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price)
+VALUES 
+(1, 1, 2, 250000),
+(1, 5, 1, 250000),
+(2, 2, 1, 1200000),
+(3, 5, 1, 320000);
+
+-- Cart
+INSERT INTO Cart (UserID, ProductID, Quantity)
+VALUES 
+(1, 3, 1),
+(2, 4, 2),
+(3, 1, 3);
+
+-- Payments
+INSERT INTO Payments (OrderID, PaymentMethod, PaymentType, AmountPaid)
+VALUES 
+(1, N'COD', N'Offline', 750000),
+(2, N'Bank Transfer', N'Online', 1200000),
+(3, N'Credit Card', N'Online', 320000);
+
+-- Shipping
+INSERT INTO Shipping (OrderID, Carrier, TrackingNumber, EstimatedDelivery, DeliveryStatus)
+VALUES 
+(1, N'GHN', N'GHN123456', '2025-04-20', N'Delivered'),
+(2, N'Viettel Post', N'VT123123', '2025-04-25', N'Processing');
+
+-- Contact
+INSERT INTO Contact (StoreName, Phone, Email, Address, WorkingHours, Facebook, Zalo, Instagram, Note)
+VALUES 
+(N'H?i S?n T??i Ngon', '18001234', 'support@haisantuoingon.vn', N'123 Lê L?i, Q1, TP.HCM',
+ N'7:00 - 21:00', 'https://facebook.com/haisantuoingon', '0909999999', 'https://instagram.com/haisantuoingon', N'Giao hàng toàn qu?c');
+
+-- LogActivity
+INSERT INTO LogActivity (UserID, Action, Resource, DataBefore, DataAfter, IPAddress, Location)
+VALUES 
+(1, N'T?o ??n hàng', N'Orders', NULL, N'{orderId: 1, amount: 750000}', '192.168.1.1', N'TP.HCM');
+
+-- PasswordResets
+INSERT INTO PasswordResets (UserID, Token, ExpiryTime)
+VALUES 
+(1, 'resetToken123', DATEADD(HOUR, 1, GETDATE()));
+
+-- Reviews
+INSERT INTO Reviews (UserID, ProductID, Rating, Comment)
+VALUES 
+(1, 1, 5, N'Tôm r?t t??i ngon, giao nhanh.'),
+(2, 2, 4, N'Cua to, ?úng mô t?.'),
+(3, 3, 3, N'Cá ok nh?ng h?i ??t.');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Xoá các b?ng có ràng bu?c foreign key tr??c
+DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS PasswordResets;
+DROP TABLE IF EXISTS LogActivity;
+DROP TABLE IF EXISTS Contact;
+DROP TABLE IF EXISTS Shipping;
+DROP TABLE IF EXISTS Payments;
+DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS OrderDetails;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Images;
+DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Suppliers;
+DROP TABLE IF EXISTS Categories;
+DROP TABLE IF EXISTS Users;
