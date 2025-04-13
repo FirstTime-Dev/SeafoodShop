@@ -17,11 +17,25 @@
             <scope>test</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>javax.servlet-api</artifactId>-->
+<!--            <version>4.0.1</version> &lt;!&ndash; Hoặc 3.1.0 nếu dùng Tomcat 8 &ndash;&gt;-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
+
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version> <!-- Hoặc 3.1.0 nếu dùng Tomcat 8 -->
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version> <!-- Hoặc phiên bản cao hơn -->
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
         </dependency>
 
 

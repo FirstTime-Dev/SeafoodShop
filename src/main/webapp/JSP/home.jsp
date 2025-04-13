@@ -19,22 +19,22 @@
 <div class="home-slide-show">
     <div class="owl-carousel owl-theme">
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
         </div>
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
 
         </div>
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
 
         </div>
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
 
         </div>
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
 
         </div>
     </div>
