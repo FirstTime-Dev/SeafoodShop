@@ -125,25 +125,26 @@ const handleGoogleUser = async () => {
 
         const userData = await userResponse.json();
         console.log('Thông tin người dùng:', userData);
-        const response = await fetch('/SeafoodShop_war_exploded/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userData })
-    });
+    //     const response = await fetch('/SeafoodShop_war_exploded/login', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ userData })
+    // });
+
         // sendOTP(userData.email);
         // Gửi OTP đến email
-        // const otpSent = await sendOTP(userData.email);
-        //
-        // if (otpSent) {
-        //     // Lưu email vào sessionStorage để xác thực OTP
-        //     sessionStorage.setItem('otpEmail', userData.email);
-        //
-        //     // Chuyển hướng đến trang OTP
-        //     window.location.href = 'otp.jsp';
+        const otpSent = await sendOTP(userData.email);
 
-    //     }
+        if (otpSent) {
+            // Lưu email vào sessionStorage để xác thực OTP
+            sessionStorage.setItem('otpEmail', userData.email);
+
+            // Chuyển hướng đến trang OTP
+            // window.location.href = 'otp.jsp';
+
+        }
     // } catch (error) {
     //     console.error('Lỗi hệ thống:', error);
     //     alert('Đăng nhập thất bại! Vui lòng thử lại.');
