@@ -23,7 +23,7 @@
                 <label>
                     <input id="login_password" type="password" placeholder="Password">
                 </label>
-                <div id="errorMessage" style="color:red; font-size: 12px; position: absolute; top: 50%; right: 44%;">addsad</div>
+                <div id="errorMessage" style="color:red; font-size: 12px; position: absolute; top: 50%; right: 44%;"></div>
                 <i class='bx bxs-lock'></i>
             </div>
             <div class="forgot-link">
@@ -93,18 +93,20 @@
             const username = $('#login_username').val().trim();
             const password = $('#login_password').val().trim();
             const errorDiv = $('#errorMessage');
+            const loginRequest = 'normalLogin';
 
             $.ajax({
-                url: '<%= request.getContextPath() %>/login', // servlet URL mapping
+                url: '<%= request.getContextPath() %>/loginController', // servlet URL mapping
                 type: 'POST',
                 data: {
                     username: username,
-                    password: password
+                    password: password,
+                    request: loginRequest
                 },
                 success: function (response) {
                     // Xử lý kết quả trả về từ servlet
                     if (response === 'success') {
-                        window.location.href = 'home.jsp'; // chuyển trang nếu đăng nhập thành công
+                        window.location.href = '<%=request.getContextPath()%>/JSP/home.jsp'; // chuyển trang nếu đăng nhập thành công
                     } else {
                         errorDiv.text('Tên đăng nhập hoặc mật khẩu không đúng.');
                     }
