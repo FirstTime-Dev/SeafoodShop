@@ -1,4 +1,5 @@
-<%--
+<%@ page import="SeafoodShop.model.Product" %>
+<%@ page import="java.math.BigDecimal" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 23/03/2025
@@ -20,29 +21,61 @@
     <div class="product-details">
         <h1>Nghêu Sân - Sống</h1>
 
-        <div class="product-info">
-            <p><strong>Xuất xứ:</strong> Phan Thiết, Việt Nam</p>
-            <p><strong>Khối lượng:</strong> 10 - 20 con/kg</p>
-            <p><span class="highlight">Giao nhanh 2H</span></p>
-        </div>
+<%--        <div class="product-info">--%>
+<%--            <p><strong>Xuất xứ:</strong> Phan Thiết, Việt Nam</p>--%>
+<%--            <p><strong>Khối lượng:</strong> 10 - 20 con/kg</p>--%>
+<%--            <p><span class="highlight">Giao nhanh 2H</span></p>--%>
+<%--        </div>--%>
 
-        <div class="price">249,000đ</div>
+<%--        <div class="price">249,000đ</div>--%>
 
-        <div class="options">
-            <label><input type="radio" name="weight" checked> 1 kg</label>
-            <label><input type="radio" name="weight"> 0.5 kg</label>
-        </div>
+<%--        <div class="options">--%>
+<%--            <label><input type="radio" name="weight" checked> 1 kg</label>--%>
+<%--            <label><input type="radio" name="weight"> 0.5 kg</label>--%>
+<%--        </div>--%>
 
-        <div class="quantity">
-            <label for="qty">Số lượng:</label>
-            <input type="number" id="qty" value="1" min="1">
-        </div>
+<%--        <div class="quantity">--%>
+<%--            <label for="qty">Số lượng:</label>--%>
+<%--            <input type="number" id="qty" value="1" min="1">--%>
+<%--        </div>--%>
 
-        <div class="buttons">
-            <button class="btn add-cart">THÊM VÀO GIỎ</button>
-            <button class="btn buy-now">MUA NGAY</button>
-        </div>
+<%--        <div class="buttons">--%>
+<%--            <button class="btn add-cart">THÊM VÀO GIỎ</button>--%>
+<%--            <button class="btn buy-now">MUA NGAY</button>--%>
+<%--        </div>--%>
     </div>
+    <%
+        Product pr = (Product) request.getAttribute("product");
+        BigDecimal productPrice = pr.getPrice();
+        String productOrigin = pr.getOrigin();
+        int productQuantity = pr.getStockQuantity();
+        BigDecimal productWeight = pr.getWeight();
+    %>
+    <h1>Nghêu Sân - Sống</h1>
+
+    <div class="product-info">
+        <p><strong>Xuất xứ:</strong><%=productOrigin%>></p>
+        <p><strong>Khối lượng:</strong><%=productWeight%>kg</p>
+        <p><span class="highlight">Giao nhanh 2H</span></p>
+    </div>
+
+    <div class="price"><%=productPrice%>đ</div>
+
+    <div class="options">
+        <label><input type="radio" name="weight" checked> 1 kg</label>
+        <label><input type="radio" name="weight"> 0.5 kg</label>
+    </div>
+
+    <div class="quantity">
+        <label for="qty">Số lượng: <%=productQuantity%></label>
+        <input type="number" id="qty" value="1" min="1">
+    </div>
+
+    <div class="buttons">
+        <button class="btn add-cart">THÊM VÀO GIỎ</button>
+        <button class="btn buy-now">MUA NGAY</button>
+    </div>
+
 </div>
 <div class="review-selection">
     <div class="productReview">
