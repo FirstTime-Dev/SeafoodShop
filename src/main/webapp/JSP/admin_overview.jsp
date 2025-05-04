@@ -33,11 +33,13 @@
                 <table class="revenue-table">
                     <tr>
                         <th>Theo tháng</th>
-                        <td>50,000,000 VND</td>
+                        <td><%= String.format("%,.0f VND", (Double) request.getAttribute("revenueMonth")) %>
+                        </td>
                     </tr>
                     <tr>
                         <th>Theo năm</th>
-                        <td>600,000,000 VND</td>
+                        <td><%= String.format("%,.0f VND", (Double) request.getAttribute("revenueYear")) %>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -48,11 +50,13 @@
                     <table class="info-table">
                         <tr>
                             <th>Tháng</th>
-                            <td>Cá hồi Na Uy</td>
+                            <td><%=request.getAttribute("topMonthProduct")%>
+                            </td>
                         </tr>
                         <tr>
                             <th>Năm</th>
-                            <td>Tôm sú Cà Mau</td>
+                            <td><%=request.getAttribute("topYearProduct")%>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -62,56 +66,71 @@
                     <table class="info-table">
                         <tr>
                             <th>Trong tháng</th>
-                            <td>65 đơn hàng</td>
+                            <td><%= request.getAttribute("ordersMonth")%>
+                            </td>
                         </tr>
                         <tr>
                             <th>Trong năm</th>
-                            <td>712 đơn hàng</td>
+                            <td><%= request.getAttribute("ordersYear")%>
+                            </td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
         <div class="grid">
-            <a href="admin_products.jsp" class="box-link">
-                <div class="box">
-                    <h3>Tình trạng tồn kho</h3>
-                    <p><strong>Tổng: 320 sản phẩm</strong></p>
-                    <p><strong><span class="label">Sắp hết</span> <span class="badge stock">12</span></strong></p>
-                    <p><strong><span class="label">Hết</span> <span class="badge stock">8</span></strong></p>
-                </div>
-            </a>
-            <a href="admin_accounts.jsp" class="box-link">
-                <div class="box">
+            <div class="box">
+                <a href="admin_products.jsp" class="box-link">
+                    <h3>Tình trạng kho hàng</h3>
+                    <h3>Tổng: <%= request.getAttribute("totalIventory") %> sản phẩm</h3>
+                    <p><strong><span class="label">Sắp hết HSD: </span> <span
+                            class="badge stock"><%= request.getAttribute("expiringProductCount") %></span></strong></p>
+                    <p><strong><span class="label">Hết HSD: </span> <span
+                            class="badge stock"><%= request.getAttribute("expiredProductCount") %></span></strong></p>
+                    <p><strong><span class="label">Sắp hết hàng: </span> <span
+                            class="badge stock"><%= request.getAttribute("almostOutOfStockProducts") %></span></strong>
+                    </p>
+                    <p><strong><span class="label">Hết hàng: </span> <span
+                            class="badge stock"><%= request.getAttribute("outOfStockProducts") %></span></strong></p>
+                </a>
+            </div>
+            <div class="box">
+                <a href="admin_accounts.jsp" class="box-link">
                     <h3>Tài khoản</h3>
-                    <p><strong>1,200 người dùng</strong></p>
-                </div>
-            </a>
+                    <h3>Tổng : <%
+                        int active = (int) request.getAttribute("activeAccounts");
+                        int disable = (int) request.getAttribute("disableAccounts");
+                        int total = active + disable;%><%= total %> tài khoản</h3>
+                    <p><strong>Tài khoản khả dụng: <%= request.getAttribute("activeAccounts") %></strong></p>
+                    <p><strong>Tài khoản bị vô hiệu hóa : <%= request.getAttribute("disableAccounts") %></strong></p>
+                </a>
+            </div>
+            <div class="box">
             <a href="admin_suppliers.jsp" class="box-link">
-                <div class="box">
                     <h3>Nhà cung cấp</h3>
-                    <p><strong>35 nhà cung cấp</strong></p>
-                </div>
+                    <h3>Tổng : <%= request.getAttribute("totalSuppliers") %> nhà cung cấp</strong></h3>
             </a>
-            <a href="admin_categories.jsp" class="box-link">
-                <div class="box">
+            </div>
+            <div class="box">
+                <a href="admin_categories.jsp" class="box-link">
                     <h3>Danh mục</h3>
-                    <p><strong>18 danh mục</strong></p>
-                </div>
-            </a>
-            <a href="admin_discounts.jsp" class="box-link">
-                <div class="box">
+                    <h3>Tổng : <%= request.getAttribute("totalCategory") %> danh mục</h3>
+                </a>
+            </div>
+            <div class="box">
+                <a href="admin_discounts.jsp" class="box-link">
                     <h3>Chương trình khuyến mãi</h3>
-                    <p><strong>5 chương trình</strong></p>
-                </div>
-            </a>
-            <a href="admin_reviews.jsp" class="box-link">
-                <div class="box">
+                    <h3>Tổng : <%= request.getAttribute("totalDiscount") %> chương trình</h3>
+                    <p><strong>Số khuyến mãi còn hiệu lực : <%= request.getAttribute("totalAvailableDiscount") %></strong></p>
+                </a>
+            </div>
+            <div class="box">
+                <a href="admin_reviews.jsp" class="box-link">
                     <h3>Đánh giá sản phẩm</h3>
-                    <p><strong>Trung bình: 4.3 / 5 sao</strong></p>
-                    <p><strong>Tổng đánh giá: 920</strong></p>
-                </div>
-            </a>
+                    <p><strong>Trung bình: <%= request.getAttribute("avgRating") %> / 5 sao</strong></p>
+                    <p><strong>Tổng đánh giá: <%= request.getAttribute("totalReview") %></strong></p>
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -1,8 +1,10 @@
+﻿-- Tạo database SeafoodProject
 CREATE DATABASE SeafoodProject;
 USE SeafoodProject;
 
 GO
--- B?ng user: l?u th�ng tin user - quy?n c?a user - tr?ng th�i user --
+
+-- Tạo bảng Users
 CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
     FullName NVARCHAR(100) NOT NULL,
@@ -12,12 +14,13 @@ CREATE TABLE Users (
     PhoneNumber VARCHAR(15) UNIQUE NOT NULL,
     BirthDate DATE NOT NULL,
     Address NVARCHAR(255),
-    Role INT CHECK (Role BETWEEN 1 AND 3) DEFAULT 1, -- 1: User, 2: Low Admin, 3: High Admin
+    Role INT CHECK (Role BETWEEN 1 AND 3) DEFAULT 1, -- 1: User, 2: Manage, 3: Admin
+	Ban INT DEFAULT 0, -- 0: Unban, 1: Ban
     State INT DEFAULT 1, -- 1: Active, 0: Disabled
     CreatedAt DATETIME DEFAULT GETDATE()
 );
 
--- B?ng ph�n lo?i: l?u gi?u c�c lo?i s?n ph?m - m� t?
+-- Tạo bảng Categories
 CREATE TABLE Categories (
     CategoryID INT PRIMARY KEY IDENTITY(1,1),
     CategoryName NVARCHAR(50) NOT NULL UNIQUE,
@@ -25,6 +28,7 @@ CREATE TABLE Categories (
     State INT DEFAULT 1
 );
 
+-- Tạo bảng Suppliers
 CREATE TABLE Suppliers (
     SupplierID INT PRIMARY KEY IDENTITY(1,1),
     SupplierName NVARCHAR(100) NOT NULL,
@@ -35,6 +39,7 @@ CREATE TABLE Suppliers (
     State INT DEFAULT 1
 );
 
+-- Tạo bảng Products
 CREATE TABLE Products (
     ProductID INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(100) NOT NULL,
@@ -42,17 +47,17 @@ CREATE TABLE Products (
     Price DECIMAL(10,2) NOT NULL,
     StockQuantity INT NOT NULL DEFAULT 0,
     SupplierID INT,
-    Description NVARCHAR(MAX),  -- M� t? chi ti?t v? s?n ph?m
-    Origin NVARCHAR(100),  -- Xu?t x? (VD: Vi?t Nam, Nh?t B?n)
-    StorageCondition NVARCHAR(255),  -- ?i?u ki?n b?o qu?n (VD: -18�C, ?�ng g�i ch�n kh�ng)
-    ExpiryDate DATE,  -- Ng�y h?t h?n
-    Weight DECIMAL(10,2) CHECK (Weight > 0),  -- Tr?ng l??ng trung b�nh (kg)
-    State INT DEFAULT 1,  -- 1: Hi?n th?, 0: ?n n?u kh�ng c�n b�n
+    Description NVARCHAR(MAX),
+    Origin NVARCHAR(100),
+    StorageCondition NVARCHAR(255),
+    ExpiryDate DATE,
+    Weight DECIMAL(10,2) CHECK (Weight > 0),
+    State INT DEFAULT 1,
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
 
--- B?ng H�nh ?nh S?n Ph?m (Images)
+-- Tạo bảng Images
 CREATE TABLE Images (
     ImageID INT PRIMARY KEY IDENTITY(1,1),
     ProductID INT NOT NULL,
@@ -61,6 +66,7 @@ CREATE TABLE Images (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
 
+-- Tạo bảng Orders
 CREATE TABLE Orders (
     OrderID INT PRIMARY KEY IDENTITY(1,1),
     UserID INT NOT NULL,
@@ -72,17 +78,20 @@ CREATE TABLE Orders (
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
+-- Tạo bảng OrderDetails
 CREATE TABLE OrderDetails (
-    OrderDetailID INT PRIMARY KEY IDENTITY(1,1),
+    OrderDetailID INT IDENTITY(1,1) PRIMARY KEY,
     OrderID INT NOT NULL,
     ProductID INT NOT NULL,
     Quantity INT NOT NULL CHECK (Quantity > 0),
     Price DECIMAL(10,2) NOT NULL CHECK (Price >= 0),
     Total AS (Quantity * Price) PERSISTED,
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+    CONSTRAINT FK_OrderDetails_Orders FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
+    CONSTRAINT FK_OrderDetails_Products FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
 
+
+-- Tạo bảng Cart
 CREATE TABLE Cart (
     CartID INT PRIMARY KEY IDENTITY(1,1),
     UserID INT NOT NULL,
@@ -93,55 +102,59 @@ CREATE TABLE Cart (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
 
+-- Tạo bảng Payments
 CREATE TABLE Payments (
     PaymentID INT PRIMARY KEY IDENTITY(1,1),
     OrderID INT NOT NULL,
-    PaymentMethod NVARCHAR(50) NOT NULL, -- "Credit Card", "Bank Transfer", "COD"
-    PaymentType NVARCHAR(50) NOT NULL DEFAULT 'Offline', -- Online / Offline
+    PaymentMethod NVARCHAR(50) NOT NULL,
+    PaymentType NVARCHAR(50) NOT NULL DEFAULT 'Offline',
     PaymentStatus NVARCHAR(50) DEFAULT 'Pending',
     PaymentDate DATETIME DEFAULT GETDATE(),
     AmountPaid DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
+-- Tạo bảng Shipping
 CREATE TABLE Shipping (
     ShippingID INT PRIMARY KEY IDENTITY(1,1),
     OrderID INT NOT NULL,
-    Carrier NVARCHAR(100) NOT NULL, -- T�n ??n v? v?n chuy?n
+    Carrier NVARCHAR(100) NOT NULL,
     TrackingNumber NVARCHAR(50),
     EstimatedDelivery DATE,
     DeliveryStatus NVARCHAR(50) DEFAULT 'Processing',
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
+-- Tạo bảng Contact
 CREATE TABLE Contact (
     ContactID INT PRIMARY KEY IDENTITY(1,1),
-    StoreName NVARCHAR(100) NOT NULL,  -- T�n c?a h�ng
-    Phone NVARCHAR(15) UNIQUE NOT NULL,  -- S? ?i?n tho?i hotline
-    Email NVARCHAR(100) UNIQUE NOT NULL,  -- Email h? tr? kh�ch h�ng
-    Address NVARCHAR(255) NOT NULL,  -- ??a ch? c?a h�ng ch�nh
-    WorkingHours NVARCHAR(100),  -- Gi? l�m vi?c (VD: "8:00 - 22:00")
-    Facebook NVARCHAR(255),  -- Link Facebook c?a h�ng
-    Zalo NVARCHAR(50),  -- S? Zalo li�n h?
-    Instagram NVARCHAR(255),  -- Link Instagram c?a h�ng
-    Note NVARCHAR(255),  -- Ghi ch� th�m (n?u c�)
-    State INT DEFAULT 1  -- 1: Ho?t ??ng, 0: V� hi?u h�a
+    StoreName NVARCHAR(100) NOT NULL,
+    Phone NVARCHAR(15) UNIQUE NOT NULL,
+    Email NVARCHAR(100) UNIQUE NOT NULL,
+    Address NVARCHAR(255) NOT NULL,
+    WorkingHours NVARCHAR(100),
+    Facebook NVARCHAR(255),
+    Zalo NVARCHAR(50),
+    Instagram NVARCHAR(255),
+    Note NVARCHAR(255),
+    State INT DEFAULT 1
 );
 
-
+-- Tạo bảng LogActivity
 CREATE TABLE LogActivity (
     LogID INT PRIMARY KEY IDENTITY(1,1),
-    UserID INT NULL, -- NULL n?u l� h? th?ng t? ??ng log
+    UserID INT NULL,
     Action NVARCHAR(255) NOT NULL,
-    Resource NVARCHAR(100) NOT NULL, -- T�n b?ng ho?c API b? t�c ??ng
-    DataBefore NVARCHAR(MAX) NULL, -- D? li?u tr??c thay ??i (JSON)
-    DataAfter NVARCHAR(MAX) NULL, -- D? li?u sau thay ??i (JSON)
+    Resource NVARCHAR(100) NOT NULL,
+    DataBefore NVARCHAR(MAX) NULL,
+    DataAfter NVARCHAR(MAX) NULL,
     IPAddress NVARCHAR(50) NULL,
     Timestamp DATETIME DEFAULT GETDATE(),
     Location NVARCHAR(255) NULL,
     FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE SET NULL
 );
 
+-- Tạo bảng PasswordResets
 CREATE TABLE PasswordResets (
     ResetID INT PRIMARY KEY IDENTITY(1,1),
     UserID INT NOT NULL,
@@ -150,55 +163,103 @@ CREATE TABLE PasswordResets (
     FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
+-- Tạo bảng Reviews
 CREATE TABLE Reviews (
     ReviewID INT PRIMARY KEY IDENTITY(1,1),
-    UserID INT NOT NULL,  -- Ng??i ?�nh gi�
-    ProductID INT NOT NULL,  -- S?n ph?m ???c ?�nh gi�
-    Rating INT CHECK (Rating BETWEEN 1 AND 5),  -- ?�nh gi� t? 1 ??n 5 sao
-    Comment NVARCHAR(1000),  -- N?i dung b�nh lu?n
-    ReviewDate DATETIME DEFAULT GETDATE(),  -- Th?i gian ?�nh gi�
-    State INT DEFAULT 1,  -- 1: Hi?n th?, 0: ?n (n?u vi ph?m n?i quy)
+    UserID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Rating INT CHECK (Rating BETWEEN 1 AND 5),
+    Comment NVARCHAR(1000),
+    ReviewDate DATETIME DEFAULT GETDATE(),
+    State INT DEFAULT 1,
     FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
 
--- Sample Data for Users
-INSERT INTO Users (FullName, Username, Password, Email, PhoneNumber, BirthDate, Address, Role, State)
-VALUES 
-(N'Nguy?n V?n A', 'usera', 'hashedpassword0', 'a@example.com', '0900000001', '1999-03-13', N'H� N?i', 1, 1),
-(N'Tr?n Th? B', 'userb', 'hashedpassword1', 'b@example.com', '0900000002', '2001-01-14', N'TP. HCM', 2, 1),
-(N'L� V?n C', 'userc', 'hashedpassword2', 'c@example.com', '0900000003', '1998-06-15', N'?� N?ng', 3, 1),
-(N'Ph?m Th? D', 'userd', 'hashedpassword3', 'd@example.com', '0900000004', '1997-09-21', N'H?i Ph�ng', 1, 1),
-(N'Ho�ng V?n E', 'usere', 'hashedpassword4', 'e@example.com', '0900000005', '2000-11-10', N'C?n Th?', 1, 1);
+-- Tạo bảng Discounts
+CREATE TABLE Discounts (
+    DiscountID INT PRIMARY KEY IDENTITY(1,1),
+    Code NVARCHAR(50) UNIQUE NOT NULL,
+    DiscountType NVARCHAR(20) CHECK (DiscountType IN ('Percentage', 'Fixed')) NOT NULL,
+    Value DECIMAL(10,2) NOT NULL CHECK (Value > 0),
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    MinimumOrderAmount DECIMAL(10,2) DEFAULT 0,
+    MaxUsage INT DEFAULT NULL,
+    UsageCount INT DEFAULT 0,
+    IsActive BIT DEFAULT 1,
+    Description NVARCHAR(255)
+);
 
--- Categories
-INSERT INTO Categories (CategoryName, Description, State)
-VALUES 
-(N'H?i s?n t??i s?ng', N'C�, t�m, cua... t??i s?ng', 1),
-(N'H?i s?n ?�ng l?nh', N'B?o qu?n nhi?t ?? th?p', 1),
-(N'H?i s?n nh?p kh?u', N'Nh?p t? n??c ngo�i', 1),
-(N'??c s?n v�ng mi?n', N'S?n ph?m ??a ph??ng n?i b?t', 1),
-(N'S?n ph?m ch? bi?n s?n', N'?�ng g�i, ?n li?n', 1);
+-- Tạo bảng ProductDiscount
+CREATE TABLE ProductDiscount (
+    ProductID INT,
+    DiscountID INT,
+    PRIMARY KEY (ProductID, DiscountID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE,
+    FOREIGN KEY (DiscountID) REFERENCES Discounts(DiscountID) ON DELETE CASCADE
+);
 
--- Suppliers
-INSERT INTO Suppliers (SupplierName, ContactName, Phone, Email, Address, State)
-VALUES 
-(N'C�ng ty TNHH Bi?n Xanh', N'Tr?n V?n H?i', '0911222333', 'contact@bienxanh.vn', N'Qu?ng Ninh', 1),
-(N'Cty CP H?i S?n Mi?n Nam', N'L� Th? Tuy?t', '0933444555', 'info@haisansouth.vn', N'C� Mau', 1),
-(N'Seafood Japan Ltd.', N'Yamamoto Kenta', '0812345678', 'export@seafood.jp', N'Tokyo, Japan', 1),
-(N'SeaFresh Co.', N'Nguy?n V?n H�ng', '0909988776', 'seafresh@vn.com', N'?� N?ng', 1),
-(N'H?i S?n Vina', N'Tr?n Kim Ng�n', '0977554433', 'sales@haisanvina.vn', N'TP. HCM', 1);
+-- Tạo bảng ProductIn
+CREATE TABLE ProductIn (
+    ProductInID INT PRIMARY KEY IDENTITY(1,1),
+    SupplierID INT NOT NULL,
+    ImportDate DATETIME DEFAULT GETDATE(),
+    Notes NVARCHAR(255),
+    CreatedBy INT,
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
+    FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
+);
 
--- Products
-INSERT INTO Products (Name, CategoryID, Price, StockQuantity, SupplierID, Description, Origin, StorageCondition, ExpiryDate, Weight, State)
-VALUES 
-(N'T�m S� T??i', 1, 250000, 120, 1, N'T�m s� ?�nh b?t trong ng�y.', N'Vi?t Nam', N'0 - 4�C', '2025-08-01', 0.5, 1),
-(N'Cua Ho�ng ??', 1, 1200000, 30, 3, N'Cua nh?p kh?u Alaska.', N'M?', N'-18�C', '2025-12-31', 1.8, 1),
-(N'C� H?i Phi L�', 2, 380000, 60, 3, N'C� h?i Na Uy phi l� s?n.', N'Na Uy', N'-18�C', '2025-07-15', 1.2, 1),
-(N'M?c M?t N?ng', 4, 450000, 45, 4, N'M?c ph?i 1 n?ng t? Phan Thi?t.', N'Vi?t Nam', N'-18�C', '2025-09-01', 0.7, 1),
-(N'Ch? M?c H? Long', 5, 320000, 100, 5, N'Ch? m?c ??c s?n H? Long.', N'Vi?t Nam', N'B?o qu?n ?�ng l?nh', '2025-10-30', 0.3, 1);
+-- Tạo bảng ProductInDetail
+CREATE TABLE ProductInDetail (
+    ProductInDetailID INT PRIMARY KEY IDENTITY(1,1),
+    ProductInID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL CHECK (Quantity > 0),
+    ImportPrice DECIMAL(10,2) NOT NULL,
+	ExpiryDate DATE NOT NULL,
+	CreatedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (ProductInID) REFERENCES ProductIn(ProductInID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
 
--- Images
+INSERT INTO Users (FullName, Username, Password, Email, PhoneNumber, BirthDate, Address, Role, Ban, State)
+VALUES
+(N'Phạm Thị D', 'phamthid', '$2a$10$xJw...', 'd@example.com', '0909123459', '1995-04-15', N'Q4, TP.HCM', 1, 1, 1),
+(N'Hoàng Văn E', 'hoangvane', '$2a$10$yKz...', 'e@example.com', '0909123460', '1988-05-20', N'Q5, TP.HCM', 1, 0, 1),
+(N'Vũ Thị F', 'vuthif', '$2a$10$zLx...', 'f@example.com', '0909123461', '1993-06-25', N'Q6, TP.HCM', 2, 1, 0),
+(N'Đặng Văn G', 'dangvang', '$2a$10$wQv...', 'g@example.com', '0909123462', '1991-07-30', N'Q7, TP.HCM', 3, 1, 1),
+(N'Bùi Thị H', 'buithih', '$2a$10$vRt...', 'h@example.com', '0909123463', '1989-08-10', N'Q8, TP.HCM', 1, 0, 0),
+(N'Ngô Văn I', 'ngovani', '$2a$10$uSw...', 'i@example.com', '0909123464', '1996-09-05', N'Q9, TP.HCM', 1, 1, 1),
+(N'Đỗ Thị K', 'dothik', '$2a$10$tPq...', 'k@example.com', '0909123465', '1997-10-12', N'Q10, TP.HCM', 2, 1, 1),
+(N'Mai Văn L', 'maivanl', '$2a$10$sNo...', 'l@example.com', '0909123466', '1985-11-18', N'Q11, TP.HCM', 1, 0, 1),
+(N'Lý Thị M', 'lythim', '$2a$10$rMn...', 'm@example.com', '0909123467', '1998-12-22', N'Q12, TP.HCM', 1, 1, 0),
+(N'Trịnh Văn N', 'trinhvann', '$2a$10$qKl...', 'n@example.com', '0909123468', '1999-01-30', N'Q1, Hà Nội', 3, 1, 1);
+
+INSERT INTO Categories (CategoryName, Description)
+VALUES
+(N'Tôm', N'Các loại tôm tươi sống'),
+(N'Cua', N'Cua biển cao cấp'),
+(N'Cá', N'Cá nhập khẩu'),
+(N'Mực', N'Mực một nắng, mực tươi'),
+(N'Hải sản chế biến', N'Các sản phẩm hải sản đã qua chế biến');
+
+INSERT INTO Suppliers (SupplierName, ContactName, Phone, Email, Address)
+VALUES
+(N'Công ty TNHH Tôm Việt', N'Minh Tâm', '0901111111', 'tomviet@example.com', N'Cà Mau'),
+(N'Công ty Cua Biển', N'Thành Long', '0902222222', 'cuabien@example.com', N'Quảng Ninh'),
+(N'Cá Hồi Na Uy', N'Lê Hải', '0903333333', 'cahoinauy@example.com', N'TP. HCM');
+
+INSERT INTO Products (Name, CategoryID, Price, StockQuantity, SupplierID, Description, Origin, StorageCondition, ExpiryDate, Weight)
+VALUES
+(N'Tôm sú loại 1', 1, 250000, 100, 1, N'Tôm sú tươi sống loại 1', N'Cà Mau', N'Bảo quản lạnh 0-4 độ C', '2025-04-20', 0.5),
+(N'Cua hoàng đế', 2, 1200000, 50, 2, N'Cua hoàng đế siêu to khổng lồ', N'Alaska', N'Đông lạnh -18 độ C', '2025-04-25', 1.2),
+(N'Cá hồi phi lê', 3, 400000, 70, 3, N'Cá hồi Na Uy phi lê tươi', N'Na Uy', N'Bảo quản lạnh', '2025-04-22', 1.0),
+(N'Mực một nắng', 4, 300000, 40, 1, N'Mực một nắng loại đặc biệt', N'Nha Trang', N'Bảo quản khô ráo', '2025-04-19', 0.8),
+(N'Chả mực Hạ Long', 5, 250000, 60, 2, N'Chả mực đặc sản Hạ Long', N'Hạ Long', N'Bảo quản lạnh', '2025-04-30', 0.5);
+
+-- Thêm dữ liệu mẫu cho các bảng Images, Orders, OrderDetails, Cart, Payments, Shipping, Contact, LogActivity, PasswordResets, Reviews
 INSERT INTO Images (ProductID, ImageURL)
 VALUES 
 (1, 'images/tom_su.jpg'),
@@ -207,63 +268,83 @@ VALUES
 (4, 'images/muc_mot_nang.jpg'),
 (5, 'images/cha_muc.jpg');
 
--- Orders
 INSERT INTO Orders (UserID, TotalAmount, Status, ShippingStatus)
 VALUES 
 (1, 750000, 'Completed', 'Shipped'),
 (2, 1200000, 'Pending', 'Processing'),
 (3, 320000, 'Cancelled', 'Not Shipped');
 
--- OrderDetails
 INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price)
 VALUES 
 (1, 1, 2, 250000),
-(1, 5, 1, 250000),
 (2, 2, 1, 1200000),
 (3, 5, 1, 320000);
 
--- Cart
 INSERT INTO Cart (UserID, ProductID, Quantity)
 VALUES 
 (1, 3, 1),
 (2, 4, 2),
 (3, 1, 3);
 
--- Payments
 INSERT INTO Payments (OrderID, PaymentMethod, PaymentType, AmountPaid)
 VALUES 
 (1, N'COD', N'Offline', 750000),
 (2, N'Bank Transfer', N'Online', 1200000),
 (3, N'Credit Card', N'Online', 320000);
 
--- Shipping
 INSERT INTO Shipping (OrderID, Carrier, TrackingNumber, EstimatedDelivery, DeliveryStatus)
 VALUES 
 (1, N'GHN', N'GHN123456', '2025-04-20', N'Delivered'),
 (2, N'Viettel Post', N'VT123123', '2025-04-25', N'Processing');
 
--- Contact
 INSERT INTO Contact (StoreName, Phone, Email, Address, WorkingHours, Facebook, Zalo, Instagram, Note)
 VALUES 
-(N'H?i S?n T??i Ngon', '18001234', 'support@haisantuoingon.vn', N'123 L� L?i, Q1, TP.HCM',
- N'7:00 - 21:00', 'https://facebook.com/haisantuoingon', '0909999999', 'https://instagram.com/haisantuoingon', N'Giao h�ng to�n qu?c');
+(N'Hải Sản Tươi Ngon', '18001234', 'support@haisantuoingon.vn', N'123 Lê Lợi, Q1, TP.HCM',
+ N'7:00 - 21:00', 'https://facebook.com/haisantuoingon', '0909999999', 'https://instagram.com/haisantuoingon', N'Giao hàng toàn quốc');
 
--- LogActivity
 INSERT INTO LogActivity (UserID, Action, Resource, DataBefore, DataAfter, IPAddress, Location)
 VALUES 
-(1, N'T?o ??n h�ng', N'Orders', NULL, N'{orderId: 1, amount: 750000}', '192.168.1.1', N'TP.HCM');
+(1, N'Tạo đơn hàng', N'Orders', NULL, N'{orderId: 1, amount: 750000}', '192.168.1.1', N'TP.HCM');
 
--- PasswordResets
 INSERT INTO PasswordResets (UserID, Token, ExpiryTime)
 VALUES 
 (1, 'resetToken123', DATEADD(HOUR, 1, GETDATE()));
 
--- Reviews
 INSERT INTO Reviews (UserID, ProductID, Rating, Comment)
 VALUES 
-(1, 1, 5, N'T�m r?t t??i ngon, giao nhanh.'),
-(2, 2, 4, N'Cua to, ?�ng m� t?.'),
-(3, 3, 3, N'C� ok nh?ng h?i ??t.');
+(1, 1, 5, N'Tôm rất tươi ngon, giao nhanh.'),
+(2, 2, 4, N'Cua to, đóng gói tốt.'),
+(3, 3, 3, N'Cá ok nhưng hơi dở.');
+
+INSERT INTO ProductIn (SupplierID, ImportDate, Notes, CreatedBy)
+VALUES
+(1, GETDATE(), N'Nhập kho tôm sú', 1),
+(2, GETDATE(), N'Nhập kho cua hoàng đế', 1),
+(3, GETDATE(), N'Nhập kho cá hồi', 1);
+
+INSERT INTO ProductInDetail (ProductInID, ProductID, Quantity, ImportPrice, ExpiryDate, CreatedDate)
+VALUES
+(1, 1, 50, 200000, '2025-04-30', GETDATE()),  -- Tôm sú, số lượng 50, giá nhập 200,000, hết hạn 30/04/2025, ngày nhập là ngày hiện tại
+(2, 2, 20, 1000000, '2026-06-30', GETDATE()), -- Cua hoàng đế, số lượng 20, giá nhập 1,000,000, hết hạn 30/06/2026, ngày nhập là ngày hiện tại
+(3, 3, 30, 400000, '2025-04-20', GETDATE());  -- Cá hồi, số lượng 30, giá nhập 400,000, hết hạn 20/04/2025, ngày nhập là ngày hiện tại
+
+INSERT INTO Discounts (Code, DiscountType, Value, StartDate, EndDate, MinimumOrderAmount, MaxUsage, Description)
+VALUES 
+('SALE10', 'Percentage', 10.00, '2025-04-01', '2025-04-30', 100.00, 100, N'Giảm 10% cho đơn hàng từ 100k'),
+('FIX50K', 'Fixed', 50000.00, '2025-04-15', '2025-05-15', 300.00, 50, N'Giảm cố định 50k cho đơn hàng từ 300k'),
+('SPRING20', 'Percentage', 20.00, '2025-03-01', '2025-04-30', 200.00, NULL, N'Ưu đãi mùa xuân 20%'),
+('FLASH100K', 'Fixed', 100000.00, '2025-04-10', '2025-04-20', 500.00, 10, N'Giảm 100k trong khung giờ vàng'),
+('FREESHIP', 'Fixed', 30000.00, '2025-04-01', '2025-06-01', 0.00, NULL, N'Hỗ trợ phí vận chuyển');
+
+INSERT INTO ProductDiscount (ProductID, DiscountID)
+VALUES 
+(1, 1),
+(2, 1),
+(1, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(2, 3);
 
 
 
@@ -289,18 +370,27 @@ VALUES
 
 
 
--- Xo� c�c b?ng c� r�ng bu?c foreign key tr??c
-DROP TABLE IF EXISTS Reviews;
-DROP TABLE IF EXISTS PasswordResets;
-DROP TABLE IF EXISTS LogActivity;
-DROP TABLE IF EXISTS Contact;
-DROP TABLE IF EXISTS Shipping;
-DROP TABLE IF EXISTS Payments;
-DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS ProductInDetail;
+DROP TABLE IF EXISTS ProductIn;
+DROP TABLE IF EXISTS ProductDiscount;
+DROP TABLE IF EXISTS Discounts;
+
 DROP TABLE IF EXISTS OrderDetails;
 DROP TABLE IF EXISTS Orders;
+
+DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS Shipping;
+DROP TABLE IF EXISTS Payments;
+
 DROP TABLE IF EXISTS Images;
 DROP TABLE IF EXISTS Products;
+
 DROP TABLE IF EXISTS Suppliers;
 DROP TABLE IF EXISTS Categories;
+
+DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS Contact;
+DROP TABLE IF EXISTS PasswordResets;
+DROP TABLE IF EXISTS LogActivity;
+
 DROP TABLE IF EXISTS Users;

@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataConnect {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=SeafoodStore;encrypt=false";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=SeafoodProject;encrypt=false";
     private static final String USER = "sa";
     private static final String PASSWORD = "0";
 

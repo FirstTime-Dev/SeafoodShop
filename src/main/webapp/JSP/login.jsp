@@ -95,14 +95,14 @@
             const errorDiv = $('#errorMessage');
 
             $.ajax({
-                url: '<%= request.getContextPath() %>/login', // servlet URL mapping
+                url: '<%= request.getContextPath() %>/login', // SeafoodShop.servlet URL mapping
                 type: 'POST',
                 data: {
                     username: username,
                     password: password
                 },
                 success: function (response) {
-                    // Xử lý kết quả trả về từ servlet
+                    // Xử lý kết quả trả về từ SeafoodShop.servlet
                     if (response === 'success') {
                         window.location.href = 'home.jsp'; // chuyển trang nếu đăng nhập thành công
                     } else {
