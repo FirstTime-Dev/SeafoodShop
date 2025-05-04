@@ -14,12 +14,12 @@
     <h1>Your cart</h1>
     <div class="product-container">
         <button id="delete-button" formaction="delete" type="button">X</button>
-        <input id="choose-button" type="checkbox" >
+        <input class="choose-button" id="choose-button" type="checkbox" >
         <div class="product-info-container">
             <img src="../IMG/login-background.png" id="img-description">
             <div class="product-info-description">
-                <label>product name</label>
-                <label>price</label>
+                <label class="product-name">product name</label>
+                <label class="product-price">price</label>
             </div>
             <div class="quantity-container">
                 <button class="quantity-button" type="button" onclick="changeQuantity(-1)">-</button>
@@ -32,62 +32,16 @@
     <div class="cart-summary">
         <h2>Order Summary</h2>
         <div class="summary-container">
-            <div class="summary-item">
-                <span>Product 1</span>
-                <span>Quantity: 2</span>
-                <span>Price: 1.000.000VNĐ</span>
-            </div>
-            <div class="summary-item">
-                <span>Product 2</span>
-                <span>Quantity: 1</span>
-                <span>Price: 500.000VNĐ</span>
-            </div>
-            <div class="summary-item">
-                <span>Product 1</span>
-                <span>Quantity: 2</span>
-                <span>Price: 1.000.000VNĐ</span>
-            </div>
-            <div class="summary-item">
-                <span>Product 2</span>
-                <span>Quantity: 1</span>
-                <span>Price: 500.000VNĐ</span>
-            </div><div class="summary-item">
-            <span>Product 1</span>
-            <span>Quantity: 2</span>
-            <span>Price: 1.000.000VNĐ</span>
-        </div>
-            <div class="summary-item">
-                <span>Product 2</span>
-                <span>Quantity: 1</span>
-                <span>Price: 500.000VNĐ</span>
-            </div><div class="summary-item">
-            <span>Product 1</span>
-            <span>Quantity: 2</span>
-            <span>Price: 1.000.000VNĐ</span>
-        </div>
-            <div class="summary-item">
-                <span>Product 2</span>
-                <span>Quantity: 1</span>
-                <span>Price: 500.000VNĐ</span>
-            </div><div class="summary-item">
-            <span>Product 1</span>
-            <span>Quantity: 2</span>
-            <span>Price: 1.000.000VNĐ</span>
-        </div>
-            <div class="summary-item">
-                <span>Product 2</span>
-                <span>Quantity: 1</span>
-                <span>Price: 500.000VNĐ</span>
-            </div><div class="summary-item">
-            <span>Product 1</span>
-            <span>Quantity: 2</span>
-            <span>Price: 1.000.000VNĐ</span>
-        </div>
-            <div class="summary-item">
-                <span>Product 2</span>
-                <span>Quantity: 1</span>
-                <span>Price: 500.000VNĐ</span>
-            </div>
+<%--            <div class="summary-item">--%>
+<%--                <span>Product 1</span>--%>
+<%--                <span>Quantity: 2</span>--%>
+<%--                <span>Price: 1.000.000VNĐ</span>--%>
+<%--            </div>--%>
+<%--            <div class="summary-item">--%>
+<%--                <span>Product 2</span>--%>
+<%--                <span>Quantity: 1</span>--%>
+<%--                <span>Price: 500.000VNĐ</span>--%>
+<%--            </div>--%>
         </div>
         <div id="grand-total">Grand Total: 1.500.000VNĐ</div>
         <button id="checkout-button"><a href="<%= request.getContextPath() %>/JSP/payment.jsp">Proceed to Checkout</a></button>
@@ -95,4 +49,5 @@
 </div>
 <jsp:include page="footer.jsp" />
 </body>
+<script src="<%= request.getContextPath() %>/JS/cart.js"></script>
 </html>

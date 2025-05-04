@@ -34,15 +34,19 @@ function handleKeyDown(event, index) {
     }
 }
 
-function submitOTP() {
+async function submitOTP() {
     const inputs = document.querySelectorAll(".otp-input");
     let otp = "";
     inputs.forEach(input => {
         otp += input.value;
     });
-
+    console.log(otp);
     if (otp.length === 6) {
-        alert("OTP Entered: " + otp);
+        const sessionStorageOtp = sessionStorage.getItem('otp');
+        if(otp === sessionStorageOtp){
+            sessionStorage.removeItem('otp');
+            window.location.href = '/SeafoodShop_war_exploded/JSP/home.jsp';
+        }
     } else {
         alert("Please enter all 6 digits.");
     }

@@ -4,7 +4,6 @@ USE SeafoodProject;
 
 GO
 
--- Tạo bảng Users
 CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
     FullName NVARCHAR(100) NOT NULL,
@@ -20,7 +19,7 @@ CREATE TABLE Users (
     CreatedAt DATETIME DEFAULT GETDATE()
 );
 
--- Tạo bảng Categories
+
 CREATE TABLE Categories (
     CategoryID INT PRIMARY KEY IDENTITY(1,1),
     CategoryName NVARCHAR(50) NOT NULL UNIQUE,
@@ -57,7 +56,6 @@ CREATE TABLE Products (
     FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
 );
 
--- Tạo bảng Images
 CREATE TABLE Images (
     ImageID INT PRIMARY KEY IDENTITY(1,1),
     ProductID INT NOT NULL,
@@ -128,6 +126,7 @@ CREATE TABLE Shipping (
 -- Tạo bảng Contact
 CREATE TABLE Contact (
     ContactID INT PRIMARY KEY IDENTITY(1,1),
+<<<<<<< HEAD
     StoreName NVARCHAR(100) NOT NULL,
     Phone NVARCHAR(15) UNIQUE NOT NULL,
     Email NVARCHAR(100) UNIQUE NOT NULL,
@@ -298,13 +297,14 @@ VALUES
 (2, N'Viettel Post', N'VT123123', '2025-04-25', N'Processing');
 
 INSERT INTO Contact (StoreName, Phone, Email, Address, WorkingHours, Facebook, Zalo, Instagram, Note)
-VALUES 
+VALUES
 (N'Hải Sản Tươi Ngon', '18001234', 'support@haisantuoingon.vn', N'123 Lê Lợi, Q1, TP.HCM',
  N'7:00 - 21:00', 'https://facebook.com/haisantuoingon', '0909999999', 'https://instagram.com/haisantuoingon', N'Giao hàng toàn quốc');
 
 INSERT INTO LogActivity (UserID, Action, Resource, DataBefore, DataAfter, IPAddress, Location)
 VALUES 
 (1, N'Tạo đơn hàng', N'Orders', NULL, N'{orderId: 1, amount: 750000}', '192.168.1.1', N'TP.HCM');
+
 
 INSERT INTO PasswordResets (UserID, Token, ExpiryTime)
 VALUES 
@@ -370,11 +370,23 @@ VALUES
 
 
 
+
+<<<<<<< HEAD
 DROP TABLE IF EXISTS ProductInDetail;
 DROP TABLE IF EXISTS ProductIn;
 DROP TABLE IF EXISTS ProductDiscount;
 DROP TABLE IF EXISTS Discounts;
 
+=======
+-- Xo? c?c b?ng c? r?ng bu?c foreign key tr??c
+DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS PasswordResets;
+DROP TABLE IF EXISTS LogActivity;
+DROP TABLE IF EXISTS Contact;
+DROP TABLE IF EXISTS Shipping;
+DROP TABLE IF EXISTS Payments;
+DROP TABLE IF EXISTS Cart;
+>>>>>>> 15246e888ac81c363f3bb1711db618affb3c761e
 DROP TABLE IF EXISTS OrderDetails;
 DROP TABLE IF EXISTS Orders;
 

@@ -23,7 +23,8 @@
                 <label>
                     <input id="login_password" type="password" placeholder="Password">
                 </label>
-                <div id="errorMessage" style="color:red; font-size: 12px; position: absolute; top: 50%; right: 44%;">addsad</div>
+                <div id="errorMessage"
+                     style="color:red; font-size: 12px; position: absolute; top: 50%; right: 44%;"></div>
                 <i class='bx bxs-lock'></i>
             </div>
             <div class="forgot-link">
@@ -32,9 +33,9 @@
             <button type="submit" class="btn login_btn">Login</button>
             <p>Or login with social platforms</p>
             <div class="social-icons">
-                <a id="googleSignInBtn" ><i class='bx bxl-google'></i></a>
-                <a ><i class='bx bxl-facebook'></i></a>
-                <a ><i class='bx bxl-github'></i></a>
+                <a id="googleSignInBtn"><i class='bx bxl-google'></i></a>
+                <a><i class='bx bxl-facebook'></i></a>
+                <a><i class='bx bxl-github'></i></a>
             </div>
         </form>
     </div>
@@ -89,30 +90,32 @@
     $(document).ready(function () {
         $('#loginForm').on('submit', function (e) {
             e.preventDefault(); // Ngăn form gửi theo cách mặc định
-            if(checkLogin()){
-            const username = $('#login_username').val().trim();
-            const password = $('#login_password').val().trim();
-            const errorDiv = $('#errorMessage');
+            if (checkLogin()) {
+                const username = $('#login_username').val().trim();
+                const password = $('#login_password').val().trim();
+                const errorDiv = $('#errorMessage');
+                const loginRequest = 'normalLogin';
 
-            $.ajax({
-                url: '<%= request.getContextPath() %>/login', // SeafoodShop.servlet URL mapping
-                type: 'POST',
-                data: {
-                    username: username,
-                    password: password
-                },
-                success: function (response) {
-                    // Xử lý kết quả trả về từ SeafoodShop.servlet
-                    if (response === 'success') {
-                        window.location.href = 'home.jsp'; // chuyển trang nếu đăng nhập thành công
-                    } else {
-                        errorDiv.text('Tên đăng nhập hoặc mật khẩu không đúng.');
+                $.ajax({
+                    url: '<%= request.getContextPath() %>/loginController', // servlet URL mapping
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        password: password,
+                        request: loginRequest
+                    },
+                    success: function (response) {
+                        // Xử lý kết quả trả về từ SeafoodShop.servlet
+                        if (response === 'success') {
+                            window.location.href = '<%=request.getContextPath()%>/JSP/home.jsp'; // chuyển trang nếu đăng nhập thành công
+                        } else {
+                            errorDiv.text('Tên đăng nhập hoặc mật khẩu không đúng.');
+                        }
+                    },
+                    error: function () {
+                        errorDiv.text('Đã xảy ra lỗi trong quá trình xử lý. Vui lòng thử lại.');
                     }
-                },
-                error: function () {
-                    errorDiv.text('Đã xảy ra lỗi trong quá trình xử lý. Vui lòng thử lại.');
-                }
-            });
+                });
             }
         });
     });

@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Header</title>
-    <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header.css">
 
 </head>
 <body>
@@ -30,8 +30,8 @@
 
             <div class="contact-auth">
                 <span>+1 234 567 890</span>
-                <a href="login.jsp">Sign In</a>
-                <a href="#">Register</a>
+                <a href="<%= request.getContextPath() %>/JSP/login.jsp">Sign In</a>
+                <a href="<%= request.getContextPath() %>/JSP/login.jsp">Register</a>
             </div>
         </div>
         <!-- header chính -->

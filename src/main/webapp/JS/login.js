@@ -97,6 +97,15 @@ const sendOTP = async (email) => {
             body: JSON.stringify({ email: email })
         });
 
+        const result = await response.json();
+        if (result.status === 'success') {
+        // Nếu cần lưu OTP hoặc email vào sessionStorage/localStorage:
+            sessionStorage.setItem('email', email);
+            sessionStorage.setItem('otp', result.otp);
+
+            // Chuyển sang trang OTP
+            window.location.href = '/SeafoodShop_war_exploded/JSP/otp.jsp';
+        }
         // if (!response.ok) {
         //     throw new Error('Gửi OTP thất bại');
         // }
@@ -124,26 +133,20 @@ const handleGoogleUser = async () => {
         if (!userResponse.ok) throw new Error('Lỗi xác thực Google');
 
         const userData = await userResponse.json();
-        console.log('Thông tin người dùng:', userData);
-        const response = await fetch('/SeafoodShop_war_exploded/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userData })
-    });
+        // console.log('Thông tin người dùng:', userData);
+    //     const response = await fetch('/SeafoodShop_war_exploded/login', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ userData })
+    // });
+
         // sendOTP(userData.email);
         // Gửi OTP đến email
-        // const otpSent = await sendOTP(userData.email);
-        //
-        // if (otpSent) {
-        //     // Lưu email vào sessionStorage để xác thực OTP
-        //     sessionStorage.setItem('otpEmail', userData.email);
-        //
-        //     // Chuyển hướng đến trang OTP
-        //     window.location.href = 'otp.jsp';
+        await sendOTP(userData.email);
 
-    //     }
+
     // } catch (error) {
     //     console.error('Lỗi hệ thống:', error);
     //     alert('Đăng nhập thất bại! Vui lòng thử lại.');
@@ -198,9 +201,9 @@ const handleGoogleRedirect = () => {
             }
 
             // Validate password
-            if (password.length < 8) {
+            if (password.length < 6) {
                 // event.preventDefault();
-                message.textContent = "Mật khẩu phải chứa ít nhất 8 kí tự";
+                message.textContent = "Mật khẩu phải chứa ít nhất 6 kí tự";
                 message.className = "invalid";
                 return false;
             }
@@ -210,12 +213,12 @@ const handleGoogleRedirect = () => {
                     message.className = "invalid";
                     return;
                 }*/
-            if (!/[a-z]/.test(password)) {
-                // event.preventDefault();
-                message.textContent = "Mật khẩu phải chứ ít nhất 1 kí tự thường";
-                message.className = "invalid";
-                return false;
-            }
+            // if (!/[a-z]/.test(password)) {
+            //     // event.preventDefault();
+            //     message.textContent = "Mật khẩu phải chứ ít nhất 1 kí tự thường";
+            //     message.className = "invalid";
+            //     return false;
+            // }
             if (!/[0-9]/.test(password)) {
                 // event.preventDefault();
                 message.textContent = "Mật khẩu phải chứa ít nhất 1 chữ số";
