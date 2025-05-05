@@ -1,4 +1,4 @@
-package servlet;
+package SeafoodShop.servlet;
 
 import SeafoodShop.dao.DataConnect;
 import jakarta.servlet.ServletException;

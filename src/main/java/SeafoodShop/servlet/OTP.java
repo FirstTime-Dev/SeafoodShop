@@ -1,4 +1,4 @@
-package servlet;
+package SeafoodShop.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

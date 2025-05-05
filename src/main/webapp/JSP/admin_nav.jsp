@@ -8,15 +8,15 @@
 <div class="admin-nav">
     <h3>Admin Panel</h3>
     <p>Welcome, Admin</p>
-    <a href="admin_overview.jsp">Overview</a>
-    <a href="admin_accounts.jsp">Account</a>
-    <a href="admin_orders.jsp">Order</a>
-    <a href="admin_discounts.jsp">Discount</a>
-    <a href="admin_categories.jsp">Category</a>
-    <a href="admin_products.jsp">Product</a>
-    <a href="admin_reviews.jsp">Review</a>
-    <a href="admin_suppliers.jsp">Supplier</a>
-    <a href="admin_log.jsp">Log</a>
+    <a href="AdminOverview">Overview</a>
+    <a href="AdminAccount">Account</a>
+    <a href="AdminOrder">Order</a>
+    <a href="AdminDiscount">Discount</a>
+    <a href="AdminCategory">Category</a>
+    <a href="AdminProduct">Product</a>
+    <a href="AdminReview">Review</a>
+    <a href="AdminSupplier">Supplier</a>
+    <a href="AdminLog">Log</a>
 </div>
 </body>
 </html>
