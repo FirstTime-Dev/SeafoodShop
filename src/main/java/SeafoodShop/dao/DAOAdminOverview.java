@@ -14,8 +14,8 @@ public class DAOAdminOverview {
                 "WHERE Status = 'Completed' AND " +
                 "MONTH(OrderDate) = MONTH(GETDATE()) AND " +
                 "YEAR(OrderDate) = YEAR(GETDATE())";
-
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -36,8 +36,8 @@ public class DAOAdminOverview {
                 "FROM Orders " +
                 "WHERE Status = 'Completed' AND " +
                 "YEAR(OrderDate) = YEAR(GETDATE())";
-
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -63,7 +63,8 @@ public class DAOAdminOverview {
                 "AND O.Status = 'Completed' " +
                 "GROUP BY P.Name " +
                 "ORDER BY TotalSold DESC";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -85,7 +86,8 @@ public class DAOAdminOverview {
                 "AND O.Status = 'Completed' " +
                 "GROUP BY P.Name " +
                 "ORDER BY TotalSold DESC";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -102,8 +104,8 @@ public class DAOAdminOverview {
                 "WHERE Status = 'Completed' " +
                 "AND MONTH(OrderDate) = MONTH(GETDATE()) " +
                 "AND YEAR(OrderDate) = YEAR(GETDATE())";
-
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -117,8 +119,8 @@ public class DAOAdminOverview {
         String sql = "SELECT COUNT(*) AS Total FROM Orders " +
                 "WHERE Status = 'Completed' " +
                 "AND YEAR(OrderDate) = YEAR(GETDATE())";
-
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -136,7 +138,8 @@ public class DAOAdminOverview {
                 "WHERE \n" +
                 "    pid.Quantity > 0\n" +
                 "    AND pid.ExpiryDate < CAST(GETDATE() AS DATE);";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -154,7 +157,8 @@ public class DAOAdminOverview {
                 "WHERE \n" +
                 "    pid.Quantity > 0\n" +
                 "    AND pid.ExpiryDate BETWEEN CAST(GETDATE() AS DATE) AND DATEADD(DAY, 30, GETDATE());";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -180,7 +184,8 @@ public class DAOAdminOverview {
                 "    (p.StockQuantity + ISNULL(SUM(pid.Quantity), 0) - ISNULL(SUM(od.Quantity), 0)) <= 40\n" +
                 "ORDER BY \n" +
                 "    CurrentStock ASC;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -206,7 +211,8 @@ public class DAOAdminOverview {
                 "        p.ProductID, p.StockQuantity\n" +
                 ") AS InventoryCalc\n" +
                 "WHERE CurrentStock <= 0;\n";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -221,7 +227,8 @@ public class DAOAdminOverview {
                 "    COUNT(*) AS TotalCategories\n" +
                 "FROM \n" +
                 "    Categories;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -246,7 +253,8 @@ public class DAOAdminOverview {
                 "    GROUP BY \n" +
                 "        p.ProductID, p.StockQuantity\n" +
                 ") AS StockCalculation;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -260,7 +268,8 @@ public class DAOAdminOverview {
         String sql = "SELECT COUNT(*) AS ActiveAccountCount\n" +
                 "FROM Users\n" +
                 "WHERE State = 1;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -274,7 +283,8 @@ public class DAOAdminOverview {
         String sql = "SELECT COUNT(*) AS DisabledAccountCount\n" +
                 "FROM Users\n" +
                 "WHERE State = 0;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -287,7 +297,8 @@ public class DAOAdminOverview {
     public int getNumberOfSuppliers() throws SQLException {
         String sql = "SELECT COUNT(*) AS Suppliers\n" +
                 "FROM Suppliers";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -300,7 +311,8 @@ public class DAOAdminOverview {
     public int getCategoryCount() throws SQLException {
         String sql = "SELECT COUNT(*) AS CategoryCount\n" +
                 "From Categories";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -312,7 +324,8 @@ public class DAOAdminOverview {
 
     public int getDiscountCount() throws SQLException {
         String sql = "SELECT COUNT(*) AS TotalDiscounts FROM Discounts;\n";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -326,7 +339,8 @@ public class DAOAdminOverview {
         String sql = "SELECT COUNT(*) AS TotalActiveDiscounts\n" +
                 "FROM Discounts\n" +
                 "WHERE IsActive = 1;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -339,7 +353,8 @@ public class DAOAdminOverview {
     public double getAvgRating() throws SQLException {
         String sql = "SELECT AVG(CAST(Rating AS FLOAT)) AS AverageRating\n" +
                 "FROM Reviews;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -350,7 +365,8 @@ public class DAOAdminOverview {
     }
     public int getTotalReviews() throws SQLException {
         String sql = "SELECT COUNT(*) AS TotalReviews FROM Reviews;\n";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {

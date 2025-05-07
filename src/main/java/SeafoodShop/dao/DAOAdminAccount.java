@@ -12,7 +12,8 @@ public class DAOAdminAccount {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM Users\n" +
                 "WHERE State = 1;";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dataConnect = new DataConnect();
+        try (Connection conn = dataConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -41,7 +42,8 @@ public class DAOAdminAccount {
         }
 
         String sql = "UPDATE Users SET FullName=?, Username=?, Password=?, Email=?, PhoneNumber=?, BirthDate=?, Address=?, Role=?, Ban=?, State=? WHERE UserID=?";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dataConnect = new DataConnect();
+        try (Connection conn = dataConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, user.getFullName());
@@ -69,7 +71,8 @@ public class DAOAdminAccount {
 
     public User getUserbyID(int UserID) throws SQLException {
         String sql = "SELECT * FROM Users WHERE UserID = ?";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dataConnect = new DataConnect();
+        try (Connection conn = dataConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, UserID);
             ResultSet rs = ps.executeQuery();
@@ -99,7 +102,8 @@ public class DAOAdminAccount {
 
     public boolean updateBanStatus(String userID, int Ban) throws SQLException {
         String sql = "UPDATE Users SET Ban=? WHERE UserID=?";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dataConnect = new DataConnect();
+        try (Connection conn = dataConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, Ban);
             ps.setString(2, userID);
@@ -114,7 +118,8 @@ public class DAOAdminAccount {
         String sql = "INSERT INTO Users"
                 + " (FullName, Username, Password, Email, PhoneNumber, BirthDate, Address)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DataConnect.getConnection();
+        DataConnect dataConnect = new DataConnect();
+        try (Connection conn = dataConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getFullName());
