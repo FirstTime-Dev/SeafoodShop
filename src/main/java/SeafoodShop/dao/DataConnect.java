@@ -13,7 +13,7 @@ public class DataConnect {
     private static final String PASSWORD = "0";
     public static Connection conn = null;
 
-    public Connection getConnection() throws SQLException {
+    public  Connection getConnection() throws SQLException {
         if(conn == null){
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // Đăng ký driver
@@ -86,6 +86,8 @@ public class DataConnect {
         }
         return pr;
     }
+
+
 
     public static void main(String[] args) throws SQLException {
         DataConnect dc = new DataConnect();
