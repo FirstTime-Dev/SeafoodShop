@@ -117,7 +117,7 @@ FROM
     Products p
 LEFT JOIN ProductInDetail pid ON p.ProductID = pid.ProductID         -- Liên kết với bảng ProductInDetail để lấy số lượng nhập kho
 LEFT JOIN OrderDetails od ON p.ProductID = od.ProductID             -- Liên kết với bảng OrderDetails để lấy số lượng đã bán
-LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = 'Completed' -- Chỉ tính đơn hàng đã hoàn thành
+LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = '1' -- Chỉ tính đơn hàng đã hoàn thành
 GROUP BY 
     p.ProductID, p.Name, p.StockQuantity
 HAVING 
@@ -178,3 +178,58 @@ WHERE UserID = 1;
 
 -- Lấy user theo id --
 SELECT * FROM Users WHERE UserID = 1;
+
+-- Tạo thêm Account --
+INSERT INTO Users 
+(FullName, Username, Password, Email, PhoneNumber, BirthDate, Address)
+VALUES 
+(N'Nguyễn Văn A', 'nguyenvana', '123456', 'vana@example.com', '0909123456', '1995-08-20', N'123 Đường ABC, Quận 1, TP.HCM');
+
+
+-- Update biến status trong Order --
+UPDATE Orders SET Status=2 WHERE OrderID=2;
+
+-- Update biến status trong Order -- 
+UPDATE Orders SET Status=3 WHERE OrderID=2;
+UPDATE Products
+SET StockQuantity = StockQuantity + OD.Quantity
+FROM Products P
+JOIN OrderDetails OD ON P.ProductID = OD.ProductID
+WHERE OD.OrderID = 2;
+
+-- Truy vấn cho Chi tiết đơn hàng -- 
+SELECT * FROM OrderDetails WHERE OrderID = ?;
+
+-- Truy vấn cho chỉnh sửa chi tiết đơn hàng --
+UPDATE OrderDetails
+SET 
+    ProductID = ?,
+    Quantity = ?,
+    Price = ?
+WHERE OrderID = ?;
+
+-- Truy vấn các đơn hàng trong trạng thái 'Pending' --
+SELECT * FROM Orders WHERE Status=1 AND State=1;
+
+-- Truy vấn các chi tiết đơn hàng --
+SELECT * FROM OrderDetails WHERE OrderID=1;
+
+-- Truy vấn chi tiết đơn hàng --
+SELECT 
+    od.OrderID,
+	o.OrderDate,
+    p.Name AS ProductName,
+    od.Quantity,
+    od.Price,
+    od.Total,
+    u.FullName,
+    u.PhoneNumber,
+    u.Email,
+    u.Address,
+    o.Status
+FROM OrderDetails od
+JOIN Orders o ON od.OrderID = o.OrderID
+JOIN Users u ON o.UserID = u.UserID
+JOIN Products p ON od.ProductID = p.ProductID
+WHERE od.OrderID = 1;
+

@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// Hàm hiển thị toast
+    // Hàm hiển thị toast
     function showToast(message, type = "info") {
         const toast = document.createElement("div");
         toast.className = `toast ${type}`;
@@ -130,10 +130,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Xử lý popup chỉnh sửa người dùng
+    // Khai báo modals
+    const modals = {
+        edit: {
+            element: document.getElementById("editUserPopup"),
+        }
+    };
+
+// Xử lý popup chỉnh sửa người dùng
     const editForm = document.getElementById("editUserForm");
 
     if (editForm) {
+
+        // Đóng popup khi nhấn nút X
+        const closeBtn = document.getElementById("closeEditPopup");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+                modals.edit.element.style.display = "none";
+            });
+        }
+
+        // Đóng popup khi nhấn ra ngoài modal-content
+        window.addEventListener("click", function (event) {
+            if (event.target === modals.edit.element) {
+                modals.edit.element.style.display = "none";
+            }
+        });
+
         // Mở popup chỉnh sửa
         document.querySelectorAll(".edit").forEach(button => {
             button.addEventListener("click", async function () {
@@ -148,7 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     const user = await response.json();
                     if (!user || user.error) throw new Error(user?.error || "Không tìm thấy thông tin người dùng");
                     fillEditForm(user);
-                    modals.edit.element.style.display = "block";
+
+                    // Hiển thị modal
+                    if (modals.edit.element) {
+                        modals.edit.element.style.display = "block";
+                    }
                 } catch (error) {
                     console.error("Error:", error);
                     showToast("Lỗi khi tải thông tin: " + error.message, "error");
@@ -159,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Submit form chỉnh sửa (URL-encoded)
         editForm.addEventListener("submit", async function (event) {
             event.preventDefault();
-            const userID = document.getElementById("editUserID").value;
+            const userID = document.getElementById("UserID").value;
             const formData = new FormData(this);
             const params = new URLSearchParams();
             for (let [k, v] of formData) params.append(k, v);
@@ -185,9 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     // Hàm điền dữ liệu vào form chỉnh sửa
     function fillEditForm(user) {
-        document.getElementById("editUserID").value = user.userID;
+        document.getElementById("UserID").value = user.userID;
         document.getElementById("editFullName").value = user.fullName || "";
         document.getElementById("editUsername").value = user.username || "";
         document.getElementById("editPassword").value = user.password || "";

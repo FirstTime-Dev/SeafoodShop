@@ -1,3 +1,5 @@
+<%@ page import="SeafoodShop.model.Order" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -13,6 +15,9 @@
         <jsp:include page="admin_nav.jsp"/>
     </div>
     <div class="admin-content">
+        <%
+            List<Order> orders = (List<Order>) request.getAttribute("orders");
+        %>
         <div class="header-add-container">
             <h2>Quản lý đơn hàng</h2>
         </div>
@@ -20,36 +25,101 @@
             <thead>
             <tr>
                 <th>Mã Đơn</th>
-                <th>Khách Hàng</th>
+                <th>Mã khách hàng</th>
                 <th>Tổng Tiền</th>
                 <th>Trạng Thái</th>
                 <th>Hành Động</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>DH001</td>
-                <td>Nguyễn Văn A</td>
-                <td>1.200.000đ</td>
-                <td>Chờ xác nhận</td>
-                <td class="actions">
-                    <button class="confirm">Xác nhận</button>
-                    <button class="cancel">Hủy</button>
-                </td>
-            </tr>
-            <tr>
-                <td>DH002</td>
-                <td>Trần Thị B</td>
-                <td>850.000đ</td>
-                <td>Chờ xác nhận</td>
-                <td class="actions">
-                    <button class="confirm">Xác nhận</button>
-                    <button class="cancel">Hủy</button>
-                </td>
-            </tr>
-            <!-- Thêm các đơn hàng khác ở đây -->
+            <%
+                if (orders != null) {
+                    for (Order order : orders) {
+                        String statusStr = "";
+                        switch (order.getOrderStatus()) {
+                            case 1:
+                                statusStr = "Chờ xác nhận";
+                                break;
+                            case 2:
+                                statusStr = "Đã xác nhận";
+                                break;
+                            case 3:
+                                statusStr = "Đã hủy";
+                                break;
+                            default:
+                                statusStr = "Không xác định";
+                        }
+            %>
             </tbody>
+            <tr>
+                <td><%= order.getOrderID() %>
+                </td>
+                <td><%= order.getUserID() %>
+                </td>
+                <td><%= order.getTotalAmount() %> VND</td>
+                <td><%= statusStr %>
+                </td>
+                </td>
+                <%
+                        }
+                    }
+                %>
+            </tr>
         </table>
+        <div id="orderDetailPopup" class="popup">
+            <div class="popup-content">
+                <span id="closeOrderDetailPopup" class="close-popup">&times;</span>
+                <h2>Chi Tiết Đơn Hàng</h2>
+                <div id="orderDetailContent">
+                    <table class="detail-table">
+                        <tr>
+                            <th>Mã Đơn Hàng:</th>
+                            <td id="popupOrderID"></td>
+                        </tr>
+                        <tr>
+                            <th>Tên Sản Phẩm:</th>
+                            <td id="popupProductName"></td>
+                        </tr>
+                        <tr>
+                            <th>Số Lượng:</th>
+                            <td id="popupQuantity"></td>
+                        </tr>
+                        <tr>
+                            <th>Giá:</th>
+                            <td id="popupPrice"></td>
+                        </tr>
+                        <tr>
+                            <th>Tổng:</th>
+                            <td id="popupTotal"></td>
+                        </tr>
+                        <tr>
+                            <th>Ngày Đặt Hàng:</th>
+                            <td id="popupOrderDate"></td>
+                        </tr>
+                        <tr>
+                            <th>Họ Tên Khách:</th>
+                            <td id="popupFullName"></td>
+                        </tr>
+                        <tr>
+                            <th>SĐT:</th>
+                            <td id="popupPhoneNumber"></td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td id="popupEmail"></td>
+                        </tr>
+                        <tr>
+                            <th>Địa Chỉ:</th>
+                            <td id="popupAddress"></td>
+                        </tr>
+                        <tr>
+                            <th>Trạng Thái:</th>
+                            <td id="popupStatus"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -31,8 +31,8 @@
             <scope>provided</scope>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>javax.servlet</groupId>-->
-<!--            <artifactId>javax.servlet-api</artifactId>-->
+<!--            <groupId>javax.SeafoodShop.servlet</groupId>-->
+<!--            <artifactId>javax.SeafoodShop.servlet-api</artifactId>-->
 <!--            <version>4.0.1</version> &lt;!&ndash; Hoặc 3.1.0 nếu dùng Tomcat 8 &ndash;&gt;-->
 <!--            <scope>provided</scope>-->
 <!--        </dependency>-->

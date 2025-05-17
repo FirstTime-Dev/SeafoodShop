@@ -12,7 +12,6 @@ public class AdminCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
         request.getRequestDispatcher("/JSP/admin_categories.jsp").forward(request, response);
     }
 

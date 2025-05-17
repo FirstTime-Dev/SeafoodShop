@@ -81,3 +81,65 @@ th {
     align-items: center;
     margin-bottom: 20px;
 }
+
+/* Popup Chi Tiết Đơn Hàng */
+#orderDetailPopup .popup-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 30px 40px;
+    border: 1px solid #ccc;
+    width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Tiêu đề popup */
+#orderDetailPopup h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* Bảng chi tiết đơn hàng */
+#orderDetailPopup .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    font-size: 15px;
+    color: #333;
+}
+
+#orderDetailPopup .detail-table th,
+#orderDetailPopup .detail-table td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#orderDetailPopup .detail-table th {
+    background-color: #007bff;
+    color: white;
+    width: 35%;
+}
+
+#orderDetailPopup .detail-table td {
+    background-color: #f9f9f9;
+}
+
+/* Nút đóng popup */
+#closeOrderDetailPopup {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 24px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+#closeOrderDetailPopup:hover {
+    color: #000;
+}
+

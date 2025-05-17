@@ -11,7 +11,7 @@ public class DAOAdminOverview {
         double revenue = 0;
         String sql = "SELECT SUM(TotalAmount) AS Revenue " +
                 "FROM Orders " +
-                "WHERE Status = 'Completed' AND " +
+                "WHERE Status = 2 AND " +
                 "MONTH(OrderDate) = MONTH(GETDATE()) AND " +
                 "YEAR(OrderDate) = YEAR(GETDATE())";
         DataConnect dc = new DataConnect();
@@ -34,7 +34,7 @@ public class DAOAdminOverview {
         double revenue = 0;
         String sql = "SELECT SUM(TotalAmount) AS Revenue " +
                 "FROM Orders " +
-                "WHERE Status = 'Completed' AND " +
+                "WHERE Status = 2 AND " +
                 "YEAR(OrderDate) = YEAR(GETDATE())";
         DataConnect dc = new DataConnect();
         try (Connection conn = dc.getConnection();
@@ -53,14 +53,14 @@ public class DAOAdminOverview {
     }
 
     public String getTopProductOfMonth() {
-        String hotProduct = "";
+        String hotProductM = "";
         String sql = "SELECT TOP 1 P.Name, SUM(OD.Quantity) AS TotalSold " +
                 "FROM OrderDetails OD " +
                 "JOIN Orders O ON OD.OrderID = O.OrderID " +
                 "JOIN Products P ON OD.ProductID = P.ProductID " +
                 "WHERE MONTH(O.OrderDate) = MONTH(GETDATE()) " +
                 "AND YEAR(O.OrderDate) = YEAR(GETDATE()) " +
-                "AND O.Status = 'Completed' " +
+                "AND O.Status = 2 " +
                 "GROUP BY P.Name " +
                 "ORDER BY TotalSold DESC";
         DataConnect dc = new DataConnect();
@@ -68,22 +68,22 @@ public class DAOAdminOverview {
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                hotProduct = rs.getString("Name");
+                hotProductM = rs.getString("Name");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return hotProduct;
+        return hotProductM;
     }
 
     public String getTopProductOfYear() {
-        String hotProduct = "";
+        String hotProductY = "";
         String sql = "SELECT TOP 1 P.Name, SUM(OD.Quantity) AS TotalSold " +
                 "FROM OrderDetails OD " +
                 "JOIN Orders O ON OD.OrderID = O.OrderID " +
                 "JOIN Products P ON OD.ProductID = P.ProductID " +
                 "WHERE YEAR(O.OrderDate) = YEAR(GETDATE()) " +
-                "AND O.Status = 'Completed' " +
+                "AND O.Status = 2 " +
                 "GROUP BY P.Name " +
                 "ORDER BY TotalSold DESC";
         DataConnect dc = new DataConnect();
@@ -91,17 +91,17 @@ public class DAOAdminOverview {
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                hotProduct = rs.getString("Name");
+                hotProductY = rs.getString("Name");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return hotProduct;
+        return hotProductY;
     }
 
-    public int getDeliveredOrdersOfMonth() throws SQLException {
+    public int getDeliveredOrdersOfMonth() {
         String sql = "SELECT COUNT(*) AS Total FROM Orders " +
-                "WHERE Status = 'Completed' " +
+                "WHERE Status = 2 " +
                 "AND MONTH(OrderDate) = MONTH(GETDATE()) " +
                 "AND YEAR(OrderDate) = YEAR(GETDATE())";
         DataConnect dc = new DataConnect();
@@ -111,13 +111,15 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("Total");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getDeliveredOrdersOfYear() throws SQLException {
+    public int getDeliveredOrdersOfYear() {
         String sql = "SELECT COUNT(*) AS Total FROM Orders " +
-                "WHERE Status = 'Completed' " +
+                "WHERE Status = 2 " +
                 "AND YEAR(OrderDate) = YEAR(GETDATE())";
         DataConnect dc = new DataConnect();
         try (Connection conn = dc.getConnection();
@@ -126,11 +128,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("Total");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getExpiredProducts() throws SQLException {
+    public int getExpiredProducts() {
         String sql = "SELECT \n" +
                 "    ISNULL(SUM(pid.Quantity), 0) AS TotalExpiredQuantity\n" +
                 "FROM \n" +
@@ -145,11 +149,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("TotalExpiredQuantity");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getExpiringProducts() throws SQLException {
+    public int getExpiringProducts() {
         String sql = "SELECT \n" +
                 "    SUM(pid.Quantity) AS TotalExpiringSoonQuantity\n" +
                 "FROM \n" +
@@ -164,11 +170,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("TotalExpiringSoonQuantity");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getAlmostOutOfStockProducts() throws SQLException {
+    public int getAlmostOutOfStockProducts() {
         String sql = "SELECT \n" +
                 "    p.ProductID,\n" +
                 "    p.Name,\n" +
@@ -177,7 +185,7 @@ public class DAOAdminOverview {
                 "    Products p\n" +
                 "LEFT JOIN ProductInDetail pid ON p.ProductID = pid.ProductID\n" +
                 "LEFT JOIN OrderDetails od ON p.ProductID = od.ProductID\n" +
-                "LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = 'Completed'\n" +
+                "LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = 2\n" +
                 "GROUP BY \n" +
                 "    p.ProductID, p.Name, p.StockQuantity\n" +
                 "HAVING \n" +
@@ -191,11 +199,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("CurrentStock");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getOutOfStockProducts() throws SQLException {
+    public int getOutOfStockProducts() {
         String sql = "SELECT \n" +
                 "    COUNT(*) AS OutOfStockCount\n" +
                 "FROM (\n" +
@@ -206,7 +216,7 @@ public class DAOAdminOverview {
                 "        Products p\n" +
                 "    LEFT JOIN ProductInDetail pid ON p.ProductID = pid.ProductID\n" +
                 "    LEFT JOIN OrderDetails od ON p.ProductID = od.ProductID\n" +
-                "    LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = 'Completed'\n" +
+                "    LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = 2\n" +
                 "    GROUP BY \n" +
                 "        p.ProductID, p.StockQuantity\n" +
                 ") AS InventoryCalc\n" +
@@ -218,11 +228,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("OutOfStockCount");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getTotalCategories() throws SQLException {
+    public int getTotalCategories() {
         String sql = "SELECT \n" +
                 "    COUNT(*) AS TotalCategories\n" +
                 "FROM \n" +
@@ -234,11 +246,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("TotalCategories");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getTotalIventory() throws SQLException {
+    public int getTotalIventory() {
         String sql = "SELECT \n" +
                 "    SUM(CurrentStock) AS TotalStock\n" +
                 "FROM (\n" +
@@ -249,7 +263,7 @@ public class DAOAdminOverview {
                 "        Products p\n" +
                 "    LEFT JOIN ProductInDetail pid ON p.ProductID = pid.ProductID\n" +
                 "    LEFT JOIN OrderDetails od ON p.ProductID = od.ProductID\n" +
-                "    LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = 'Completed' \n" +
+                "    LEFT JOIN Orders o ON od.OrderID = o.OrderID AND o.Status = 2 \n" +
                 "    GROUP BY \n" +
                 "        p.ProductID, p.StockQuantity\n" +
                 ") AS StockCalculation;";
@@ -260,11 +274,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("TotalStock");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getActiveAccounts() throws SQLException {
+    public int getActiveAccounts() {
         String sql = "SELECT COUNT(*) AS ActiveAccountCount\n" +
                 "FROM Users\n" +
                 "WHERE State = 1;";
@@ -275,11 +291,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("ActiveAccountCount");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getDisableAccounts() throws SQLException {
+    public int getDisableAccounts() {
         String sql = "SELECT COUNT(*) AS DisabledAccountCount\n" +
                 "FROM Users\n" +
                 "WHERE State = 0;";
@@ -290,11 +308,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("DisabledAccountCount");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getNumberOfSuppliers() throws SQLException {
+    public int getNumberOfSuppliers() {
         String sql = "SELECT COUNT(*) AS Suppliers\n" +
                 "FROM Suppliers";
         DataConnect dc = new DataConnect();
@@ -304,11 +324,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("Suppliers");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getCategoryCount() throws SQLException {
+    public int getCategoryCount() {
         String sql = "SELECT COUNT(*) AS CategoryCount\n" +
                 "From Categories";
         DataConnect dc = new DataConnect();
@@ -318,11 +340,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("CategoryCount");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getDiscountCount() throws SQLException {
+    public int getDiscountCount() {
         String sql = "SELECT COUNT(*) AS TotalDiscounts FROM Discounts;\n";
         DataConnect dc = new DataConnect();
         try (Connection conn = dc.getConnection();
@@ -331,11 +355,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("TotalDiscounts");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public int getDiscountIsAvailable() throws SQLException {
+    public int getDiscountIsAvailable() {
         String sql = "SELECT COUNT(*) AS TotalActiveDiscounts\n" +
                 "FROM Discounts\n" +
                 "WHERE IsActive = 1;";
@@ -346,11 +372,13 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("TotalActiveDiscounts");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    public double getAvgRating() throws SQLException {
+    public double getAvgRating() {
         String sql = "SELECT AVG(CAST(Rating AS FLOAT)) AS AverageRating\n" +
                 "FROM Reviews;";
         DataConnect dc = new DataConnect();
@@ -360,18 +388,23 @@ public class DAOAdminOverview {
             if (rs.next()) {
                 return rs.getInt("AverageRating");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0.0;
     }
-    public int getTotalReviews() throws SQLException {
+
+    public int getTotalReviews() {
         String sql = "SELECT COUNT(*) AS TotalReviews FROM Reviews;\n";
         DataConnect dc = new DataConnect();
         try (Connection conn = dc.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt("TotalReviews");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }

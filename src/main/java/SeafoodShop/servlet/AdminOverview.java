@@ -35,26 +35,21 @@ public class AdminOverview extends HttpServlet {
         int totalAvailableDiscount = 0;
         double avgRating = 0.0;
         int totalReview = 0;
-        try {
-            totalReview = daoAdminOverview.getTotalReviews();
-            avgRating = daoAdminOverview.getAvgRating();
-            totalAvailableDiscount = daoAdminOverview.getDiscountIsAvailable();
-            totalDiscount = daoAdminOverview.getDiscountCount();
-            totalCategory = daoAdminOverview.getTotalCategories();
-            totalSuppliers = daoAdminOverview.getNumberOfSuppliers();
-            activeAccounts = daoAdminOverview.getActiveAccounts();
-            disableAccounts = daoAdminOverview.getDisableAccounts();
-            totalIventory = daoAdminOverview.getTotalIventory();
-            expiredProductCount = daoAdminOverview.getExpiredProducts();
-            expiringProductCount = daoAdminOverview.getExpiringProducts();
-            almostOutOfStockProducts = daoAdminOverview.getAlmostOutOfStockProducts();
-            outOfStockProducts = daoAdminOverview.getOutOfStockProducts();
-            ordersMonth = daoAdminOverview.getDeliveredOrdersOfMonth();
-            ordersYear = daoAdminOverview.getDeliveredOrdersOfYear();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        totalReview = daoAdminOverview.getTotalReviews();
+        avgRating = daoAdminOverview.getAvgRating();
+        totalAvailableDiscount = daoAdminOverview.getDiscountIsAvailable();
+        totalDiscount = daoAdminOverview.getDiscountCount();
+        totalCategory = daoAdminOverview.getTotalCategories();
+        totalSuppliers = daoAdminOverview.getNumberOfSuppliers();
+        activeAccounts = daoAdminOverview.getActiveAccounts();
+        disableAccounts = daoAdminOverview.getDisableAccounts();
+        totalIventory = daoAdminOverview.getTotalIventory();
+        expiredProductCount = daoAdminOverview.getExpiredProducts();
+        expiringProductCount = daoAdminOverview.getExpiringProducts();
+        almostOutOfStockProducts = daoAdminOverview.getAlmostOutOfStockProducts();
+        outOfStockProducts = daoAdminOverview.getOutOfStockProducts();
+        ordersMonth = daoAdminOverview.getDeliveredOrdersOfMonth();
+        ordersYear = daoAdminOverview.getDeliveredOrdersOfYear();
 
         request.setAttribute("totalReview", totalReview);
         request.setAttribute("avgRating", avgRating);

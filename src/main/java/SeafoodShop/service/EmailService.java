@@ -1,11 +1,10 @@
-package service;
+package SeafoodShop.service;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 
 import java.security.SecureRandom;
 import java.util.Properties;
-import java.util.Random;
 
 public class EmailService {
 

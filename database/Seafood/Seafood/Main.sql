@@ -70,9 +70,8 @@ CREATE TABLE Orders (
     UserID INT NOT NULL,
     OrderDate DATETIME DEFAULT GETDATE(),
     TotalAmount DECIMAL(10,2) DEFAULT 0,
-    Status NVARCHAR(50) DEFAULT 'Pending',
-    ShippingStatus NVARCHAR(50) DEFAULT 'Not Shipped',
-    State INT DEFAULT 1,
+    Status INT CHECK (Status BETWEEN 1 AND 3) DEFAULT 1, -- 1. Pending ,2. Completed ,3. Cancelled --
+    State INT DEFAULT 1, -- 1: Active, 0: Disabled
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
@@ -119,14 +118,12 @@ CREATE TABLE Shipping (
     Carrier NVARCHAR(100) NOT NULL,
     TrackingNumber NVARCHAR(50),
     EstimatedDelivery DATE,
-    DeliveryStatus NVARCHAR(50) DEFAULT 'Processing',
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
 -- Tạo bảng Contact
 CREATE TABLE Contact (
     ContactID INT PRIMARY KEY IDENTITY(1,1),
-<<<<<<< HEAD
     StoreName NVARCHAR(100) NOT NULL,
     Phone NVARCHAR(15) UNIQUE NOT NULL,
     Email NVARCHAR(100) UNIQUE NOT NULL,
@@ -267,11 +264,11 @@ VALUES
 (4, 'images/muc_mot_nang.jpg'),
 (5, 'images/cha_muc.jpg');
 
-INSERT INTO Orders (UserID, TotalAmount, Status, ShippingStatus)
+INSERT INTO Orders (UserID, TotalAmount, Status)
 VALUES 
-(1, 750000, 'Completed', 'Shipped'),
-(2, 1200000, 'Pending', 'Processing'),
-(3, 320000, 'Cancelled', 'Not Shipped');
+(1, 750000, 1),
+(2, 1200000, 2),
+(3, 320000, 3);
 
 INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price)
 VALUES 
@@ -291,10 +288,10 @@ VALUES
 (2, N'Bank Transfer', N'Online', 1200000),
 (3, N'Credit Card', N'Online', 320000);
 
-INSERT INTO Shipping (OrderID, Carrier, TrackingNumber, EstimatedDelivery, DeliveryStatus)
+INSERT INTO Shipping (OrderID, Carrier, TrackingNumber, EstimatedDelivery)
 VALUES 
-(1, N'GHN', N'GHN123456', '2025-04-20', N'Delivered'),
-(2, N'Viettel Post', N'VT123123', '2025-04-25', N'Processing');
+(1, N'GHN', N'GHN123456', '2025-04-20'),
+(2, N'Viettel Post', N'VT123123', '2025-04-25');
 
 INSERT INTO Contact (StoreName, Phone, Email, Address, WorkingHours, Facebook, Zalo, Instagram, Note)
 VALUES
@@ -371,14 +368,11 @@ VALUES
 
 
 
-<<<<<<< HEAD
 DROP TABLE IF EXISTS ProductInDetail;
 DROP TABLE IF EXISTS ProductIn;
 DROP TABLE IF EXISTS ProductDiscount;
 DROP TABLE IF EXISTS Discounts;
 
-=======
--- Xo? c?c b?ng c? r?ng bu?c foreign key tr??c
 DROP TABLE IF EXISTS Reviews;
 DROP TABLE IF EXISTS PasswordResets;
 DROP TABLE IF EXISTS LogActivity;
@@ -386,7 +380,7 @@ DROP TABLE IF EXISTS Contact;
 DROP TABLE IF EXISTS Shipping;
 DROP TABLE IF EXISTS Payments;
 DROP TABLE IF EXISTS Cart;
->>>>>>> 15246e888ac81c363f3bb1711db618affb3c761e
+
 DROP TABLE IF EXISTS OrderDetails;
 DROP TABLE IF EXISTS Orders;
 
