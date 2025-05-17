@@ -274,7 +274,7 @@ VALUES
 (3, 320000, 'Cancelled', 'Not Shipped');
 
 INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price)
-VALUES 
+VALUES
 (1, 1, 2, 250000),
 (2, 2, 1, 1200000),
 (3, 5, 1, 320000);

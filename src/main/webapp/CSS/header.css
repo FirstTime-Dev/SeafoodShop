@@ -86,7 +86,6 @@ header {
     color: #333333;
     z-index: 1000;
 }
-
 .Bottom-nav {
     position: relative;
     display: flex;
@@ -94,35 +93,39 @@ header {
     align-items: center;
     background: rgb(148, 214, 236);
     transition: transform 0.6s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    height: 60px;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 20px 0 20px 30px;
+    width: 100px;
+    height: 60px;
+}
+.logo img{
+    width: 100px;
+    height: 60px;
+    margin-left: 30px;
 
 }
-.logo span {
-    color: red;
-}
-
-.Bottom-nav ul {
+.Bottom-nav .header_tag-list {
     list-style: none;
     display: flex;
     padding: 0;
-    opacity: 1;
+    margin: 0px;
+    bottom: 0px;
+    justify-content: center;
 }
-
-.Bottom-nav .header_tag-list li {
+.Bottom-nav .header_tag-list .tag-name {
     margin: 0 15px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     color: #333333;
+    width: 30px;
+    height: 40px;
+    margin-top: 20px;
 }
 
-.Bottom-nav  ul .tag-name a:hover {
+.Bottom-nav  ul .tag-name:hover {
     color: red;
 }
 .contact-auth a:hover {
@@ -149,4 +152,57 @@ header {
 }
 .header_icon-list .shopping-icon{
     margin-right: 50px;
+    list-style: none;
+}
+/* Ẩn menu con ban đầu */
+.tag-name .other {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(256, 256, 256, 0.8);
+    list-style: none;
+    padding: 10px 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(10px);
+    visibility: hidden;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out, visibility 0.4s;
+    justify-content: center;
+}
+
+/* Khi hover vào thẻ "KHÁC" thì menu con hiện ra */
+.tag-name-other:hover .other {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+.other-list{
+    list-style: none;
+}
+.other li{
+    font-size: 14px;
+    font-weight: bold;
+}
+.other-list-header{
+    border-bottom: #484848 1px solid;
+    text-align: center;
+    padding-bottom: 10px;
+    color: #333;
+}
+/* Định dạng các mục trong menu con */
+.other .other-list-text {
+    color: #333;
+    padding: 10px;
+    margin: 10px;
+    width: 80px;
+    height: 20px;
+}
+.other .other-list:hover .other-list-header{
+    color: red;
+}
+.other .other-list-text:hover {
+    cursor: pointer;
+    color: red;
 }
