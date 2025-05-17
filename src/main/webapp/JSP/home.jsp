@@ -138,8 +138,11 @@
                 <p>200.000đ/1kg</p>
             </div>
             <div class="products_buttons">
-                <button class="add_to_cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">mua ngay</button>
+                <form action="<%= request.getContextPath() %>/addToCart" method="post">
+                    <input type="hidden" id="product_id" name="product_id" value="<%=pr.getProductID()%>">
+                    <button type="submit" class="add_to_cart" id="addToCartBtn">Thêm vào giỏ hàng</button>
+                </form>
+                <button class="buy-now" >mua ngay</button>
             </div>
         </div>
     </div>
