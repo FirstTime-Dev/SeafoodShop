@@ -30,47 +30,27 @@
 
             <div class="contact-auth">
                 <span>+1 234 567 890</span>
-                <a href="login.jsp">Sign In</a>
+                <a href="<%= request.getContextPath() %>/JSP/login.jsp">Sign In</a>
+                <a href="<%= request.getContextPath() %>/JSP/login.jsp">Register</a>
             </div>
         </div>
         <!-- header chính -->
         <nav class="Bottom-nav">
-            <a href="home.jsp"> <div class="logo"><img src="../IMG/logo.png" alt=""></div>
+            <div class="logo">SEA<span>FOOD</span></div>
 
-                <ul class="header_tag-list">
-                    <li class="tag-name"><a href="#">CÁ</a></li>
-                    <li class="tag-name" ><a href="#">TÔM</a></li>
-                    <li class="tag-name"><a href="#">CUA</a></li>
-                    <li class="tag-name"><a href="#">MỰC</a></li>
-                    <li class="tag-name"><a href="#">ỐC</a></li>
-                    <li class="tag-name tag-name-other"><a href="#">KHÁC</a>
-                        <ul class="other">
-                            <ul class="other-list">
-                                <li class="other-list-header"><a href="#">mực khô</a></li>
-                                <li class="other-list-text"><a href="#">mực khô</a></li>
-                                <li class="other-list-text"><a href="#">mực 1 nắng</a></li>
-                                <li class="other-list-text"><a href="#">mực 2 nắng</a></li>
-                            </ul>
-                            <ul class="other-list">
-                                <li class="other-list-header"><a href="#">chả cá</a></li>
-                                <li class="other-list-text"><a href="#">chả cá rô phi</a></li>
-                                <li class="other-list-text"><a href="#">chả cá chả cá thát lát</a></li>
-                                <li class="other-list-text"><a href="#">chả cá thu</a></li>
-                            </ul>
-                            <ul class="other-list">
-                                <li class="other-list-header"><a href="#">rong biển </a></li>
-                                <li class="other-list-text"><a href="#"> rong biển khô</a></li>
-                                <li class="other-list-text"><a href="#"> rong nho</a></li>
-                            </ul>
-                        </ul>
+            <ul class="header_tag-list">
+                <li class="tag-name"><a href="#">CÁ</a></li>
+                <li class="tag-name" ><a href="#">TÔM</a></li>
+                <li class="tag-name"><a href="#">CUA</a></li>
+                <li class="tag-name"><a href="#">MỰC</a></li>
+                <li class="tag-name"><a href="#">ỐC</a></li>
+                <li class="tag-name"><a href="#">KHÁC</a></li>
 
-                    </li>
-
-                </ul>
-                <ul class="header_icon-list">
-                    <li class="shopping-icon"><a href=""><i class="fa-solid fa-cart-shopping"></a></i></li>
-                    </li>
-                </ul>
+            </ul>
+            <ul class="header_icon-list">
+                <li class="shopping-icon"><a href="<%= request.getContextPath() %>/cartController"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                </li>
+            </ul>
         </nav>
     </header>
 </div>

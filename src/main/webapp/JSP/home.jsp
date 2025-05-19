@@ -1,3 +1,6 @@
+<%@ page import="SeafoodShop.dao.DataConnect" %>
+<%@ page import="SeafoodShop.model.Product" %>
+<%@ page import="java.math.BigDecimal" %>
 <%@  page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -12,130 +15,45 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
             integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/breadcrumb.css">
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
-
-<div class="breadcrumb">
-    <div class="container">
-        <ul>
-            <li><a href="<%= request.getContextPath() %>/home.jsp">Trang chủ</a></li>
-        </ul>
-    </div>
-</div>
-
 <div class="home-slide-show">
     <div class="owl-carousel owl-theme">
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg"  alt="">
         </div>
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
 
         </div>
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
-
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
         </div>
         <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
-
-        </div>
-        <div class="item">
-            <img src="../IMG/homepageBackground.jpg" alt="">
-
+            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
         </div>
     </div>
 </div>
 <div id="products"  class="products">
     <div class="products_main">
+
+        <%
+            DataConnect dao = new DataConnect();
+        for(Product pr : dao.getProductList()){
+            String productName= pr.getName();
+            BigDecimal productPrice = pr.getPrice();%>
         <div class="products1">
             <div class="products_img">
                 <img src="" alt="">
             </div>
             <div class="products_name">
-                <h3>Mực</h3>
-                <p>300.000đ/1kg</p>
-            </div>
-            <div class="products_buttons">
-                <button class="add_to_cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">mua ngay</button>
-            </div>
-        </div>
-        <div class="products1">
-            <div class="products_img">
-                <img src="" alt="">
-            </div>
-            <div class="products_name">
-                <h3>Cá thu</h3>
-                <p>250.000đ/1kg</p>
-            </div>
-            <div class="products_buttons">
-                <button class="add_to_cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">mua ngay</button>
-            </div>
-        </div>
-        <div class="products1">
-            <div class="products_img">
-                <img src="Cua hoàng đế" alt="">
-            </div>
-            <div class="products_name">
-                <h3>Ốc</h3>
-                <p>200.000đ/1kg</p>
-            </div>
-            <div class="products_buttons">
-                <button class="add_to_cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">mua ngay</button>
-            </div>
-        </div>
-        <div class="products1">
-            <div class="products_img">
-                <img src="" alt="">
-            </div>
-            <div class="products_name">
-                <h3>cá hồi</h3>
-                <p>550.000đ/1kg</p>
-            </div>
-            <div class="products_buttons">
-                <button class="add_to_cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">mua ngay</button>
-            </div>
-        </div>
-        <div class="products1">
-            <div class="products_img">
-                <img src="" alt="">
-            </div>
-            <div class="products_name">
-                <h3>mực khô</h3>
-                <p>750.000đ/1kg</p>
-            </div>
-            <div class="products_buttons">
-                <button class="add_to_cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">mua ngay</button>
-            </div>
-        </div>
-        <div class="products1">
-            <div class="products_img">
-                <img src="" alt="">
-            </div>
-            <div class="products_name">
-                <h3>Mực một nắng</h3>
-                <p>200.000đ/1kg</p>
-            </div>
-            <div class="products_buttons">
-                <button class="add_to_cart">Thêm vào giỏ hàng</button>
-                <button class="buy-now">mua ngay</button>
-            </div>
-        </div>
-        <div class="products1">
-            <div class="products_img">
-                <img src="" alt="">
-            </div>
-            <div class="products_name">
-                <h3>Cá chép</h3>
-                <p>200.000đ/1kg</p>
+                <h3><%=productName%>></h3>
+                <p><%=productPrice%>đ/1kg</p>
             </div>
             <div class="products_buttons">
                 <form action="<%= request.getContextPath() %>/addToCart" method="post">
@@ -145,6 +63,10 @@
                 <button class="buy-now" >mua ngay</button>
             </div>
         </div>
+        <%
+        }
+        %>
+
     </div>
 </div>
 

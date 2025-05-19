@@ -13,15 +13,6 @@
     <link rel="stylesheet" href="../CSS/productDetail.css">
 </head>
 <body>
-<div class="breadcrumb">
-    <div class="container">
-        <ul>
-            <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
-            <li><a href="<%= request.getContextPath() %>JSP/cart.jsp">sản phẩm </a></li>
-            <li><a href="<%= request.getContextPath() %>JSP/cart.jsp">đơn hàng </a></li>
-        </ul>
-    </div>
-</div>
 <div class="product-container">
     <div class="product-image">
         <img src="img/tải xuống.jpg" alt="Nghêu Sống" />

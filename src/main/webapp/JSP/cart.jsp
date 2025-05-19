@@ -4,20 +4,12 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/cart.css">
     <script src="<%= request.getContextPath() %>/JS/cart.js"></script>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/breadcrumb.css">
     <title>Cart</title>
 </head>
 <body>
 
 <jsp:include page="header.jsp" />
-<div class="breadcrumb">
-    <div class="container">
-        <ul>
-            <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
-            <li><a href="<%= request.getContextPath() %>JSP/cart.jsp">thanh toán</a></li>
-        </ul>
-    </div>
-</div>
+
 <div class="container">
     <h1>Your cart</h1>
     <div class="product-container">

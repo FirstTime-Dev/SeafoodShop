@@ -6,22 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/purchase.css">
     <script defer src="<%=request.getContextPath()%>/JS/purchase.js"></script> <!-- Thêm defer để tránh lỗi tải script -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/breadcrumb.css">
     <title>Purchase</title>
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
 
-<div class="breadcrumb">
-    <div class="container">
-        <ul>
-            <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
-            <li><a href="<%= request.getContextPath() %>JSP/cart.jsp">sản phẩm </a></li>
-            <li><a href="<%= request.getContextPath() %>JSP/cart.jsp">đơn hàng </a></li>
-        </ul>
-    </div>
-</div>
 <div class="container">
     <h2>My purchase</h2>
 
