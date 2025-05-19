@@ -25,6 +25,18 @@ public class DataConnect {
         return conn;
     }
 
+    public int getUserIDByEmail(String email) throws SQLException {
+        getConnection();
+        String sql = "select UserID from Users where email = ? ";
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            return rs.getInt("UserID");
+        }
+        return -1;
+    }
+
     public int getUserID(String username, String password) throws SQLException {
         getConnection();
         String sql = "select * from Users where Username=? and password=?";
@@ -49,6 +61,16 @@ public class DataConnect {
             return rs.getInt("Role");
         }
         return -1;
+    }
+
+    public void register(String username, String password, String email) throws SQLException {
+        getConnection();
+        String sql = "insert into Users (Username, Password, Email) values(?,?,?)";
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ps.setString(1, username);
+        ps.setString(2, password);
+        ps.setString(3, email);
+        ps.executeUpdate();
     }
 
     public List<Product> getProductList() throws SQLException {
