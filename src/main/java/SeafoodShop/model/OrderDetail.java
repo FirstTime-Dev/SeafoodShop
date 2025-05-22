@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class OrderDetail {
     private int orderID;
+    private Date orderDate;
     private String productName;
     private int quantity;
     private double price;
@@ -12,13 +13,12 @@ public class OrderDetail {
     private String phoneNumber;
     private String email;
     private String address;
-    private Date orderDate;
-    private int status; // 1: Pending, 2: Completed, 3: Cancelled
+    private int status; // 1: Pending, 2: Confirm, 3: Cancelled
 
     public OrderDetail() {}
 
-    public OrderDetail(int orderID, String productName, int quantity, double price, double total,
-                       String fullName, String phoneNumber, String email, String address, int status, Date orderDate) {
+    public OrderDetail(int orderID, Date orderDate, String productName, int quantity, double price, double total,
+                       String fullName, String phoneNumber, String email, String address, int status) {
         this.orderID = orderID;
         this.productName = productName;
         this.quantity = quantity;
@@ -116,4 +116,7 @@ public class OrderDetail {
         return orderDate;
     }
 
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
 }

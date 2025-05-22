@@ -233,3 +233,9 @@ JOIN Users u ON o.UserID = u.UserID
 JOIN Products p ON od.ProductID = p.ProductID
 WHERE od.OrderID = 1;
 
+-- Update orderStatus từ Pending sang Xác nhận hoặc từ status hiện tại sang Cancelled --
+-- Check current status --
+SELECT Status FROM Orders WHERE OrderID = 2;
+-- Update status --
+UPDATE Orders SET Status = 2 WHERE OrderID = 2;
+UPDATE Orders SET Status = 1 WHERE OrderID = 1;

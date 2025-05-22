@@ -8,7 +8,7 @@ CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
     FullName NVARCHAR(100) NOT NULL,
     Username NVARCHAR(50) UNIQUE NOT NULL,
-    Password NVARCHAR(255) NOT NULL,
+    Password NVARCHAR(255) ,
     Email NVARCHAR(100) UNIQUE NOT NULL,
     PhoneNumber VARCHAR(15) UNIQUE NOT NULL,
     BirthDate DATE NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE Orders (
     UserID INT NOT NULL,
     OrderDate DATETIME DEFAULT GETDATE(),
     TotalAmount DECIMAL(10,2) DEFAULT 0,
-    Status INT CHECK (Status BETWEEN 1 AND 3) DEFAULT 1, -- 1. Pending ,2. Completed ,3. Cancelled --
+    Status INT CHECK (Status BETWEEN 1 AND 3) DEFAULT 1, -- 1. Pending ,2. Comfirm ,3. Cancelled --
     State INT DEFAULT 1, -- 1: Active, 0: Disabled
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );

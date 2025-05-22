@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <script src="<%= request.getContextPath() %>/JS/admin_orders.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/admin_orders.css">
@@ -50,21 +51,45 @@
                                 statusStr = "Không xác định";
                         }
             %>
-            </tbody>
             <tr>
-                <td><%= order.getOrderID() %>
+                <td>
+                    <a href="#" class="order-detail-link" data-id="<%= order.getOrderID() %>">
+                        <%= order.getOrderID() %>
+                    </a>
                 </td>
+
                 <td><%= order.getUserID() %>
                 </td>
                 <td><%= order.getTotalAmount() %> VND</td>
                 <td><%= statusStr %>
                 </td>
+                <td>
+                    <%
+                        int status = order.getOrderStatus();
+                        if (status == 1) {
+                    %>
+                    <button class="confirm-btn <%= (order.getOrderStatus() == 1) ? "" : "hidden" %>"
+                            data-id="<%= order.getOrderID() %>">Xác nhận
+                    </button>
+                    <button class="cancel-btn <%= (order.getOrderStatus() == 1 || order.getOrderStatus() == 2) ? "" : "hidden" %>"
+                            data-id="<%= order.getOrderID() %>">Hủy
+                    </button>
+                    <%
+                    } else if (status == 2) {
+                    %>
+                    <button class="cancel-btn <%= (order.getOrderStatus() == 1 || order.getOrderStatus() == 2) ? "" : "hidden" %>"
+                            data-id="<%= order.getOrderID() %>">Hủy
+                    </button>
+                    <%
+                        } // status == 3 => không hiển thị gì
+                    %>
                 </td>
                 <%
                         }
                     }
                 %>
             </tr>
+            </tbody>
         </table>
         <div id="orderDetailPopup" class="popup">
             <div class="popup-content">
