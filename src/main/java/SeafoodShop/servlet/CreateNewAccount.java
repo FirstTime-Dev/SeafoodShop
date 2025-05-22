@@ -8,7 +8,6 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 
 @WebServlet(name = "CreateNewAccount", value = "/CreateNewAccount")
 public class CreateNewAccount extends HttpServlet {

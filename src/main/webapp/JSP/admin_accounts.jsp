@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="SeafoodShop.model.User" %>
 
@@ -115,8 +114,8 @@
                 <span id="closeEditPopup" class="close-popup">&times;</span>
                 <h2>Chỉnh Sửa Người Dùng</h2>
                 <form id="editUserForm" method="post" action="EditUserInformation">
-                    <label for="editUserID">ID người dùng:</label>
-                    <input type="text" id="editUserID" name="userID" readonly>
+                    <label for="UserID">ID người dùng:</label>
+                    <input type="text" id="UserID" name="userID" readonly>
 
                     <label for="editFullName">Họ và tên:</label>
                     <input type="text" id="editFullName" name="fullName" required>

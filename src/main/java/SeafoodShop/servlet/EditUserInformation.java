@@ -41,37 +41,32 @@ public class EditUserInformation extends HttpServlet {
         }
 
         DAOAdminAccount dao = new DAOAdminAccount();
-        try {
-            User u = dao.getUserbyID(userID);
-            if (u == null) {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                response.getWriter().write("{\"error\":\"User not found\"}");
-                return;
-            }
-            // Build a simple DTO map to control date format
-            Map<String, Object> dto = new HashMap<>();
-            dto.put("userID", u.getUserID());
-            dto.put("fullName", u.getFullName());
-            dto.put("username", u.getUsername());
-            dto.put("password", u.getPassword());
-            dto.put("email", u.getEmail());
-            dto.put("phone", u.getPhone());
-            dto.put("address", u.getAddress());
-            dto.put("role", u.getRole());
-            dto.put("ban", u.getBan());
-            dto.put("state", u.getState());
-            dto.put("birthday", u.getBirthday() != null
-                    ? new SimpleDateFormat("yyyy-MM-dd").format(u.getBirthday())
-                    : null);
-            dto.put("editCreatedAt", u.getEditCreatedAt() != null
-                    ? new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(u.getEditCreatedAt())
-                    : null);
-
-            new Gson().toJson(dto, response.getWriter());
-        } catch (SQLException e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"error\":\"Database error\"}");
+        User u = dao.getUserbyID(userID);
+        if (u == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write("{\"error\":\"User not found\"}");
+            return;
         }
+        // Build a simple DTO map to control date format
+        Map<String, Object> dto = new HashMap<>();
+        dto.put("userID", u.getUserID());
+        dto.put("fullName", u.getFullName());
+        dto.put("username", u.getUsername());
+        dto.put("password", u.getPassword());
+        dto.put("email", u.getEmail());
+        dto.put("phone", u.getPhone());
+        dto.put("address", u.getAddress());
+        dto.put("role", u.getRole());
+        dto.put("ban", u.getBan());
+        dto.put("state", u.getState());
+        dto.put("birthday", u.getBirthday() != null
+                ? new SimpleDateFormat("yyyy-MM-dd").format(u.getBirthday())
+                : null);
+        dto.put("editCreatedAt", u.getEditCreatedAt() != null
+                ? new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(u.getEditCreatedAt())
+                : null);
+
+        new Gson().toJson(dto, response.getWriter());
     }
 
     @Override

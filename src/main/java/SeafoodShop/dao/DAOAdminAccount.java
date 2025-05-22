@@ -8,12 +8,11 @@ import java.util.List;
 
 public class DAOAdminAccount {
 
-    public List<User> getAllUserActive() throws SQLException {
+    public List<User> getAllUserActive() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM Users\n" +
-                "WHERE State = 1;";
-        DataConnect dataConnect = new DataConnect();
-        try (Connection conn = dataConnect.getConnection();
+        String sql = "SELECT * FROM Users WHERE State = 1;";
+        DataConnect dc = new DataConnect();
+        try (Connection conn = dc.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -31,6 +30,8 @@ public class DAOAdminAccount {
                 user.setState(rs.getInt("State"));
                 users.add(user);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return users;
     }
@@ -69,14 +70,13 @@ public class DAOAdminAccount {
     }
 
 
-    public User getUserbyID(int UserID) throws SQLException {
+    public User getUserbyID(int UserID) {
         String sql = "SELECT * FROM Users WHERE UserID = ?";
         DataConnect dataConnect = new DataConnect();
         try (Connection conn = dataConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, UserID);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 User user = new User();
                 user.setUserID(rs.getInt("UserID"));
@@ -100,7 +100,7 @@ public class DAOAdminAccount {
     }
 
 
-    public boolean updateBanStatus(String userID, int Ban) throws SQLException {
+    public boolean updateBanStatus(String userID, int Ban) {
         String sql = "UPDATE Users SET Ban=? WHERE UserID=?";
         DataConnect dataConnect = new DataConnect();
         try (Connection conn = dataConnect.getConnection();

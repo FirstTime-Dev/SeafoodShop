@@ -34,6 +34,12 @@
           <AssociatedConnUserName />
           <FullPath>Seafood.sql</FullPath>
         </FileNode>
+        <FileNode Name="SQLQuery1.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:ADMIN-DELL5500:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>ADMIN-DELL5500</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SQLQuery1.sql</FullPath>
+        </FileNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">

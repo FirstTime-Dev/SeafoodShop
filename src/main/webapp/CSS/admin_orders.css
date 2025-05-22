@@ -48,23 +48,6 @@ th {
     color: white;
 }
 
-.confirm {
-    background-color: #66FFFF;
-}
-
-.cancel {
-    background-color: #dc3545;
-}
-
-.actions button {
-    margin-right: 6px;
-    padding: 6px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9em;
-}
-
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -80,4 +63,138 @@ th {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+/* Popup Chi Tiết Đơn Hàng */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    background: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Nút xác nhận */
+.confirm-btn {
+    background-color: #10b981; /* xanh ngọc nhạt */
+    color: white;
+    font-size: 16px;
+    border: none !important;
+    outline: none !important;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.confirm-btn:hover {
+    background-color: #059669;
+}
+
+.confirm-btn:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Nút hủy */
+.cancel-btn {
+    background-color: #f97316; /* cam nhạt */
+    color: white;
+    font-size: 16px;
+    border: none !important;
+    outline: none !important;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #ea580c;
+}
+
+.cancel-btn:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Cố định chiều cao cho từng hàng */
+table tbody tr {
+    height: 50px; /* bạn có thể chỉnh theo ý muốn */
+    line-height: 50px; /* canh giữa theo chiều dọc */
+}
+
+/* Cố định chiều rộng cho từng cột tương ứng theo thứ tự cột */
+table thead th, table tbody td {
+    /* Nếu bạn biết rõ chiều rộng từng cột, đặt theo thứ tự */
+}
+
+/* Ví dụ cụ thể cho bảng bạn có 5 cột, mình đặt cố định từng cột: */
+table thead th:nth-child(1),
+table tbody td:nth-child(1) {
+    width: 80px; /* Mã đơn */
+    min-width: 80px;
+    max-width: 80px;
+}
+
+table thead th:nth-child(2),
+table tbody td:nth-child(2) {
+    width: 120px; /* Mã khách hàng */
+    min-width: 120px;
+    max-width: 120px;
+}
+
+table thead th:nth-child(3),
+table tbody td:nth-child(3) {
+    width: 150px; /* Tổng Tiền */
+    min-width: 150px;
+    max-width: 150px;
+}
+
+table thead th:nth-child(4),
+table tbody td:nth-child(4) {
+    width: 130px; /* Trạng Thái */
+    min-width: 130px;
+    max-width: 130px;
+}
+
+table thead th:nth-child(5),
+table tbody td:nth-child(5) {
+    width: 180px; /* Hành Động */
+    min-width: 180px;
+    max-width: 180px;
+    white-space: nowrap; /* không xuống dòng */
+}
+
+/* Giữ nút không xuống dòng, có khoảng cách */
+table tbody td:nth-child(5) button {
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
+/* Ẩn nút bằng class hidden nếu cần */
+button.hidden {
+    display: none !important;
 }

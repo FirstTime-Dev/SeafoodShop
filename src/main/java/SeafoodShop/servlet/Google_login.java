@@ -1,4 +1,4 @@
-package servlet;
+package SeafoodShop.servlet;
 
 import jakarta.mail.MessagingException;
 import org.json.JSONObject;
@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.EmailService;
+import SeafoodShop.service.EmailService;
 
 import java.io.BufferedReader;
 import java.io.IOException;

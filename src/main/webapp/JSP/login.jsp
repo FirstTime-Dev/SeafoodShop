@@ -97,7 +97,7 @@
                 const loginRequest = 'normalLogin';
 
                 $.ajax({
-                    url: '<%= request.getContextPath() %>/loginController', // servlet URL mapping
+                    url: '<%= request.getContextPath() %>/loginController', // SeafoodShop.servlet URL mapping
                     type: 'POST',
                     data: {
                         username: username,
@@ -105,7 +105,7 @@
                         request: loginRequest
                     },
                     success: function (response) {
-                        // Xử lý kết quả trả về từ SeafoodShop.servlet
+                        // Xử lý kết quả trả về từ SeafoodShop.SeafoodShop.servlet
                         if (response === 'success') {
                             window.location.href = '<%=request.getContextPath()%>/JSP/home.jsp'; // chuyển trang nếu đăng nhập thành công
                         } else {
