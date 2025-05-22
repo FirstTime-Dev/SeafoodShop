@@ -9,7 +9,7 @@ html, body {
     flex-direction: column;
 }
 
-/* Container chính */
+/* Contain er chính */
 .container {
     width: 80%;
     margin: auto;
