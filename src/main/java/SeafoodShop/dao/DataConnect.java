@@ -11,6 +11,7 @@ public class DataConnect {
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=SeafoodProject;encrypt=false";
     private static final String USER = "sa";
     private static final String PASSWORD = "0";
+    private static Connection conn = null;
 
     public Connection getConnection() throws SQLException {
         try {
@@ -22,12 +23,11 @@ public class DataConnect {
     }
 
     public int getUserIDByEmail(String email) throws SQLException {
-        getConnection();
         String sql = "select UserID from Users where email = ? ";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             return rs.getInt("UserID");
         }
         return -1;
@@ -36,11 +36,11 @@ public class DataConnect {
     public int getUserID(String username, String password) throws SQLException {
         getConnection();
         String sql = "select * from Users where Username=? and password=?";
-        PreparedStatement ps =  conn.prepareStatement(sql);
+        PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, username);
         ps.setString(2, password);
         ResultSet rs = ps.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             return rs.getInt("UserID");
         }
         return -1;
@@ -62,7 +62,6 @@ public class DataConnect {
     }
 
     public void register(String username, String password, String email) throws SQLException {
-        getConnection();
         String sql = "insert into Users (Username, Password, Email) values(?,?,?)";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, username);
@@ -116,9 +115,9 @@ public class DataConnect {
 
         return new Product(description, productID, name, categoryID, price, stockQuantity,
                 supplierID, origin, storageCondition, expiryDate, weight, state);
-      
+    }
+
     public int getProductCount(int product_id) throws SQLException {
-        getConnection();
         String sql = "SELECT \n" +
                 "    p.ProductID,\n" +
                 "    p.Name,\n" +
@@ -148,21 +147,21 @@ public class DataConnect {
                 "WHERE p.ProductID = ? \n" +
                 "GROUP BY \n" +
                 "    p.ProductID, p.Name;\n";
-        PreparedStatement ps =  conn.prepareStatement(sql);
+        PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setInt(1, product_id);
         ResultSet rs = ps.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             return rs.getInt("StockQuantity");
         }
         return -1;
     }
 
-    public void addProductToCart(int user_id,int product_id) throws SQLException {
+    public void addProductToCart(int user_id, int product_id) throws SQLException {
         getProductByID(product_id);
-        if(getProductCount(product_id) - 1 >= 0){
+        if (getProductCount(product_id) - 1 >= 0) {
             String sql = "INSERT INTO [dbo].[Cart] ([UserID],[ProductID],[Quantity],[AddedAt])\n" +
                     "VALUES (? , ?, 1, GETDATE());";
-            PreparedStatement ps =  conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, user_id);
             ps.setInt(2, user_id);
             ps.executeUpdate();
