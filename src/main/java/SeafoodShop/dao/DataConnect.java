@@ -1,6 +1,7 @@
 package SeafoodShop.dao;
 
 import SeafoodShop.model.Product;
+import SeafoodShop.model.User;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -23,6 +24,7 @@ public class DataConnect {
     }
 
     public int getUserIDByEmail(String email) throws SQLException {
+        getConnection();
         String sql = "select UserID from Users where email = ? ";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, email);
@@ -46,6 +48,21 @@ public class DataConnect {
         return -1;
     }
 
+    public User getUserById(int userID) throws SQLException {
+        getConnection();
+        String sql = "select * from Users where UserID = ?";
+        PreparedStatement ps =  conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            User user = new User();
+            user.setUserID(rs.getInt("UserID"));
+            user.setUsername(rs.getString("Username"));
+            user.setRole(rs.getInt("Role"));
+            return user;
+        }
+        return null;
+    }
+
     public int getUserRole(String username, String password) throws SQLException {
         String sql = "SELECT Role FROM Users WHERE Username = ? AND Password = ?";
         try (Connection conn = getConnection();
@@ -61,12 +78,35 @@ public class DataConnect {
         return -1;
     }
 
+    public int getUserRole(int id) throws SQLException {
+        String sql = "SELECT Role FROM Users WHERE UserID = ?";
+        try (Connection conn = getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("Role");
+            }
+        }
+        return -1;
+    }
+
     public void register(String username, String password, String email) throws SQLException {
+        getConnection();
         String sql = "insert into Users (Username, Password, Email) values(?,?,?)";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, username);
         ps.setString(2, password);
         ps.setString(3, email);
+        ps.executeUpdate();
+    }
+
+    public void register(String email, String fullName) throws SQLException {
+        getConnection();
+        String sql = "insert into Users (Email, FullName) values(?,?)";
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ps.setString(1, email);
+        ps.setString(2, fullName);
         ps.executeUpdate();
     }
 
@@ -118,6 +158,7 @@ public class DataConnect {
     }
 
     public int getProductCount(int product_id) throws SQLException {
+        getConnection();
         String sql = "SELECT \n" +
                 "    p.ProductID,\n" +
                 "    p.Name,\n" +
@@ -176,6 +217,6 @@ public class DataConnect {
 //        System.out.println(dc.getProductList());
 //        System.out.println(dc.getProductByID(2));
         System.out.println(dc.getProductCount(1));
-
+        System.out.println("Nguyễn Văn A ");
     }
 }

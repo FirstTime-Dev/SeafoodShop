@@ -24,7 +24,10 @@ public class Login extends HttpServlet {
         try {
             dc.getConnection();
             int role;
+            int user_id;
             if((role = dc.getUserRole(username,password)) != -1){
+                user_id = dc.getUserID(username,password);
+                session.setAttribute("user_id",user_id);
                 session.setAttribute("role",role);
                 resp.setContentType("text/plain");
                 PrintWriter out = resp.getWriter();

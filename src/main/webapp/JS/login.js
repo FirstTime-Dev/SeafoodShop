@@ -78,7 +78,7 @@ const getGoogleToken = () => {
     const hash = window.location.hash.substring(1);
     const urlParams = new URLSearchParams(hash);
     const token = urlParams.get('access_token');
-
+    console.log(token);
     if (token) {
         // window.history.replaceState({}, document.title, window.location.pathname);
         return token;
@@ -87,14 +87,18 @@ const getGoogleToken = () => {
 }
 
 // Hàm gửi OTP đến server
-const sendOTP = async (email) => {
+const sendOTP = async (email, familyName, givenName) => {
     // try {
         const response = await fetch('/SeafoodShop_war_exploded/Google_login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8',
             },
-            body: JSON.stringify({ email: email })
+            body: JSON.stringify({
+                email: email ,
+                family_name: familyName,
+                given_name: givenName
+            })
         });
 
         const result = await response.json();
@@ -133,7 +137,7 @@ const handleGoogleUser = async () => {
         if (!userResponse.ok) throw new Error('Lỗi xác thực Google');
 
         const userData = await userResponse.json();
-        // console.log('Thông tin người dùng:', userData);
+        console.log('Thông tin người dùng:', userData);
     //     const response = await fetch('/SeafoodShop_war_exploded/login', {
     //     method: 'POST',
     //     headers: {
@@ -142,9 +146,10 @@ const handleGoogleUser = async () => {
     //     body: JSON.stringify({ userData })
     // });
 
-        // sendOTP(userData.email);
         // Gửi OTP đến email
-        await sendOTP(userData.email);
+
+    console.log("Tên:", userData.family_name + " " + userData.given_name);
+        await sendOTP(userData.email, userData.family_name, userData.given_name);
 
 
     // } catch (error) {
