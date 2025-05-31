@@ -10,7 +10,7 @@
 <head>
     <title>Header</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 <div class="header-container">
@@ -31,12 +31,11 @@
             <div class="contact-auth">
                 <span>+1 234 567 890</span>
                 <a href="<%= request.getContextPath() %>/JSP/login.jsp">Sign In</a>
-                <a href="<%= request.getContextPath() %>/JSP/login.jsp">Register</a>
             </div>
         </div>
         <!-- header chính -->
         <nav class="Bottom-nav">
-            <div class="logo">SEA<span>FOOD</span></div>
+            <div class="logo"><img src="<%= request.getContextPath() %>/IMG/logo.png"  alt=""></div>
 
             <ul class="header_tag-list">
                 <li class="tag-name"><a href="#">CÁ</a></li>
@@ -44,7 +43,22 @@
                 <li class="tag-name"><a href="#">CUA</a></li>
                 <li class="tag-name"><a href="#">MỰC</a></li>
                 <li class="tag-name"><a href="#">ỐC</a></li>
-                <li class="tag-name"><a href="#">KHÁC</a></li>
+                <li class="tag-name tag-name-other"><a href="#">KHÁC</a>
+                    <ul class="other">
+                        <ul class="other-list">
+                            <li class="other-list-header"><a href="#">mực khô</a></li>
+                            <li class="other-list-text"><a href="#">mực khô</a></li>
+                            <li class="other-list-text"><a href="#">mực 1 nắng</a></li>
+                            <li class="other-list-text"><a href="#">mực 2 nắng</a></li>
+                        </ul>
+                        <ul class="other-list">
+                            <li class="other-list-header"><a href="#"> chả cá </a></li>
+                            <li class="other-list-text"><a href="#">chả cá thát lát </a></li>
+                            <li class="other-list-text"><a href="#">chả cá rô phi </a></li>
+                        </ul>
+                    </ul>
+
+                </li>
 
             </ul>
             <ul class="header_icon-list">
