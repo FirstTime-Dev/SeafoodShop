@@ -6,13 +6,13 @@ GO
 
 CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
-    FullName NVARCHAR(100) NOT NULL,
-    Username NVARCHAR(50) UNIQUE NOT NULL,
-    Password NVARCHAR(255) ,
+    FullName NVARCHAR(100)  NULL,
+    Username NVARCHAR(50) UNIQUE NULL,
+    Password NVARCHAR(255) NULL,
     Email NVARCHAR(100) UNIQUE NOT NULL,
-    PhoneNumber VARCHAR(15) UNIQUE NOT NULL,
-    BirthDate DATE NOT NULL,
-    Address NVARCHAR(255),
+    PhoneNumber VARCHAR(15) UNIQUE NULL,
+    BirthDate DATE NULL,
+    Address NVARCHAR(255) NULL,
     Role INT CHECK (Role BETWEEN 1 AND 3) DEFAULT 1, -- 1: User, 2: Manage, 3: Admin
 	Ban INT DEFAULT 0, -- 0: Unban, 1: Ban
     State INT DEFAULT 1, -- 1: Active, 0: Disabled
