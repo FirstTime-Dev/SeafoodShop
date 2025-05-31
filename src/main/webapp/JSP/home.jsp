@@ -52,8 +52,7 @@
 <div id="products"  class="products">
     <div class="products_main">
 
-        <%
-            DataConnect dao = new DataConnect();
+        <%DataConnect dao = new DataConnect();
         for(Product pr : dao.getProductList()){
             String productName= pr.getName();
             BigDecimal productPrice = pr.getPrice();%>

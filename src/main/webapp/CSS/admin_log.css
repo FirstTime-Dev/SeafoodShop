@@ -29,3 +29,132 @@ body {
     font-size: 24px;
     color: #333;
 }
+
+/* === Log Action Buttons === */
+.level-actions {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.level-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.all-info-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.info-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.warning-info-btn {
+    background-color: #ffc107;
+    color: black;
+}
+
+.error-info-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.critical-info-btn {
+    background-color: #721c24;
+    color: white;
+}
+
+/* Hover Effects */
+.level-actions button:hover {
+    filter: brightness(90%);
+}
+
+/* === Table Styling === */
+.log-record-content {
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fafafa;
+    padding: 10px;
+}
+
+table.main-content {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+table.main-content th,
+table.main-content td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+table.main-content thead {
+    background-color: #343a40;
+    color: white;
+}
+
+.info-content {
+    background-color: #e7f3f9;
+}
+
+.warning-content {
+    background-color: #fff3cd;
+}
+
+.error-content {
+    background-color: #f8d7da;
+}
+
+.critical-content {
+    background-color: #f5c6cb;
+    font-weight: bold;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .level-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    table.main-content thead {
+        display: none;
+    }
+
+    table.main-content,
+    table.main-content tbody,
+    table.main-content tr,
+    table.main-content td {
+        display: block;
+        width: 100%;
+    }
+
+    table.main-content tr {
+        margin-bottom: 15px;
+    }
+
+    table.main-content td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    table.main-content td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+    }
+}
