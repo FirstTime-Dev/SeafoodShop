@@ -75,6 +75,7 @@ th {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
 }
 
 .popup-content {
@@ -142,16 +143,14 @@ th {
 
 /* Cố định chiều cao cho từng hàng */
 table tbody tr {
-    height: 50px; /* bạn có thể chỉnh theo ý muốn */
-    line-height: 50px; /* canh giữa theo chiều dọc */
+    height: 50px;
+    line-height: 50px;
 }
 
 /* Cố định chiều rộng cho từng cột tương ứng theo thứ tự cột */
 table thead th, table tbody td {
-    /* Nếu bạn biết rõ chiều rộng từng cột, đặt theo thứ tự */
 }
 
-/* Ví dụ cụ thể cho bảng bạn có 5 cột, mình đặt cố định từng cột: */
 table thead th:nth-child(1),
 table tbody td:nth-child(1) {
     width: 80px; /* Mã đơn */

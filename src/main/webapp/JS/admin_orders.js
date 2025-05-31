@@ -20,8 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.getElementById("popupPhoneNumber").textContent = data.phoneNumber;
                     document.getElementById("popupEmail").textContent = data.email;
                     document.getElementById("popupAddress").textContent = data.address;
-                    document.getElementById("popupStatus").textContent = data.status;
-
+                    renderStatus(data.status);
                     // Hiện popup
                     document.getElementById("orderDetailPopup").style.display = "block";
                 });
@@ -73,5 +72,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Hiện thị trạng thái status trong popup orderDetail
+    function renderStatus(orderDetailsStatus) {
+        const statusMap = {
+            1: "Đang chờ duyệt",
+            2: "Đã duyệt",
+            3: "Đã từ chối"
+        };
+
+        const statusText = statusMap[orderDetailsStatus] || "Không xác định";
+        document.getElementById("popupStatus").textContent = `${statusText}`;
+    }
 
 });
