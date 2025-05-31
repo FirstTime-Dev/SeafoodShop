@@ -5,12 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/purchase.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/breadcrumb.css">
     <script defer src="<%=request.getContextPath()%>/JS/purchase.js"></script> <!-- Thêm defer để tránh lỗi tải script -->
     <title>Purchase</title>
+
 </head>
 <body>
 
 <jsp:include page="header.jsp"/>
+<div class="breadcrumb">
+    <div class="container">
+        <ul>
+            <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
+            <li><a href="<%= request.getContextPath() %>JSP/purchase.jsp">Thông tin đơn hàng</a></li>
+        </ul>
+    </div>
+</div>
 
 <div class="container">
     <h2>My purchase</h2>

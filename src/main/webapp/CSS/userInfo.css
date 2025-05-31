@@ -1,0 +1,199 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+.sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar li {
+    padding: 10px 0;
+    cursor: pointer;
+}
+.sidebar li:hover {
+    color: red;
+}
+.content {
+    padding: 30px;
+    flex-grow: 1;
+}
+.content-section {
+    display: none;
+}
+.content-section.active {
+    display: block;
+}
+/* css cho profile */
+form input[type="text"],
+form select {
+    width: 300px;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form small {
+    color: #888;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+}
+
+img#avatar-preview {
+    display: block;
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* chức năng địa chỉ  */
+#address-list {
+    margin-top: 20px;
+}
+
+/* Thẻ địa chỉ */
+.address-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Tên người nhận + số điện thoại */
+.address-card strong {
+    font-size: 16px;
+    color: #333;
+}
+
+.address-card span {
+    color: #555;
+}
+
+/* Thẻ "Mặc định" */
+.address-card .default-label {
+    color: #0056b3;
+    font-size: 12px;
+    border: 1px solid #0056b3;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.address-card button {
+    padding: 6px 12px;
+    margin-right: 5px;
+    margin-top: 10px;
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s ease;
+}
+
+.address-card button:hover {
+    background-color: #e0e0e0;
+}
+
+/*css Nút thêm địa chỉ mới */
+#btn-add-address {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+#btn-add-address:hover {
+    background-color: #0056b3;
+}
+/* CSS cho phần đổi mật khẩu */
+#change-password-form {
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+#change-password-form .form-group {
+    margin-bottom: 20px;
+}
+
+#change-password-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#change-password-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#change-password-form input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#change-password-form .hint {
+    color: #666;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+#change-password-form .error-message {
+    color: #dc3545;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+#change-password-form .save-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#change-password-form .save-btn:hover {
+    background-color: #0056b3;
+}

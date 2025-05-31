@@ -12,7 +12,10 @@ public class DataConnect {
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=SeafoodProject;encrypt=false";
     private static final String USER = "sa";
     private static final String PASSWORD = "0";
+
+
     private static Connection conn = null;
+
 
     public Connection getConnection() throws SQLException {
         try {
@@ -156,6 +159,9 @@ public class DataConnect {
         return new Product(description, productID, name, categoryID, price, stockQuantity,
                 supplierID, origin, storageCondition, expiryDate, weight, state);
     }
+
+
+
 
     public int getProductCount(int product_id) throws SQLException {
         getConnection();
