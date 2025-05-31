@@ -8,7 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/userInfo.css">
+    <script defer src="<%=request.getContextPath()%>/JS/userInfo.js"></script>
     <title>thông tin cá nhân</title>
+    
 </head>
 <body>
 <div class="sidebar">
