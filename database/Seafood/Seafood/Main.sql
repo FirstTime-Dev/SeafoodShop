@@ -104,8 +104,8 @@ CREATE TABLE Payments (
     PaymentID INT PRIMARY KEY IDENTITY(1,1),
     OrderID INT NOT NULL,
     PaymentMethod NVARCHAR(50) NOT NULL,
-    PaymentType NVARCHAR(50) NOT NULL DEFAULT 'Offline',
-    PaymentStatus NVARCHAR(50) DEFAULT 'Pending',
+    PaymentType NVARCHAR(50) NOT NULL DEFAULT 'Offline', -- 1. COD , 2. Bank
+    PaymentStatus NVARCHAR(50) DEFAULT 'Pending', -- 1. Pending, 2. Confirm, 3. Denide
     PaymentDate DATETIME DEFAULT GETDATE(),
     AmountPaid DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
@@ -145,6 +145,7 @@ CREATE TABLE LogActivity (
     DataBefore NVARCHAR(MAX) NULL,
     DataAfter NVARCHAR(MAX) NULL,
     IPAddress NVARCHAR(50) NULL,
+	SeverityLevel NVARCHAR(20) DEFAULT 'INFO', -- 1. INFO, 2. WARNING, 3. ERROR, 4. CRITICAL 
     Timestamp DATETIME DEFAULT GETDATE(),
     Location NVARCHAR(255) NULL,
     FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE SET NULL
@@ -302,7 +303,6 @@ INSERT INTO LogActivity (UserID, Action, Resource, DataBefore, DataAfter, IPAddr
 VALUES 
 (1, N'Tạo đơn hàng', N'Orders', NULL, N'{orderId: 1, amount: 750000}', '192.168.1.1', N'TP.HCM');
 
-
 INSERT INTO PasswordResets (UserID, Token, ExpiryTime)
 VALUES 
 (1, 'resetToken123', DATEADD(HOUR, 1, GETDATE()));
@@ -400,3 +400,6 @@ DROP TABLE IF EXISTS PasswordResets;
 DROP TABLE IF EXISTS LogActivity;
 
 DROP TABLE IF EXISTS Users;
+
+ALTER TABLE LogActivity
+ADD SeverityLevel NVARCHAR(20) DEFAULT 'INFO';

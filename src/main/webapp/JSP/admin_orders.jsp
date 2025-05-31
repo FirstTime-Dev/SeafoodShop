@@ -139,7 +139,7 @@
                         </tr>
                         <tr>
                             <th>Trạng Thái:</th>
-                            <td id="popupStatus"></td>
+                            <td id="popupStatus" ></td>
                         </tr>
                     </table>
                 </div>
