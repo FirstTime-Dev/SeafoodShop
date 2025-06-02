@@ -1,3 +1,5 @@
+<%@ page import="SeafoodShop.dao.DataConnect" %>
+<%@ page import="SeafoodShop.model.Cart" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -37,6 +39,10 @@
                 <label id="total-price">Total price: 500.000VNĐ</label>
             </div>
         </div>
+        <% DataConnect dc = new DataConnect();
+            for(Cart c : dc.getCartList((int) session.getAttribute("user_id"))){
+
+            }%>
     </div>
     <div class="cart-summary">
         <h2>Order Summary</h2>
