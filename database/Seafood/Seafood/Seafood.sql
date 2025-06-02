@@ -239,3 +239,9 @@ SELECT Status FROM Orders WHERE OrderID = 2;
 -- Update status --
 UPDATE Orders SET Status = 2 WHERE OrderID = 2;
 UPDATE Orders SET Status = 1 WHERE OrderID = 1;
+
+-- Check User --
+SELECT * FROM Users;
+
+-- Update password --
+UPDATE Users SET Password = 'D11111111' WHERE UserID = 1;
