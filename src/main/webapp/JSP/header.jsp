@@ -30,16 +30,38 @@
 
             <div class="contact-auth">
                 <span>+1 234 567 890</span>
-                <a href="<%= request.getContextPath() %>/JSP/login.jsp">Sign In</a>
+                <%
+                    // Lấy session (nếu chưa có thì trả về null)
+                    session = request.getSession(false);
+                    Integer userId = null;
+                    if (session != null) {
+                        userId = (Integer) session.getAttribute("user_id");
+                    }
+                    if (userId == null) {
+                        // Chưa đăng nhập → hiển thị Sign In/Sign Up
+                %>
+                <a href="<%= request.getContextPath() %>/loginController">Sign In/Sign Up</a>
+                <%
+                } else {
+                    // Đã đăng nhập → hiển thị link tới trang User Info
+                    // Bạn có thể thay "userInfo.jsp" hoặc một Servlet nào đó mà bạn đã tạo
+                %>
+                <a href="<%= request.getContextPath() %>/userInfo.jsp">User Info</a>
+                <!-- Nếu muốn hiển thị thêm nút Logout -->
+                <span style="margin:0 8px;">|</span>
+                <a href="<%= request.getContextPath() %>/logout">Logout</a>
+                <%
+                    }
+                %>
             </div>
         </div>
         <!-- header chính -->
         <nav class="Bottom-nav">
-            <div class="logo"><img src="<%= request.getContextPath() %>/IMG/logo.png"  alt=""></div>
+            <div class="logo"><img src="<%= request.getContextPath() %>/IMG/logo.png" alt=""></div>
 
             <ul class="header_tag-list">
                 <li class="tag-name"><a href="#">CÁ</a></li>
-                <li class="tag-name" ><a href="#">TÔM</a></li>
+                <li class="tag-name"><a href="#">TÔM</a></li>
                 <li class="tag-name"><a href="#">CUA</a></li>
                 <li class="tag-name"><a href="#">MỰC</a></li>
                 <li class="tag-name"><a href="#">ỐC</a></li>
@@ -62,7 +84,8 @@
 
             </ul>
             <ul class="header_icon-list">
-                <li class="shopping-icon"><a href="<%= request.getContextPath() %>/cartController"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li class="shopping-icon"><a href="<%= request.getContextPath() %>/cartController"><i
+                        class="fa-solid fa-cart-shopping"></i></a></li>
                 </li>
             </ul>
         </nav>

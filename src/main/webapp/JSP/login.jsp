@@ -107,7 +107,7 @@
                     success: function (response) {
                         // Xử lý kết quả trả về từ SeafoodShop.SeafoodShop.servlet
                         if (response === 'success') {
-                            window.location.href = '<%=request.getContextPath()%>/JSP/home.jsp'; // chuyển trang nếu đăng nhập thành công
+                            window.location.href = '<%=request.getContextPath()%>/homeController'; // chuyển trang nếu đăng nhập thành công
                         } else {
                             errorDiv.text('Tên đăng nhập hoặc mật khẩu không đúng.');
                         }

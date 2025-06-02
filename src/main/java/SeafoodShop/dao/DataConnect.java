@@ -27,7 +27,7 @@ public class DataConnect {
     }
 
     public int getUserIDByEmail(String email) throws SQLException {
-        getConnection();
+        Connection conn = getConnection();
         String sql = "select UserID from Users where email = ? ";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, email);
@@ -39,7 +39,7 @@ public class DataConnect {
     }
 
     public int getUserID(String username, String password) throws SQLException {
-        getConnection();
+        Connection conn = getConnection();
         String sql = "select * from Users where Username=? and password=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, username);
@@ -95,7 +95,7 @@ public class DataConnect {
     }
 
     public void register(String username, String password, String email) throws SQLException {
-        getConnection();
+        Connection conn = getConnection();
         String sql = "insert into Users (Username, Password, Email) values(?,?,?)";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, username);
@@ -105,7 +105,7 @@ public class DataConnect {
     }
 
     public void register(String email, String fullName) throws SQLException {
-        getConnection();
+        Connection conn = getConnection();
         String sql = "insert into Users (Email, FullName) values(?,?)";
         PreparedStatement ps = getConnection().prepareStatement(sql);
         ps.setString(1, email);
@@ -164,7 +164,7 @@ public class DataConnect {
 
 
     public int getProductCount(int product_id) throws SQLException {
-        getConnection();
+        Connection conn = getConnection();
         String sql = "SELECT \n" +
                 "    p.ProductID,\n" +
                 "    p.Name,\n" +
@@ -217,12 +217,15 @@ public class DataConnect {
 
     public static void main(String[] args) throws SQLException {
         DataConnect dc = new DataConnect();
-        System.out.println(dc.getProductByID(2));
+//        System.out.println(dc.getProductByID(2));
         dc.getConnection();
 //        System.out.println(dc.getUserRole("nguyenvana","123456"));
 //        System.out.println(dc.getProductList());
 //        System.out.println(dc.getProductByID(2));
-        System.out.println(dc.getProductCount(1));
-        System.out.println("Nguyễn Văn A ");
+//        System.out.println(dc.getProductCount(1));
+//        System.out.println("Nguyễn Văn A ");
+        System.out.println(dc.getUserRole("phamthid","D11111111"));
+        System.out.println(dc.getUserID("phamthid","D11111111"));
+
     }
 }
