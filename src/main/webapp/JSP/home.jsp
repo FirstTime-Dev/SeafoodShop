@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hải Sản Tươi Sống - Chất Lượng Từ Đại Dương</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/home.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/breadcrumb.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
           integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
@@ -19,6 +20,15 @@
 <body>
 
 <jsp:include page="header.jsp"/>
+
+<div class="breadcrumb">
+    <div class="container">
+        <ul>
+            <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
+        </ul>
+    </div>
+</div>
+
 <div class="home-slide-show">
     <div class="owl-carousel owl-theme">
         <div class="item">

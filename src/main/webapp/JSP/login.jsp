@@ -23,8 +23,8 @@
                 <label>
                     <input id="login_password" type="password" placeholder="Password">
                 </label>
-                <div id="errorMessage"
-                     style="color:red; font-size: 12px; position: absolute; top: 50%; right: 44%;"></div>
+                <div id="errorMessage" style="color:red; font-size: 12px; margin-top: 5px;"></div>
+
                 <i class='bx bxs-lock'></i>
             </div>
             <div class="forgot-link">
