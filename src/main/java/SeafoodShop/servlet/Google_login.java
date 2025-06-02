@@ -52,7 +52,6 @@ public class Google_login extends HttpServlet {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error: " + e.getMessage());
         }
-        System.out.println(email);
         try {
             EmailService emailService = new EmailService();
             String otp = emailService.generateOTP();
