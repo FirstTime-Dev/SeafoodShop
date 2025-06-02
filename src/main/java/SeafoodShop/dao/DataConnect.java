@@ -113,7 +113,7 @@ public class DataConnect {
 
     public List<Product> getProductList() throws SQLException {
         List<Product> productList = new ArrayList<>();
-        String sql = "SELECT * FROM Products";
+        String sql = "SELECT p.*, img.ImageURL FROM Products p JOIN Images img ON p.ProductID = img.ProductID";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -126,7 +126,7 @@ public class DataConnect {
     }
 
     public Product getProductByID(int productID) throws SQLException {
-        String sql = "SELECT * FROM Products WHERE ProductID = ?";
+        String sql = "SELECT p.*, img.ImageURL FROM Products p JOIN Images img ON p.ProductID = img.ProductID  WHERE p.ProductID = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, productID);
@@ -153,9 +153,10 @@ public class DataConnect {
         Date expiryDate = rs.getDate("ExpiryDate");
         BigDecimal weight = rs.getBigDecimal("Weight");
         int state = rs.getInt("State");
+        String imgURL = rs.getString("ImageURL");
 
         return new Product(description, productID, name, categoryID, price, stockQuantity,
-                supplierID, origin, storageCondition, expiryDate, weight, state);
+                supplierID, origin, storageCondition, expiryDate, weight, state, imgURL);
     }
     public int getAllProductQuantityInCart(int productID) throws SQLException {
         int count = 0;
@@ -214,7 +215,7 @@ public class DataConnect {
 
     public List<Cart> getCartList(int user_id) throws SQLException {
         List<Cart> cartList = new ArrayList<>();
-        String sql = "SELECT * FROM Cart WHERE UserID = ?";
+        String sql = "SELECT c.*,p.Name,p.Price, img.ImageURL FROM Cart c JOIN Images img ON c.ProductID = img.ProductID JOIN Products p ON c.ProductID = p.ProductID WHERE c.UserID = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, user_id);
@@ -225,6 +226,9 @@ public class DataConnect {
                 cart.setUserId(rs.getInt("UserID"));
                 cart.setProductId(rs.getInt("ProductID"));
                 cart.setQuantity(rs.getInt("Quantity"));
+                cart.setProductName(rs.getString("Name"));
+                cart.setProductImageURL(rs.getString("ImageURL"));
+                cart.setProductPrice(rs.getBigDecimal("Price"));
                 cart.setAddAt(rs.getDate("AddAt"));
                 cartList.add(cart);
             }
@@ -241,7 +245,7 @@ public class DataConnect {
             try (Connection conn = getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, user_id);
-                ps.setInt(2, user_id);
+                ps.setInt(2, product_id);
                 ps.executeUpdate();
             }
         }
@@ -256,6 +260,10 @@ public class DataConnect {
 //        System.out.println(dc.getProductByID(2));
 //        System.out.println(dc.getProductCount(1));
 //        System.out.println("Nguyễn Văn A ");
-        System.out.println(dc.getAllProductQuantityInCart(1));
+//        System.out.println(dc.getAllProductQuantityInCart(1));
+        List<Product> list = dc.getProductList();
+        for(Product p : list) {
+            System.out.println(p.getProductID());
+        }
     }
 }
