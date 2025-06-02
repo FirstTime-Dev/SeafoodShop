@@ -14,29 +14,29 @@ document.querySelectorAll(".product-content").forEach(el => {
 });
 
 $(document).ready(function () {
-    $('#addToCartBtn').on('submit', function (e) {
-        e.preventDefault(); // Ngăn form gửi theo cách mặc định
+    // Gán submit cho tất cả form thêm vào giỏ hàng
+    $('form[action$="addToCart"]').on('submit', function (e) {
+        e.preventDefault(); // Ngăn gửi form theo cách mặc định
 
-        const product_id = $('#product_id').val().trim();
+        const form = $(this); // Lấy form đang được submit
+        const product_id = form.find('input[name="product_id"]').val().trim();
 
         $.ajax({
-            url: '<%= request.getContextPath() %>/addToCart', // servlet URL mapping
+            url: form.attr('action'), // URL của form
             type: 'POST',
             data: {
                 product_id: product_id,
             },
             success: function (response) {
-                // Xử lý kết quả trả về từ SeafoodShop.servlet
                 if (response === 'success') {
-
+                    alert('Đã thêm sản phẩm vào giỏ hàng!');
                 } else {
-                    console.log('Error adding to cart');
+                    alert('Có lỗi xảy ra khi thêm sản phẩm!');
                 }
             },
             error: function () {
-                console.log('Error adding to cart 1');
+                alert('Lỗi kết nối khi thêm sản phẩm!');
             }
         });
-
     });
 });

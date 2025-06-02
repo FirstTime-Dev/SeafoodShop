@@ -16,8 +16,9 @@ public class Product {
     Date expiryDate;
     BigDecimal weight;
     int state;
+    String imgUrl;
 
-    public Product(String description, int productID, String name, int categoryID, BigDecimal price, int stockQuantity, String supplierID, String origin, String storageCondition, Date expiryDate, BigDecimal weight, int state) {
+    public Product(String description, int productID, String name, int categoryID, BigDecimal price, int stockQuantity, String supplierID, String origin, String storageCondition, Date expiryDate, BigDecimal weight, int state, String imgUrl) {
         this.description = description;
         this.productID = productID;
         this.name = name;
@@ -30,6 +31,7 @@ public class Product {
         this.expiryDate = expiryDate;
         this.weight = weight;
         this.state = state;
+        this.imgUrl = imgUrl;
     }
 
     public void setProductID(int productID) {
@@ -127,6 +129,10 @@ public class Product {
     public int getState() {
         return state;
     }
+
+    public String getImgUrl() {return imgUrl;}
+
+    public void setImgUrl(String imgUrl) {this.imgUrl = imgUrl;}
 
     @Override
     public String toString() {
