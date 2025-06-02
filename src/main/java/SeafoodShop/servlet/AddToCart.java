@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet("/addToCart")
@@ -21,6 +22,9 @@ public class AddToCart extends HttpServlet {
             int user_id = (int) session.getAttribute("user_id");
             DataConnect dc = new DataConnect();
             dc.addProductToCart(user_id, product_id);
+            resp.setContentType("text/plain");
+            PrintWriter out = resp.getWriter();
+            out.print("success");
         }catch (SQLException e){
             e.printStackTrace();
         }

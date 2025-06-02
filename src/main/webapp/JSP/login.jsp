@@ -14,14 +14,14 @@
             <h1>Login</h1>
             <div class="input-box">
                 <label>
-                    <input id="login_username" type="text" placeholder="Username">
+                    <input id="login_username" type="text" placeholder="Username" name="login_username">
                 </label>
 
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
                 <label>
-                    <input id="login_password" type="password" placeholder="Password">
+                    <input id="login_password" type="password" placeholder="Password" name="login_password">
                 </label>
                 <div id="errorMessage" style="color:red; font-size: 12px; margin-top: 5px;"></div>
 
@@ -45,19 +45,19 @@
             <h1>Registration</h1>
             <div class="input-box">
                 <label>
-                    <input class="username" type="text" placeholder="Username">
+                    <input class="username" type="text" placeholder="Username" name="register_username">
                 </label>
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
                 <label>
-                    <input type="email" placeholder="Email">
+                    <input type="email" placeholder="Email" name="register_email">
                 </label>
                 <i class='bx bxs-envelope'></i>
             </div>
             <div class="input-box">
                 <label>
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" name="register_password">
                 </label>
                 <i class='bx bxs-lock'></i>
             </div>
