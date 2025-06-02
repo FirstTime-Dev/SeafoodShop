@@ -14,12 +14,18 @@ import java.sql.SQLException;
 
 @WebServlet("/login")
 public class Login extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String username = req.getParameter("login_username");
+        String password = req.getParameter("login_password");
         DataConnect dc = new DataConnect();
         try {
             dc.getConnection();
