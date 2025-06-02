@@ -4,7 +4,6 @@
 <%@  page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <script src="<%= request.getContextPath() %>/JS/home.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hải Sản Tươi Sống - Chất Lượng Từ Đại Dương</title>
@@ -16,6 +15,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
             integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="<%= request.getContextPath() %>/JS/home.js"></script>
 </head>
 <body>
 
@@ -61,7 +61,7 @@
                 <img src="" alt="">
             </div>
             <div class="products_name">
-                <h3><%=productName%>></h3>
+                <h3><%=productName%></h3>
                 <p><%=productPrice%>đ/1kg</p>
             </div>
             <div class="products_buttons">
