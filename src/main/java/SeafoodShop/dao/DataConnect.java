@@ -229,14 +229,14 @@ public class DataConnect {
                 cart.setProductName(rs.getString("Name"));
                 cart.setProductImageURL(rs.getString("ImageURL"));
                 cart.setProductPrice(rs.getBigDecimal("Price"));
-                cart.setAddAt(rs.getDate("AddAt"));
+                cart.setAddAt(rs.getDate("AddedAt"));
                 cartList.add(cart);
             }
             return cartList;
         }
     }
 
-    public void addProductToCart(int user_id, int product_id) throws SQLException {
+    public boolean addProductToCart(int user_id, int product_id) throws SQLException {
         int productQuantity = getProductCount(product_id);
         int productQuantityInCart = getAllProductQuantityInCart(product_id);
         if (productQuantity - productQuantityInCart - 1 >= 0) {
@@ -247,8 +247,10 @@ public class DataConnect {
                 ps.setInt(1, user_id);
                 ps.setInt(2, product_id);
                 ps.executeUpdate();
+                return true;
             }
         }
+        return false;
     }
 
     public static void main(String[] args) throws SQLException {
