@@ -22,7 +22,7 @@
 <jsp:include page="header.jsp"/>
 
 <div class="breadcrumb">
-    <div class="container">
+    <div class="breadcrumb-container">
         <ul>
             <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
         </ul>
