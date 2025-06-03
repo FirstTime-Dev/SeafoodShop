@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<meta charset="UTF-8">
 <html>
 <head>
     <title>Login/Register</title>
@@ -70,7 +71,6 @@
             </div>
         </form>
     </div>
-
     <div class="toggle-box">
         <div class="toggle-panel toggle-left">
             <h1>Hello, Welcome</h1>

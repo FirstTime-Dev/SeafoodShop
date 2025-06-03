@@ -65,7 +65,7 @@ const LINK_GET_GOOGLE_TOKEN = `https://accounts.google.com/o/oauth2/v2/auth?scop
 document.addEventListener('DOMContentLoaded', () => {
     const googleSignInBtn = document.getElementById('googleSignInBtn');
 
-    // Sự kiện click nút Google Sign-in
+// Sự kiện click nút Google Sign-in
     googleSignInBtn.addEventListener("click", () => {
         window.localStorage.removeItem("access_token");
         window.location.href = LINK_GET_GOOGLE_TOKEN;
@@ -88,56 +88,55 @@ const getGoogleToken = () => {
 
 // Hàm gửi OTP đến server
 const sendOTP = async (email, familyName, givenName) => {
-    // try {
+    try {
+        const payload = {
+            email: email,
+            family_name: familyName,
+            given_name: givenName
+        };
+
+        console.log("Gửi đến server:", payload);
+
         const response = await fetch('/SeafoodShop_war_exploded/Google_login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
-            body: JSON.stringify({
-                email: email ,
-                family_name: familyName,
-                given_name: givenName
-            })
+            // ⚠️ CHỖ QUAN TRỌNG: Dùng Blob hoặc TextEncoder để mã hóa chính xác UTF-8
+            body: new Blob([JSON.stringify(payload)], { type: 'application/json; charset=UTF-8' })
         });
 
-        const result = await response.json();
+        const text = await response.text();
+        console.log("Phản hồi từ server:", text);
+        const result = JSON.parse(text);
+
         if (result.status === 'success') {
-        // Nếu cần lưu OTP hoặc email vào sessionStorage/localStorage:
             sessionStorage.setItem('email', email);
             sessionStorage.setItem('otp', result.otp);
-
-            // Chuyển sang trang OTP
             window.location.href = '/SeafoodShop_war_exploded/JSP/otp.jsp';
+        } else {
+            alert("Lỗi: " + result.message);
         }
-        // if (!response.ok) {
-        //     throw new Error('Gửi OTP thất bại');
-        // }
-
-        // const result = await response.json();
-        // console.log('OTP sent:', result);
-        return true;
-    // } catch (error) {
-    //     console.error('Lỗi gửi OTP:', error);
-    //     return false;
-    // }
-}
+    } catch (error) {
+        console.error('Lỗi gửi OTP:', error);
+    }
+};
 
 // Hàm chính xử lý thông tin người dùng
 const handleGoogleUser = async () => {
     // try {
-        const accessToken = getGoogleToken();
-        if (!accessToken) return;
+    const accessToken = getGoogleToken();
+    if (!accessToken) return;
 
-        // Lấy thông tin người dùng từ Google
-        const userResponse = await fetch(
-            `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`
-        );
+    // Lấy thông tin người dùng từ Google
+    const userResponse = await fetch(
+        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`
+    );
 
-        if (!userResponse.ok) throw new Error('Lỗi xác thực Google');
+    if (!userResponse.ok) throw new Error('Lỗi xác thực Google');
 
-        const userData = await userResponse.json();
-        console.log('Thông tin người dùng:', userData);
+    const userData = await userResponse.json();
+    console.log('Thông tin người dùng:', userData);
     //     const response = await fetch('/SeafoodShop_war_exploded/login', {
     //     method: 'POST',
     //     headers: {
@@ -146,15 +145,15 @@ const handleGoogleUser = async () => {
     //     body: JSON.stringify({ userData })
     // });
 
-        // Gửi OTP đến email
+    // Gửi OTP đến email
 
     console.log("Tên:", userData.family_name + " " + userData.given_name);
-        await sendOTP(userData.email, userData.family_name, userData.given_name);
+    await sendOTP(userData.email, userData.family_name, userData.given_name);
 
 
-    // } catch (error) {
-    //     console.error('Lỗi hệ thống:', error);
-    //     alert('Đăng nhập thất bại! Vui lòng thử lại.');
+// } catch (error) {
+//     console.error('Lỗi hệ thống:', error);
+//     alert('Đăng nhập thất bại! Vui lòng thử lại.');
     // }
 }
 
@@ -169,83 +168,83 @@ const handleGoogleRedirect = () => {
 //     .getElementById('loginForm')
 //     .addEventListener(
 //         'submit',
-        function checkLogin() {
-            const username = document
-                .getElementById('login_username').value;
-            const password = document
-                .getElementById('login_password').value;
-            const message = document.getElementById('errorMessage');
-            message.textContent = "";
+function checkLogin() {
+    const username = document
+        .getElementById('login_username').value;
+    const password = document
+        .getElementById('login_password').value;
+    const message = document.getElementById('errorMessage');
+    message.textContent = "";
 
-            // Validate username
-            if (/\s/.test(username)) {
-                // event.preventDefault();
-                message.textContent = "Tên đăng nhập không thể chứa khoảng trống";
-                message.className = "invalid";
-                return false;
-            }
-            if (username.trim() === "") {
-                // event.preventDefault();
-                message.textContent = "Tên đăng nhập không thể để trống";
-                message.className = "invalid";
-                return false;
-            }
+    // Validate username
+    if (/\s/.test(username)) {
+        // event.preventDefault();
+        message.textContent = "Tên đăng nhập không thể chứa khoảng trống";
+        message.className = "invalid";
+        return false;
+    }
+    if (username.trim() === "") {
+        // event.preventDefault();
+        message.textContent = "Tên đăng nhập không thể để trống";
+        message.className = "invalid";
+        return false;
+    }
 
-            if (username.length < 5) {
-                // event.preventDefault();
-                message.textContent = "Tên đăng nhập phải chứa ít nhất 5 kí tự";
-                message.className = "invalid";
-                return false;
-            }
+    if (username.length < 5) {
+        // event.preventDefault();
+        message.textContent = "Tên đăng nhập phải chứa ít nhất 5 kí tự";
+        message.className = "invalid";
+        return false;
+    }
 
-            if (/[^a-zA-Z0-9]/.test(username)) {
-                // event.preventDefault();
-                message.textContent = "Tên đăng nhâp chỉ có thể chứa chữ cái và số";
-                message.className = "invalid";
-                return false;
-            }
+    if (/[^a-zA-Z0-9]/.test(username)) {
+        // event.preventDefault();
+        message.textContent = "Tên đăng nhâp chỉ có thể chứa chữ cái và số";
+        message.className = "invalid";
+        return false;
+    }
 
-            // Validate password
-            if (password.length < 6) {
-                // event.preventDefault();
-                message.textContent = "Mật khẩu phải chứa ít nhất 6 kí tự";
-                message.className = "invalid";
-                return false;
-            }
-            /*	if (!/[A-Z]/.test(password)) {
-                    event.preventDefault();
-                    message.textContent = "Password must contain at least one uppercase letter.";
-                    message.className = "invalid";
-                    return;
-                }*/
-            // if (!/[a-z]/.test(password)) {
-            //     // event.preventDefault();
-            //     message.textContent = "Mật khẩu phải chứ ít nhất 1 kí tự thường";
-            //     message.className = "invalid";
-            //     return false;
-            // }
-            if (!/[0-9]/.test(password)) {
-                // event.preventDefault();
-                message.textContent = "Mật khẩu phải chứa ít nhất 1 chữ số";
-                message.className = "invalid";
-                return false;
-            }/*
+    // Validate password
+    if (password.length < 6) {
+        // event.preventDefault();
+        message.textContent = "Mật khẩu phải chứa ít nhất 6 kí tự";
+        message.className = "invalid";
+        return false;
+    }
+    /*	if (!/[A-Z]/.test(password)) {
+            event.preventDefault();
+            message.textContent = "Password must contain at least one uppercase letter.";
+            message.className = "invalid";
+            return;
+        }*/
+    // if (!/[a-z]/.test(password)) {
+    //     // event.preventDefault();
+    //     message.textContent = "Mật khẩu phải chứ ít nhất 1 kí tự thường";
+    //     message.className = "invalid";
+    //     return false;
+    // }
+    if (!/[0-9]/.test(password)) {
+        // event.preventDefault();
+        message.textContent = "Mật khẩu phải chứa ít nhất 1 chữ số";
+        message.className = "invalid";
+        return false;
+    }/*
 			if (!/[@$!%*?&]/.test(password)) {
-				event.preventDefault();
+			event.preventDefault();
 				message.textContent = "Password must contain at least one special character.";
 				message.className = "invalid";
 				return;
 			}*/
-            if (/\s/.test(password)) {
-                // event.preventDefault();
-                message.textContent = "Mật khẩu không thể chứa khoảng trắng";
-                message.className = "invalid";
-                return false;
-            }
+    if (/\s/.test(password)) {
+        // event.preventDefault();
+        message.textContent = "Mật khẩu không thể chứa khoảng trắng";
+        message.className = "invalid";
+        return false;
+    }
 
-            // Nếu vượt qua tất cả các kiểm tra, form sẽ tự động gửi dữ liệu đến Servlet (action="login")
-            message.textContent = "";
-            message.className = "valid";
-            return true;
-            // });
-        }
+    // Nếu vượt qua tất cả các kiểm tra, form sẽ tự động gửi dữ liệu đến Servlet (action="login")
+    message.textContent = "";
+    message.className = "valid";
+    return true;
+    // });
+}
