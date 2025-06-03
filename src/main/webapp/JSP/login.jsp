@@ -46,13 +46,13 @@
             <h1>Registration</h1>
             <div class="input-box">
                 <label>
-                    <input class="username" type="text" placeholder="Username" name="register_username">
+                    <input class="username" type="text" placeholder="Username" name="register_username" oninput="checkUsername(this)">
                 </label>
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
                 <label>
-                    <input type="email" placeholder="Email" name="register_email">
+                    <input type="email" placeholder="Email" name="register_email" oninput="checkEmail(this)">
                 </label>
                 <i class='bx bxs-envelope'></i>
             </div>
@@ -120,6 +120,41 @@
             }
         });
     });
+    function checkEmail(param) {
+        var email = param.value;
+        $.ajax({
+            url: '<%=request.getContextPath()%>/checkEmail',
+            type: 'post',
+            data: {
+                email : email,
+            },
+            //hiển thị kết quả tìm kiếm
+            success: function(data) {
+
+            },
+            error: function () {
+                alert("Đã xảy ra lỗi khi tìm kiếm.");
+            }
+        });
+    }
+
+    function checkUsername(param) {
+        var username = param.value;
+        $.ajax({
+            url: '<%=request.getContextPath()%>/checkUsername',
+            type: 'post',
+            data: {
+                username : username,
+            },
+            //hiển thị kết quả tìm kiếm
+            success: function(data) {
+
+            },
+            error: function () {
+                alert("Đã xảy ra lỗi khi tìm kiếm.");
+            }
+        });
+    }
 </script>
 </body>
 </html>
