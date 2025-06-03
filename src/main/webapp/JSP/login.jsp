@@ -9,6 +9,7 @@
 <%--<img src="../IMG/login-background.png" id="login-background-img">--%>
 
 <div class="container">
+<%--    đăng nhập--%>
     <div class="form-box login">
         <form action="<%= request.getContextPath() %>/login" method="post" id="loginForm">
             <h1>Login</h1>
@@ -39,7 +40,7 @@
             </div>
         </form>
     </div>
-
+<%--đăng kí--%>
     <div class="form-box register">
         <form action="<%= request.getContextPath() %>/login" method="post" id="registerForm">
             <h1>Registration</h1>

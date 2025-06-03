@@ -15,7 +15,7 @@
 <jsp:include page="header.jsp" />
 
 <div class="breadcrumb">
-    <div class="container">
+    <div class="breadcrumb-container">
         <ul>
             <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
             <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Thanh toán</a></li>
@@ -61,6 +61,82 @@
         <button id="checkout-button"><a href="<%= request.getContextPath() %>/JSP/payment.jsp">Proceed to Checkout</a></button>
     </div>
 </div>
+<%--<div class="breadcrumb">--%>
+<%--    <div class="breadcrumb-container">--%>
+<%--        <ul>--%>
+<%--            <li><a href="/SeafoodShop_war_explodedJSP/home.jsp">Trang chủ</a></li>--%>
+<%--            <li><a href="/SeafoodShop_war_explodedJSP/home.jsp">Thanh toán</a></li>--%>
+<%--        </ul>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<%--<div class="container">--%>
+<%--    <h1>Your Cart</h1>--%>
+
+<%--    <div class="cart-content">--%>
+<%--        <div class="products-section">--%>
+<%--            <div class="product-item">--%>
+<%--                <div class="product-select">--%>
+<%--                    <input type="checkbox" class="choose-button" checked>--%>
+<%--                </div>--%>
+<%--                <div class="product-info">--%>
+<%--                    <img src="/SeafoodShop_war_exploded/images/tom_su.jpg" class="product-image">--%>
+<%--                    <div class="product-details">--%>
+<%--                        <h3 class="product-name">Tôm sú loại 1</h3>--%>
+<%--                        <p class="product-price">250,000₫</p>--%>
+<%--                        <div class="quantity-control">--%>
+<%--                            <button class="quantity-btn" >-</button>--%>
+<%--                            <input type="number" class="quantity-input" value="1" min="1">--%>
+<%--                            <button class="quantity-btn">+</button>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <button class="delete-btn">×</button>--%>
+<%--            </div>--%>
+
+<%--            <div class="product-item">--%>
+<%--                <div class="product-select">--%>
+<%--                    <input type="checkbox" class="choose-button" checked>--%>
+<%--                </div>--%>
+<%--                <div class="product-info">--%>
+<%--                    <img src="/SeafoodShop_war_exploded/images/ca_hoi_file.jpg" class="product-image">--%>
+<%--                    <div class="product-details">--%>
+<%--                        <h3 class="product-name">Cá hồi phi lê</h3>--%>
+<%--                        <p class="product-price">400,000₫</p>--%>
+<%--                        <div class="quantity-control">--%>
+<%--                            <button class="quantity-btn" >-</button>--%>
+<%--                            <input type="number" class="quantity-input" value="1" min="1">--%>
+<%--                            <button class="quantity-btn">+</button>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <button class="delete-btn">×</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div class="order-summary">--%>
+<%--            <h2>Order Summary</h2>--%>
+<%--            <div class="summary-details">--%>
+<%--                <div class="summary-row">--%>
+<%--                    <span>Subtotal (2 items)</span>--%>
+<%--                    <span>650,000₫</span>--%>
+<%--                </div>--%>
+<%--                <div class="summary-row">--%>
+<%--                    <span>Shipping</span>--%>
+<%--                    <span>Free</span>--%>
+<%--                </div>--%>
+<%--                <div class="summary-row">--%>
+<%--                    <span>Tax</span>--%>
+<%--                    <span>0₫</span>--%>
+<%--                </div>--%>
+<%--                <div class="summary-row total">--%>
+<%--                    <strong>Total</strong>--%>
+<%--                    <strong>650,000₫</strong>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <button class="checkout-btn">Proceed to Checkout</button>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <jsp:include page="footer.jsp" />
 </body>
 <script src="<%= request.getContextPath() %>/JS/cart.js"></script>

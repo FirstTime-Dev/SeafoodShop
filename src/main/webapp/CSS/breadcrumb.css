@@ -1,0 +1,45 @@
+.breadcrumb {
+    font-size: 16px;
+    border-bottom: 1px solid #dee2e6;
+    margin-top: 100px;
+    padding-left: 20px;
+}
+
+.breadcrumb .breadcrumb-container {
+    max-width: 1200px;
+    padding: 0 0;
+}
+
+.breadcrumb ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+}
+
+.breadcrumb ul li {
+    margin-right: 5px;
+    position: relative;
+}
+
+.breadcrumb ul li a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb ul li a:hover {
+    color: #0056b3;
+}
+
+.breadcrumb ul li::after {
+    content: ">";
+    color: #6c757d;
+    margin-left: 10px;
+}
+
+.breadcrumb ul li:last-child::after {
+    content: "";
+    margin-left: 0;
+}
