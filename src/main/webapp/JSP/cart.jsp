@@ -75,7 +75,9 @@
                 <strong class="summary-total-amount">0₫</strong>
             </div>
 
-            <button class="checkout-btn">Proceed to Checkout</button>
+            <form action="<%= request.getContextPath() %>/Payment" method="post">
+                <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+            </form>
         </div>
     </div>
 </div>

@@ -5,13 +5,16 @@
     <title>Thanh toán - Seafood Shop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/payment.css">
-    <script src="<%=request.getContextPath()%>/JS/payment.js"></script>
-    <script src='//hstatic.net/0/0/global/jquery.min.js'></script>
+    <script src="//hstatic.net/0/0/global/jquery.min.js"></script>
+    <script src="<%= request.getContextPath() %>/JS/payment.js"></script>
 </head>
 <body>
+
+<jsp:include page="header.jsp"/>
+
 <div class="banner">
     <div class="wrap">
-        <a href="/" class="logo">
+        <a href="/SeafoodShop_war_exploded/homeController" class="logo">
             <div class="logo-cus"></div>
         </a>
     </div>
@@ -19,6 +22,23 @@
 
 <div class="content">
     <div class="wrap">
+        <%
+            SeafoodShop.model.Product product = (SeafoodShop.model.Product) request.getAttribute("product");
+            if (product == null) {
+        %>
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <p>Không tìm thấy sản phẩm để hiển thị.</p>
+            </div>
+        </div>
+        <%
+        } else {
+            String imgUrl = product.getImgUrl();
+            String thumbnailSrc = (imgUrl == null || imgUrl.trim().isEmpty())
+                    ? (request.getContextPath() + "/IMG/default-product.png")
+                    : (request.getContextPath() + "/" + imgUrl);
+            String formattedPrice = String.format("%,d", product.getPrice().longValue()) + "₫";
+        %>
         <div class="sidebar">
             <div class="sidebar-content">
                 <div class="order-summary">
@@ -30,18 +50,19 @@
                                     <td class="product-image">
                                         <div class="product-thumbnail">
                                             <div class="product-thumbnail-wrapper">
-                                                <img class="product-thumbnail-image" alt="Nghêu Sần - Sống"
-                                                     src="//product.hstatic.net/1000182631/product/308366365_3369717133294639_935367907393673668_n_289d590ea0e74fa1869f433d6cafb5d4_small.jpeg"/>
+                                                <img class="product-thumbnail-image"
+                                                     alt="<%= product.getName() %>"
+                                                     src="<%= thumbnailSrc %>"/>
                                             </div>
                                             <span class="product-thumbnail-quantity" aria-hidden="true">1</span>
                                         </div>
                                     </td>
                                     <td class="product-description">
-                                        <span class="product-description-name order-summary-emphasis">Nghêu Sần - Sống</span>
+                                        <span class="product-description-name order-summary-emphasis"><%= product.getName() %></span>
                                         <span class="product-description-variant order-summary-small-text">1 kg</span>
                                     </td>
                                     <td class="product-price">
-                                        <span class="order-summary-emphasis">249,000₫</span>
+                                        <span class="order-summary-emphasis"><%= formattedPrice %></span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -53,7 +74,8 @@
                                 <tbody>
                                 <tr class="total-line total-line-subtotal">
                                     <td class="total-line-name">Tạm tính</td>
-                                    <td class="total-line-price">249,000₫</td>
+                                    <td class="total-line-price"><%= formattedPrice %>
+                                    </td>
                                 </tr>
                                 <tr class="total-line total-line-shipping">
                                     <td class="total-line-name">Phí ship sẽ được xác nhận qua điện thoại</td>
@@ -66,7 +88,7 @@
                                         <span class="payment-due-label-total">Tổng cộng</span>
                                     </td>
                                     <td class="total-line-name payment-due">
-                                        <span class="payment-due-price">249,000₫</span>
+                                        <span class="payment-due-price"><%= formattedPrice %></span>
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -76,6 +98,9 @@
                 </div>
             </div>
         </div>
+        <%
+            }
+        %>
 
         <div class="main">
             <div class="main-content">
@@ -100,7 +125,7 @@
                                         <div class="field-input-wrapper">
                                             <label class="field-label" for="checkout_user_email">Email</label>
                                             <input placeholder="Email" class="field-input" type="email"
-                                                   id="checkout_user_email" name="checkout_user[email]">
+                                                   id="checkout_user_email" name="billing_address[email]">
                                         </div>
                                     </div>
 
@@ -117,14 +142,13 @@
                             <div class="section-content">
                                 <div class="fieldset">
 
-
                                     <div class="field field-required field-third">
                                         <div class="field-input-wrapper field-input-wrapper-select">
                                             <label class="field-label" for="customer_shipping_province">Tỉnh /
                                                 thành</label>
-                                            <select class="field-input" id="customer_shipping_province">
-                                                <option value="null" selected>Chọn tỉnh / thành</option>
-                                                <option value="50">Hồ Chí Minh</option>
+                                            <select class="field-input" id="customer_shipping_province"
+                                                    name="billing_address[province]">
+                                                <option value="">Chọn tỉnh / thành</option>
                                             </select>
                                         </div>
                                     </div>
@@ -133,8 +157,9 @@
                                         <div class="field-input-wrapper field-input-wrapper-select">
                                             <label class="field-label" for="customer_shipping_district">Quận /
                                                 huyện</label>
-                                            <select class="field-input" id="customer_shipping_district">
-                                                <option value="null" selected>Chọn quận / huyện</option>
+                                            <select class="field-input" id="customer_shipping_district"
+                                                    name="billing_address[district]">
+                                                <option value="">Chọn quận / huyện</option>
                                             </select>
                                         </div>
                                     </div>
@@ -142,19 +167,35 @@
                                     <div class="field field-required field-third">
                                         <div class="field-input-wrapper field-input-wrapper-select">
                                             <label class="field-label" for="customer_shipping_ward">Phường / xã</label>
-                                            <select class="field-input" id="customer_shipping_ward">
-
-                                                <option value="null" selected>Chọn phường / xã</option>
+                                            <select class="field-input" id="customer_shipping_ward"
+                                                    name="billing_address[ward]">
+                                                <option value="">Chọn phường / xã</option>
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="field field-required">
                                         <div class="field-input-wrapper">
-                                            <label class="field-label" for="billing_address_address1">ghi chú</label>
-                                            <input placeholder="ghi chú" class="field-input" type="text"
+                                            <label class="field-label" for="billing_address_address1">Ghi chú</label>
+                                            <input placeholder="Ghi chú" class="field-input" type="text"
                                                    id="billing_address_address1" name="billing_address[address1]">
                                         </div>
                                     </div>
+
+                                    <div class="field field-required">
+                                        <div class="field-input-wrapper">
+                                            <label class="field-label">Phí ship</label>
+                                            <span id="shipping_fee_display">—</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="field-input-wrapper">
+                                            <label class="field-label">Tổng thanh toán</label>
+                                            <span id="total_price">—</span>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -168,7 +209,7 @@
                                             <label class="radio-label" for="payment_method_id_502444">
                                                 <div class="radio-input payment-method-checkbox">
                                                     <input id="payment_method_id_502444" class="input-radio"
-                                                           name="payment_method_id" type="radio" value="502444" checked>
+                                                           name="payment_method_id" type="radio" value="COD" checked>
                                                 </div>
                                                 <div class='radio-content-input'>
                                                     <div>
@@ -181,7 +222,7 @@
                                             <label class="radio-label" for="payment_method_id_1002918822">
                                                 <div class="radio-input payment-method-checkbox">
                                                     <input id="payment_method_id_1002918822" class="input-radio"
-                                                           name="payment_method_id" type="radio" value="1002918822">
+                                                           name="payment_method_id" type="radio" value="Bank">
                                                 </div>
                                                 <div class='radio-content-input'>
                                                     <div>
@@ -197,11 +238,14 @@
                     </div>
 
                     <div class="step-footer">
-                        <form id="form_next_step">
+                        <form id="form_next_step" action="<%= request.getContextPath() %>/Payment" method="post">
+                            <input type="hidden" name="productId" value="<%= product.getProductID() %>">
+                            <input type="hidden" name="quantity" value="1">
                             <button type="submit" class="step-footer-continue-btn btn">
                                 <span class="btn-content">Hoàn tất đơn hàng</span>
                             </button>
                         </form>
+
                         <a class="step-footer-previous-link" href="<%= request.getContextPath()%>/JSP/cart.jsp">
                             Giỏ hàng
                         </a>
@@ -211,5 +255,8 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="footer.jsp"/>
+
 </body>
 </html>

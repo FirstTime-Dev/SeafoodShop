@@ -241,7 +241,7 @@ UPDATE Orders SET Status = 2 WHERE OrderID = 2;
 UPDATE Orders SET Status = 1 WHERE OrderID = 1;
 
 -- Check User --
-SELECT * FROM Categories;
+SELECT * FROM Users;
 
 -- Update password --
 UPDATE Users SET Email = '22130240@st.hcmuaf.edu.vn' WHERE UserID = 3;

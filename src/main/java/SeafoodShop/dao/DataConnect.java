@@ -27,7 +27,7 @@ public class DataConnect {
     public int getUserIDByEmail(String email) throws SQLException {
         String sql = "select UserID from Users where email = ? ";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -40,7 +40,7 @@ public class DataConnect {
     public int getUserID(String username, String password) throws SQLException {
         String sql = "select * from Users where Username=? and password=?";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -54,7 +54,7 @@ public class DataConnect {
     public boolean isExistUser(String username) throws SQLException {
         String sql = "select UserID from Users where Username=?";
         try (Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             return rs.next();
@@ -64,7 +64,7 @@ public class DataConnect {
     public User getUserById(int userID) throws SQLException {
         String sql = "select * from Users where UserID = ?";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
@@ -94,11 +94,11 @@ public class DataConnect {
 
     public int getUserRole(int id) throws SQLException {
         String sql = "SELECT Role FROM Users WHERE UserID = ?";
-        try (Connection conn = getConnection()){
+        try (Connection conn = getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt("Role");
             }
         }
@@ -169,6 +169,7 @@ public class DataConnect {
         return new Product(description, productID, name, categoryID, price, stockQuantity,
                 supplierID, origin, storageCondition, expiryDate, weight, state, imgURL);
     }
+
     public int getAllProductQuantityInCart(int productID) throws SQLException {
         int count = 0;
         String sql = "SELECT * FROM Cart WHERE ProductID = ?";
@@ -267,7 +268,7 @@ public class DataConnect {
     public boolean removeProductFromCart(int cartId) throws SQLException {
         String sql = "UPDATE Cart SET State = 0 WHERE CartID = ?";
         try (Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, cartId);
             ps.executeUpdate();
             return true;
@@ -277,14 +278,13 @@ public class DataConnect {
     public boolean updateCartQuantity(int cartId, int quantity) throws SQLException {
         String sql = "UPDATE Cart SET Quantity = ? WHERE CartID = ?";
         try (Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, quantity);
             ps.setInt(2, cartId);
             ps.executeUpdate();
             return true;
         }
     }
-
 
 
     public String getEmailByUsername(String username) throws SQLException {
@@ -304,24 +304,33 @@ public class DataConnect {
 
     public List<Product> getProductsByCategory(int categoryId) {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM Products WHERE CategoryID = ? AND State = 1";
+        String sql =
+                "SELECT p.ProductID, p.Name, p.Price, i.ImageURL " +
+                        "  FROM Products AS p " +
+                        "  LEFT JOIN Images AS i ON p.ProductID = i.ProductID " +
+                        " WHERE p.CategoryID = ? AND p.State = 1 " +
+                        " ORDER BY p.ProductID";
+
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, categoryId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Product p = new Product();
-                p.setProductID(rs.getInt("ProductID"));
-                p.setName(rs.getString("ProductName"));
-                p.setPrice(rs.getBigDecimal("Price"));
-                p.setImgUrl(rs.getString("Image")); // giả sử có trường Image
-                list.add(p);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Product p = new Product();
+                    p.setProductID(rs.getInt("ProductID"));
+                    p.setName(rs.getString("Name"));          // Tên cột đúng là "Name"
+                    p.setPrice(rs.getBigDecimal("Price"));
+                    p.setImgUrl(rs.getString("ImageURL"));   // Tên cột đúng là "ImageURL"
+                    list.add(p);
+                }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
     }
+
 
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
@@ -389,6 +398,67 @@ public class DataConnect {
         return list;
     }
 
+    public List<String> getAllCategoryNames() {
+        List<String> names = new ArrayList<>();
+        String sql = "SELECT CategoryName FROM Categories WHERE State = 1 ORDER BY CategoryID";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                names.add(rs.getString("CategoryName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return names;
+    }
+
+    public int insertOrder(int userId, BigDecimal totalAmount) throws SQLException {
+        // SQL Server: OrderDate sẽ dùng GETDATE() của SQL, Status=1 (Pending), State=1 (Active)
+        String sql = "INSERT INTO Orders (UserID, OrderDate, TotalAmount, Status, State) " +
+                "VALUES (?, GETDATE(), ?, 1, 1)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, userId);
+            ps.setBigDecimal(2, totalAmount);
+
+            int affected = ps.executeUpdate();
+            if (affected == 0) {
+                throw new SQLException("Không tạo được đơn hàng mới.");
+            }
+
+            // Lấy OrderID vừa sinh tự động
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Lấy OrderID thất bại.");
+                }
+            }
+        }
+    }
+
+    public void insertOrderDetail(int orderId, int productId, int quantity, BigDecimal price) throws SQLException {
+        String sql = "INSERT INTO OrderDetails (OrderID, ProductID, Quantity, Price) " +
+                "VALUES (?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            ps.setInt(2, productId);
+            ps.setInt(3, quantity);
+            ps.setBigDecimal(4, price);
+
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Thêm OrderDetail thất bại cho productId=" + productId);
+            }
+        }
+    }
+
     public static void main(String[] args) throws SQLException {
         DataConnect dc = new DataConnect();
 //        System.out.println(dc.getProductByID(2));
@@ -400,7 +470,7 @@ public class DataConnect {
 //        System.out.println("Nguyễn Văn A ");
 //        System.out.println(dc.getAllProductQuantityInCart(1));
         List<Product> list = dc.getProductList();
-        for(Product p : list) {
+        for (Product p : list) {
             System.out.println(p.getProductID());
         }
     }
