@@ -140,7 +140,7 @@ CREATE TABLE Contact (
 -- Tạo bảng LogActivity
 CREATE TABLE LogActivity (
     LogID INT PRIMARY KEY IDENTITY(1,1),
-    UserID INT NOT NULL,
+    UserID INT NULL,
     Action NVARCHAR(255) NOT NULL,
     Resource NVARCHAR(100) NOT NULL,
     DataBefore NVARCHAR(MAX) NULL,
@@ -273,11 +273,11 @@ VALUES
 -- Thêm dữ liệu mẫu cho các bảng Images, Orders, OrderDetails, Cart, Payments, Shipping, Contact, LogActivity, PasswordResets, Reviews
 INSERT INTO Images (ProductID, ImageURL)
 VALUES 
-(1, 'images/tom_su.jpg'),
-(2, 'images/cua_hoang_de.jpg'),
-(3, 'images/ca_hoi_file.jpg'),
-(4, 'images/muc_mot_nang.jpg'),
-(5, 'images/cha_muc.jpg');
+(1, 'IMG/tom_su.jpg'),
+(2, 'IMG/cua_hoang_de.jpg'),
+(3, 'IMG/ca_hoi_file.jpg'),
+(4, 'IMG/muc_mot_nang.jpg'),
+(5, 'IMG/cha_muc.jpg');
 
 INSERT INTO Orders (UserID, TotalAmount, Status)
 VALUES 
@@ -380,7 +380,7 @@ VALUES
 
 
 
-
+DROP TABLE IF EXISTS Otp;
 
 DROP TABLE IF EXISTS ProductInDetail;
 DROP TABLE IF EXISTS ProductIn;

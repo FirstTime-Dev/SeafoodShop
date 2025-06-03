@@ -284,3 +284,5 @@ WHERE
 ORDER BY
     p.ProductID ASC,
     i.ImageID ASC;
+
+UPDATE 
