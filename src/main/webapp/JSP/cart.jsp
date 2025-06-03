@@ -49,6 +49,7 @@
                 </div>
                 <button class="delete-btn">×</button>
             </div>
+            <div class="save"><button class="save-btn">lưu</button></div>
             <%
                 }
             %>
