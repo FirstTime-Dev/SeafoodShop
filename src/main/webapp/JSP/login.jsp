@@ -49,18 +49,21 @@
                 <label>
                     <input class="username" type="text" placeholder="Username" name="register_username" oninput="checkUsername(this)">
                 </label>
+                <div id="errorMessage-username_register" style="color:red; font-size: 12px; margin-top: 5px;"></div>
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
                 <label>
                     <input type="email" placeholder="Email" name="register_email" oninput="checkEmail(this)">
                 </label>
+                <div id="errorMessage-email_register" style="color:red; font-size: 12px; margin-top: 5px;"></div>
                 <i class='bx bxs-envelope'></i>
             </div>
             <div class="input-box">
                 <label>
                     <input type="password" placeholder="Password" name="register_password">
                 </label>
+                <div id="errorMessage-password_register" style="color:red; font-size: 12px; margin-top: 5px;"></div>
                 <i class='bx bxs-lock'></i>
             </div>
             <button type="submit" class="btn">Register</button>
