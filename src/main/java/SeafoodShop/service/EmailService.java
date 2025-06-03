@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class EmailService {
 
-    public String generateOTP() {
+    public static String generateOTP() {
         String DIGITS = "0123456789";
         int OTP_LENGTH = 6;
         SecureRandom random = new SecureRandom();

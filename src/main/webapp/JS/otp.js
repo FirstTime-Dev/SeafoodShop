@@ -40,17 +40,39 @@ async function submitOTP() {
     inputs.forEach(input => {
         otp += input.value;
     });
-    console.log(otp);
+
     if (otp.length === 6) {
-        const sessionStorageOtp = sessionStorage.getItem('otp');
-        if(otp === sessionStorageOtp){
-            sessionStorage.removeItem('otp');
-            window.location.href = '/SeafoodShop_war_exploded/JSP/home.jsp';
+        try {
+            const response = await fetch("/SeafoodShop_war_exploded/otp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ otp: otp })
+            });
+
+            const result = await response.json();
+            if (result.status === "success") {
+                const role = result.role;
+                if (role === 1) {
+                    window.location.href = "/SeafoodShop_war_exploded/homeController";
+                } else if (role === 2 || role === 3) {
+                    window.location.href = "/SeafoodShop_war_exploded/AdminOverview";
+                } else {
+                    alert("Unknown role");
+                }
+            } else {
+                alert("Invalid OTP");
+            }
+        } catch (error) {
+            console.error("Error verifying OTP:", error);
+            alert("Something went wrong.");
         }
     } else {
         alert("Please enter all 6 digits.");
     }
 }
+
 
 function sendAgain() {
     let sendAgainText = document.querySelector(".send-again");
@@ -64,4 +86,3 @@ function sendAgain() {
     // Giả lập gửi lại OTP
     alert("A new OTP has been sent to your registered phone/email.");
 }
-
