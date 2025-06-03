@@ -58,24 +58,13 @@ public class Google_login extends HttpServlet {
                 req.getSession().setAttribute("user_id", userId);
                 req.getSession().setAttribute("role", dao.getUserRole(userId));
             } else {
-                System.out.println(">> Gọi register()");
                 dao.register(email, familyName + " " + givenName);
                 userId = dao.getUserIDByEmail(email);
                 req.getSession().setAttribute("user_id", userId);
                 req.getSession().setAttribute("role", dao.getUserRole(userId));
             }
 
-            // Gửi OTP
-            String otp = EmailService.generateOTP();
-            EmailService.sendEmail(email, otp);
-
-            // Lưu vào session để đối chiếu ở /otp
-            HttpSession session = req.getSession();
-            session.setAttribute("otp", otp);
-            session.setAttribute("otpUserId", userId);
-
             jsonResponse.put("status", "success");
-            jsonResponse.put("otp", otp);
             resp.getWriter().write(jsonResponse.toString());
 
         } catch (Exception e) {

@@ -17,7 +17,7 @@ public class Product {
     BigDecimal weight;
     int state;
     String imgUrl;
-
+    public Product(){}
     public Product(String description, int productID, String name, int categoryID, BigDecimal price, int stockQuantity, String supplierID, String origin, String storageCondition, Date expiryDate, BigDecimal weight, int state, String imgUrl) {
         this.description = description;
         this.productID = productID;

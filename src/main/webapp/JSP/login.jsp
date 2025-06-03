@@ -10,7 +10,7 @@
 <%--<img src="../IMG/login-background.png" id="login-background-img">--%>
 
 <div class="container">
-<%--    đăng nhập--%>
+    <%--    đăng nhập--%>
     <div class="form-box login">
         <form action="<%= request.getContextPath() %>/login" method="post" id="loginForm">
             <h1>Login</h1>
@@ -41,13 +41,14 @@
             </div>
         </form>
     </div>
-<%--đăng kí--%>
+    <%--đăng kí--%>
     <div class="form-box register">
         <form action="<%= request.getContextPath() %>/login" method="post" id="registerForm">
             <h1>Registration</h1>
             <div class="input-box">
                 <label>
-                    <input class="username" type="text" placeholder="Username" name="register_username" oninput="checkUsername(this)">
+                    <input class="username" type="text" placeholder="Username" name="register_username"
+                           oninput="checkUsername(this)">
                 </label>
                 <i class='bx bxs-user'></i>
             </div>
@@ -87,51 +88,15 @@
 </div>
 <script src="<%= request.getContextPath() %>/JS/login.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#loginForm').on('submit', function (e) {
-            e.preventDefault(); // Ngăn form gửi theo cách mặc định
-            if (checkLogin()) {
-                const username = $('#login_username').val().trim();
-                const password = $('#login_password').val().trim();
-                const errorDiv = $('#errorMessage');
-                const loginRequest = 'normalLogin';
 
-                $.ajax({
-                    url: '<%= request.getContextPath() %>/loginController', // SeafoodShop.servlet URL mapping
-                    type: 'POST',
-                    data: {
-                        username: username,
-                        password: password,
-                        request: loginRequest
-                    },
-                    success: function (response) {
-                        // Xử lý kết quả trả về từ SeafoodShop.SeafoodShop.servlet
-                        if (response === 'success') {
-                            window.location.href = '<%=request.getContextPath()%>/homeController'; // chuyển trang nếu đăng nhập thành công
-                        } else {
-                            errorDiv.text('Tên đăng nhập hoặc mật khẩu không đúng.');
-                        }
-                    },
-                    error: function () {
-                        errorDiv.text('Đã xảy ra lỗi trong quá trình xử lý. Vui lòng thử lại.');
-                    }
-                });
-            }
-        });
-    });
+<script>
     function checkEmail(param) {
         var email = param.value;
         $.ajax({
             url: '<%=request.getContextPath()%>/checkEmail',
             type: 'post',
-            data: {
-                email : email,
-            },
-            //hiển thị kết quả tìm kiếm
-            success: function(data) {
-
-            },
+            data: { email: email },
+            success: function (data) {},
             error: function () {
                 alert("Đã xảy ra lỗi khi tìm kiếm.");
             }
@@ -143,18 +108,41 @@
         $.ajax({
             url: '<%=request.getContextPath()%>/checkUsername',
             type: 'post',
-            data: {
-                username : username,
-            },
-            //hiển thị kết quả tìm kiếm
-            success: function(data) {
-
-            },
+            data: { username: username },
+            success: function (data) {},
             error: function () {
                 alert("Đã xảy ra lỗi khi tìm kiếm.");
             }
         });
     }
+
+    $(document).ready(function () {
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault();
+            if (!checkLogin()) return;
+
+            const username = $('#login_username').val().trim();
+            const password = $('#login_password').val().trim();
+
+            $.ajax({
+                url: '<%= request.getContextPath() %>/login',
+                type: 'POST',
+                data: JSON.stringify({ username: username, password: password }),
+                contentType: 'application/json; charset=UTF-8',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        sessionStorage.setItem('otp', response.otp);
+                        window.location.href = '<%= request.getContextPath() %>/JSP/otp.jsp';
+                    } else {
+                        $('#errorMessage').text(response.message || 'Tên đăng nhập hoặc mật khẩu không đúng.');
+                    }
+                },
+                error: function () {
+                    $('#errorMessage').text('Đã xảy ra lỗi trong quá trình xử lý.');
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

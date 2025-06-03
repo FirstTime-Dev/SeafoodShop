@@ -23,8 +23,8 @@
                     <option>VN</option>
                 </select>
             </div>
-            <form action="" id="search-bar" class="search-bar">
-                <input type="text" id="search-text" placeholder="What are you looking for?" required autocomplete="off">
+            <form action="<%= request.getContextPath() %>/searchProduct" method="get" id="search-bar" class="search-bar">
+                <input type="text" id="search-text" name="query" placeholder="What are you looking for?" required autocomplete="off">
                 <button id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
 

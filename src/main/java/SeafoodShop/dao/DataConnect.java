@@ -1,6 +1,7 @@
 package SeafoodShop.dao;
 
 import SeafoodShop.model.Cart;
+import SeafoodShop.model.Category;
 import SeafoodShop.model.Product;
 import SeafoodShop.model.User;
 
@@ -26,7 +27,7 @@ public class DataConnect {
     public int getUserIDByEmail(String email) throws SQLException {
         String sql = "select UserID from Users where email = ? ";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -39,11 +40,12 @@ public class DataConnect {
     public int getUserID(String username, String password) throws SQLException {
         String sql = "select * from Users where Username=? and password=?";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                System.out.println(rs.getInt("UserID"));
                 return rs.getInt("UserID");
             }
         }
@@ -53,7 +55,7 @@ public class DataConnect {
     public boolean isExistUser(String username) throws SQLException {
         String sql = "select UserID from Users where Username=?";
         try (Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             return rs.next();
@@ -63,7 +65,7 @@ public class DataConnect {
     public User getUserById(int userID) throws SQLException {
         String sql = "select * from Users where UserID = ?";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
@@ -93,11 +95,11 @@ public class DataConnect {
 
     public int getUserRole(int id) throws SQLException {
         String sql = "SELECT Role FROM Users WHERE UserID = ?";
-        try (Connection conn = getConnection()){
+        try (Connection conn = getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt("Role");
             }
         }
@@ -168,6 +170,7 @@ public class DataConnect {
         return new Product(description, productID, name, categoryID, price, stockQuantity,
                 supplierID, origin, storageCondition, expiryDate, weight, state, imgURL);
     }
+
     public int getAllProductQuantityInCart(int productID) throws SQLException {
         int count = 0;
         String sql = "SELECT * FROM Cart WHERE ProductID = ?";
@@ -263,19 +266,123 @@ public class DataConnect {
         return false;
     }
 
+    public String getEmailByUsername(String username) throws SQLException {
+        Connection conn = getConnection();
+        String email = null;
+        String sql = "SELECT email FROM Users WHERE username = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            email = rs.getString("email");
+        }
+        rs.close();
+        ps.close();
+        return email;
+    }
+
+    public List<Product> getProductsByCategory(int categoryId) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM Products WHERE CategoryID = ? AND State = 1";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductID(rs.getInt("ProductID"));
+                p.setName(rs.getString("ProductName"));
+                p.setPrice(rs.getBigDecimal("Price"));
+                p.setImgUrl(rs.getString("Image")); // giả sử có trường Image
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Category> getAllCategories() {
+        List<Category> categories = new ArrayList<>();
+        String sql = "SELECT * FROM Categories WHERE State = 1";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Category c = new Category();
+                c.setCategoryID(rs.getInt("CategoryID"));
+                c.setCategoryName(rs.getString("CategoryName"));
+                categories.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
+
+    public List<Product> searchProductsWithImage(String keyword) {
+        List<Product> list = new ArrayList<>();
+        String sql =
+                "SELECT "
+                        + "  p.ProductID, p.Name, p.CategoryID, p.Price, p.StockQuantity, "
+                        + "  p.SupplierID, p.Description, p.Origin, p.StorageCondition, "
+                        + "  p.ExpiryDate, p.Weight, p.State, "
+                        + "  i.ImageURL "
+                        + "FROM Products AS p "
+                        + "LEFT JOIN Images AS i "
+                        + "  ON p.ProductID = i.ProductID "
+                        + "WHERE p.State = 1 "
+                        + "  AND (p.Name LIKE ? OR p.Description LIKE ?);";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            String pattern = "%" + keyword + "%";
+            ps.setString(1, pattern);
+            ps.setString(2, pattern);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductID(rs.getInt("ProductID"));
+                p.setName(rs.getString("Name"));
+                p.setCategoryID(rs.getInt("CategoryID"));
+                p.setPrice(rs.getBigDecimal("Price"));
+                p.setStockQuantity(rs.getInt("StockQuantity"));
+                p.setSupplierID(rs.getString("SupplierID"));
+                p.setDescription(rs.getString("Description"));
+                p.setOrigin(rs.getString("Origin"));
+                p.setStorageCondition(rs.getString("StorageCondition"));
+                p.setExpiryDate(rs.getDate("ExpiryDate"));
+                p.setWeight(rs.getBigDecimal("Weight"));
+                p.setState(rs.getInt("State"));
+
+                String img = rs.getString("ImageURL");
+                p.setImgUrl(img != null ? img : "");
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) throws SQLException {
         DataConnect dc = new DataConnect();
 //        System.out.println(dc.getProductByID(2));
         dc.getConnection();
-//        System.out.println(dc.getUserRole("nguyenvana","123456"));
+//        System.out.println(dc.getAllCategories().get(0).getCategoryName());
+//        System.out.println(dc.getUserRole("vuthif","$2a$10$zLx..."));
+//        System.out.println(dc.searchProducts("Cua").get(0).getName());
 //        System.out.println(dc.getProductList());
 //        System.out.println(dc.getProductByID(2));
 //        System.out.println(dc.getProductCount(1));
 //        System.out.println("Nguyễn Văn A ");
 //        System.out.println(dc.getAllProductQuantityInCart(1));
-        List<Product> list = dc.getProductList();
-        for(Product p : list) {
-            System.out.println(p.getProductID());
-        }
+//        List<Product> list = dc.getProductList();
+//        for(Product p : list) {
+//            System.out.println(p.getProductID());
+//        }
     }
 }

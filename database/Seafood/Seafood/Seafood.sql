@@ -241,7 +241,46 @@ UPDATE Orders SET Status = 2 WHERE OrderID = 2;
 UPDATE Orders SET Status = 1 WHERE OrderID = 1;
 
 -- Check User --
-SELECT * FROM Users;
+SELECT * FROM Categories;
 
 -- Update password --
-UPDATE Users SET Password = 'D11111111' WHERE UserID = 1;
+UPDATE Users SET Email = '22130240@st.hcmuaf.edu.vn' WHERE UserID = 3;
+
+SELECT email FROM Users WHERE username = 'hoangvane';
+
+INSERT INTO Otp (user_id, otp_code, created_at, expires_at, is_verified, State)
+VALUES (
+    1,
+    '123456',
+    GETDATE(),
+    DATEADD(MINUTE, 5, GETDATE()),
+    0,
+    1
+);
+
+SELECT * FROM Products WHERE State = 1 AND (Name LIKE '%Cua%' OR Description LIKE '%Cua%');
+
+SELECT
+    p.ProductID,
+    p.Name,
+    p.CategoryID,
+    p.Price,
+    p.StockQuantity,
+    p.SupplierID,
+    p.Description,
+    p.Origin,
+    p.StorageCondition,
+    p.ExpiryDate,
+    p.Weight,
+    p.State,
+    i.ImageURL,
+    i.UploadedAt
+FROM
+    Products AS p
+    LEFT JOIN Images AS i
+        ON p.ProductID = i.ProductID
+WHERE
+    p.State = 1
+ORDER BY
+    p.ProductID ASC,
+    i.ImageID ASC;

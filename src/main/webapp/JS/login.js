@@ -9,55 +9,6 @@ registerBtn.addEventListener('click', () => {
 loginBtn.addEventListener('click', () => {
     container.classList.remove('active');
 })
-//
-// ///auth/userinfo.email
-// ///auth/userinfo.profile
-//
-// const CLIENT_ID = "880084586805-kljemathregs925afo81bcrhb8aadosc.apps.googleusercontent.com";
-// const LINK_GET_GOOGLE_TOKEN = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=token&redirect_uri=http://localhost:8080/SeafoodShop_war_exploded/JSP/login.jsp&client_id=${CLIENT_ID}`
-//
-// document.addEventListener('DOMContentLoaded', () => {
-//     const googleSignInBtn = document.getElementById('googleSignInBtn');
-//     googleSignInBtn.addEventListener("click", () => {
-//         // window.localStorage.removeItem("access_token");
-//         window.location.href = LINK_GET_GOOGLE_TOKEN;
-//
-//     });
-// });
-// const getGoogleToken = () => {
-//     // const hash = window.location.hash.substring(1);
-//     // const urlParams = new URLSearchParams(hash);
-//     // const token = urlParams.get('access_token');
-//     // console.log(token);
-//     //
-//     // if (token) {
-//     //     // window.localStorage.setItem("access_token", token);
-//     //     window.history.replaceState({}, document.title, window.location.pathname);
-//     //     console.log(token);
-//     //     return token;
-//     // }
-//     // console.log(token);
-//     // // return window.localStorage.getItem("access_token") || null;
-//     // return null;
-//     const url = new URLSearchParams(window.location.hash.substring(1));
-//     const token = url.get("access_token");
-//     console.log(token);
-//     return token;
-// }
-//
-// const getGoogleUserInfoToken = async () => {
-//     const accessToken = getGoogleToken();
-//     const respone = await fetch(
-//         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`
-//     );
-//     const data = await respone.json();
-//     console.log(data);
-//     // window.location.href = "home.jsp";
-// }
-//
-//
-//
-// ... (Phần code container và nút đăng ký/đăng nhập giữ nguyên)
 
 const CLIENT_ID = "880084586805-kljemathregs925afo81bcrhb8aadosc.apps.googleusercontent.com";
 const LINK_GET_GOOGLE_TOKEN = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=token&redirect_uri=http://localhost:8080/SeafoodShop_war_exploded/JSP/login.jsp&client_id=${CLIENT_ID}`
@@ -80,47 +31,10 @@ const getGoogleToken = () => {
     const token = urlParams.get('access_token');
     console.log(token);
     if (token) {
-        // window.history.replaceState({}, document.title, window.location.pathname);
         return token;
     }
     return null;
 }
-
-// Hàm gửi OTP đến server
-const sendOTP = async (email, familyName, givenName) => {
-    try {
-        const payload = {
-            email: email,
-            family_name: familyName,
-            given_name: givenName
-        };
-
-        console.log("Gửi đến server:", payload);
-
-        const response = await fetch('/SeafoodShop_war_exploded/Google_login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-            // ⚠️ CHỖ QUAN TRỌNG: Dùng Blob hoặc TextEncoder để mã hóa chính xác UTF-8
-            body: new Blob([JSON.stringify(payload)], { type: 'application/json; charset=UTF-8' })
-        });
-
-        const text = await response.text();
-        console.log("Phản hồi từ server:", text);
-        const result = JSON.parse(text);
-
-        if (result.status === 'success') {
-            sessionStorage.setItem('email', email);
-            sessionStorage.setItem('otp', result.otp);
-            window.location.href = '/SeafoodShop_war_exploded/JSP/otp.jsp';
-        } else {
-            alert("Lỗi: " + result.message);
-        }
-    } catch (error) {
-        console.error('Lỗi gửi OTP:', error);
-    }
-};
 
 // Hàm chính xử lý thông tin người dùng
 const handleGoogleUser = async () => {
@@ -137,24 +51,34 @@ const handleGoogleUser = async () => {
 
     const userData = await userResponse.json();
     console.log('Thông tin người dùng:', userData);
-    //     const response = await fetch('/SeafoodShop_war_exploded/login', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ userData })
-    // });
-
-    // Gửi OTP đến email
 
     console.log("Tên:", userData.family_name + " " + userData.given_name);
-    await sendOTP(userData.email, userData.family_name, userData.given_name);
+    await fetch('/SeafoodShop_war_exploded/Google_login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: new Blob([JSON.stringify({
+            email: userData.email,
+            family_name: userData.family_name,
+            given_name: userData.given_name
+        })], { type: 'application/json; charset=UTF-8' })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const role = data.role;
+                if (role === 'admin') {
+                    window.location.href = '/SeafoodShop_war_exploded/admin/dashboard.jsp';
+                } else {
+                    window.location.href = '/SeafoodShop_war_exploded/JSP/home.jsp';
+                }
+            } else {
+                alert("Lỗi: " + data.message);
+            }
+        });
 
 
-// } catch (error) {
-//     console.error('Lỗi hệ thống:', error);
-//     alert('Đăng nhập thất bại! Vui lòng thử lại.');
-    // }
 }
 
 // Hàm xử lý redirect từ Google
@@ -164,10 +88,6 @@ const handleGoogleRedirect = () => {
         handleGoogleUser();
     }
 }
-// document
-//     .getElementById('loginForm')
-//     .addEventListener(
-//         'submit',
 function checkLogin() {
     const username = document
         .getElementById('login_username').value;

@@ -140,7 +140,7 @@ CREATE TABLE Contact (
 -- Tạo bảng LogActivity
 CREATE TABLE LogActivity (
     LogID INT PRIMARY KEY IDENTITY(1,1),
-    UserID INT NULL,
+    UserID INT NOT NULL,
     Action NVARCHAR(255) NOT NULL,
     Resource NVARCHAR(100) NOT NULL,
     DataBefore NVARCHAR(MAX) NULL,
@@ -150,6 +150,19 @@ CREATE TABLE LogActivity (
     Timestamp DATETIME DEFAULT GETDATE(),
     Location NVARCHAR(255) NULL,
     FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE SET NULL
+);
+	
+-- Tạo bảng OTP 
+CREATE TABLE Otp (
+	otpId INT IDENTITY(1,1) PRIMARY KEY,
+    user_id INT NOT NULL,
+    otp_code VARCHAR(10) NOT NULL,
+    created_at DATETIME DEFAULT GETDATE(),
+    expires_at DATETIME NOT NULL,
+	is_verified BIT DEFAULT 0, -- 0. False, 1. True
+	State INT DEFAULT 1,
+
+    FOREIGN KEY (user_id) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
 -- Tạo bảng PasswordResets

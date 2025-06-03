@@ -8,6 +8,7 @@
 <div class="admin-nav">
     <h3>Admin Panel</h3>
     <p>Welcome, Admin</p>
+    <a href="<%= request.getContextPath() %>/Logout" style="color: red;">Logout</a>
     <a href="AdminOverview">Overview</a>
     <a href="AdminAccount">Account</a>
     <a href="AdminOrder">Order</a>
