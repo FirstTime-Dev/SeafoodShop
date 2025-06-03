@@ -149,6 +149,7 @@
                                         <div class="field-input-wrapper field-input-wrapper-select">
                                             <label class="field-label" for="customer_shipping_ward">Phường / xã</label>
                                             <select class="field-input" id="customer_shipping_ward">
+
                                                 <option value="null" selected>Chọn phường / xã</option>
                                             </select>
                                         </div>

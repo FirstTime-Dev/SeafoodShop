@@ -115,3 +115,59 @@ $(document).ready(function() {
         $(this).toggleClass('order-summary-toggle-hide order-summary-toggle-show');
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const provinceSelect = document.getElementById("customer_shipping_province");
+    const districtSelect = document.getElementById("customer_shipping_district");
+    const wardSelect = document.getElementById("customer_shipping_ward");
+
+    // Load danh sách tỉnh
+    fetch("https://provinces.open-api.vn/api/p/")
+        .then(res => res.json())
+        .then(provinces => {
+            provinces.forEach(province => {
+                let option = document.createElement("option");
+                option.value = province.code;
+                option.textContent = province.name;
+                provinceSelect.appendChild(option);
+            });
+        });
+
+    // Khi chọn tỉnh → load quận/huyện
+    provinceSelect.addEventListener("change", function () {
+        let provinceCode = this.value;
+        districtSelect.innerHTML = `<option selected>Chọn quận / huyện</option>`;
+        wardSelect.innerHTML = `<option selected>Chọn phường / xã</option>`;
+
+        if (!provinceCode) return;
+
+        fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+            .then(res => res.json())
+            .then(data => {
+                data.districts.forEach(district => {
+                    let option = document.createElement("option");
+                    option.value = district.code;
+                    option.textContent = district.name;
+                    districtSelect.appendChild(option);
+                });
+            });
+    });
+
+    // Khi chọn quận → load phường/xã
+    districtSelect.addEventListener("change", function () {
+        let districtCode = this.value;
+        wardSelect.innerHTML = `<option selected>Chọn phường / xã</option>`;
+
+        if (!districtCode) return;
+
+        fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+            .then(res => res.json())
+            .then(data => {
+                data.wards.forEach(ward => {
+                    let option = document.createElement("option");
+                    option.value = ward.code;
+                    option.textContent = ward.name;
+                    wardSelect.appendChild(option);
+                });
+            });
+    });
+});
