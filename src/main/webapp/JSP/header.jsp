@@ -46,10 +46,10 @@
                     // Đã đăng nhập → hiển thị link tới trang User Info
                     // Bạn có thể thay "userInfo.jsp" hoặc một Servlet nào đó mà bạn đã tạo
                 %>
-                <a href="<%= request.getContextPath() %>/userInfo.jsp">User Info</a>
+                <a href="<%= request.getContextPath() %>/UserInfo">User Info</a>
                 <!-- Nếu muốn hiển thị thêm nút Logout -->
                 <span style="margin:0 8px;">|</span>
-                <a href="<%= request.getContextPath() %>/logout">Logout</a>
+                <a href="<%= request.getContextPath() %>/Logout">Logout</a>
                 <%
                     }
                 %>

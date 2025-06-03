@@ -26,52 +26,65 @@ public class Google_login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        HttpSession session = req.getSession();
-        StringBuilder jsonBuilder = new StringBuilder();
-        BufferedReader reader = req.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonBuilder.append(line);
-        }
-        JSONObject jsonObject = new JSONObject(jsonBuilder.toString());
-        String email = jsonObject.getString("email");
-        DataConnect dao = new DataConnect();
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json; charset=UTF-8");
+
+        JSONObject jsonResponse = new JSONObject();
+
         try {
+            // Đọc JSON từ body
+            StringBuilder sb = new StringBuilder();
+            String line;
+            BufferedReader reader = req.getReader();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            System.out.println(">> JSON body: " + sb);
+
+            JSONObject json = new JSONObject(sb.toString());
+
+            String email = json.getString("email");
+            String familyName = json.getString("family_name");
+            String givenName = json.getString("given_name");
+
+            System.out.println(">> Email: " + email);
+            System.out.println(">> Họ tên: " + familyName + " " + givenName);
+
+            DataConnect dao = new DataConnect();
             dao.getConnection();
+
             int userId = dao.getUserIDByEmail(email);
-            System.out.println(userId);
-            if(userId != -1){
-                session.setAttribute("user_id", userId);
-                session.setAttribute("role",dao.getUserRole(userId));
-            }else{
-                String familyName = jsonObject.getString("family_name");
-                String givenName = jsonObject.getString("given_name");
+            if (userId != -1) {
+                req.getSession().setAttribute("user_id", userId);
+                req.getSession().setAttribute("role", dao.getUserRole(userId));
+            } else {
+                System.out.println(">> Gọi register()");
                 dao.register(email, familyName + " " + givenName);
                 userId = dao.getUserIDByEmail(email);
-                if(userId != -1){
-                    session.setAttribute("user_id", userId);
-                    session.setAttribute("role",dao.getUserRole(userId));
-                    System.out.println("User registered with google successfully");
-                }
+                req.getSession().setAttribute("user_id", userId);
+                req.getSession().setAttribute("role", dao.getUserRole(userId));
             }
-        }catch (SQLException e){
-            e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error: " + e.getMessage());
-        }
-        try {
-            EmailService emailService = new EmailService();
-            String otp = emailService.generateOTP();
+
+            // Gửi OTP
+            String otp = EmailService.generateOTP();
             EmailService.sendEmail(email, otp);
 
-            JSONObject jsonResponse = new JSONObject();
+            // Lưu vào session để đối chiếu ở /otp
+            HttpSession session = req.getSession();
+            session.setAttribute("otp", otp);
+            session.setAttribute("otpUserId", userId);
+
             jsonResponse.put("status", "success");
-            jsonResponse.put("otp", otp); // nếu frontend cần sử dụng
-            resp.setContentType("application/json");
-            resp.setCharacterEncoding("UTF-8");
+            jsonResponse.put("otp", otp);
             resp.getWriter().write(jsonResponse.toString());
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Email sending failed: " + e.getMessage());
+
+        } catch (Exception e) {
+            e.printStackTrace();  //
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            jsonResponse.put("status", "error");
+            jsonResponse.put("message", e.getMessage());
+            resp.getWriter().write(jsonResponse.toString());
         }
     }
+
 }
