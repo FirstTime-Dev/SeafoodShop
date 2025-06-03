@@ -27,7 +27,7 @@ public class DataConnect {
     public int getUserIDByEmail(String email) throws SQLException {
         String sql = "select UserID from Users where email = ? ";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -40,12 +40,11 @@ public class DataConnect {
     public int getUserID(String username, String password) throws SQLException {
         String sql = "select * from Users where Username=? and password=?";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                System.out.println(rs.getInt("UserID"));
                 return rs.getInt("UserID");
             }
         }
@@ -55,7 +54,7 @@ public class DataConnect {
     public boolean isExistUser(String username) throws SQLException {
         String sql = "select UserID from Users where Username=?";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             return rs.next();
@@ -65,7 +64,7 @@ public class DataConnect {
     public User getUserById(int userID) throws SQLException {
         String sql = "select * from Users where UserID = ?";
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
@@ -95,11 +94,11 @@ public class DataConnect {
 
     public int getUserRole(int id) throws SQLException {
         String sql = "SELECT Role FROM Users WHERE UserID = ?";
-        try (Connection conn = getConnection()) {
+        try (Connection conn = getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            if(rs.next()){
                 return rs.getInt("Role");
             }
         }
@@ -170,7 +169,6 @@ public class DataConnect {
         return new Product(description, productID, name, categoryID, price, stockQuantity,
                 supplierID, origin, storageCondition, expiryDate, weight, state, imgURL);
     }
-
     public int getAllProductQuantityInCart(int productID) throws SQLException {
         int count = 0;
         String sql = "SELECT * FROM Cart WHERE ProductID = ?";
@@ -265,6 +263,29 @@ public class DataConnect {
         }
         return false;
     }
+
+    public boolean removeProductFromCart(int cartId) throws SQLException {
+        String sql = "UPDATE Cart SET State = 0 WHERE CartID = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, cartId);
+            ps.executeUpdate();
+            return true;
+        }
+    }
+
+    public boolean updateCartQuantity(int cartId, int quantity) throws SQLException {
+        String sql = "UPDATE Cart SET Quantity = ? WHERE CartID = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, quantity);
+            ps.setInt(2, cartId);
+            ps.executeUpdate();
+            return true;
+        }
+    }
+
+
 
     public String getEmailByUsername(String username) throws SQLException {
         Connection conn = getConnection();
@@ -372,17 +393,15 @@ public class DataConnect {
         DataConnect dc = new DataConnect();
 //        System.out.println(dc.getProductByID(2));
         dc.getConnection();
-//        System.out.println(dc.getAllCategories().get(0).getCategoryName());
-//        System.out.println(dc.getUserRole("vuthif","$2a$10$zLx..."));
-//        System.out.println(dc.searchProducts("Cua").get(0).getName());
+//        System.out.println(dc.getUserRole("nguyenvana","123456"));
 //        System.out.println(dc.getProductList());
 //        System.out.println(dc.getProductByID(2));
 //        System.out.println(dc.getProductCount(1));
 //        System.out.println("Nguyễn Văn A ");
 //        System.out.println(dc.getAllProductQuantityInCart(1));
-//        List<Product> list = dc.getProductList();
-//        for(Product p : list) {
-//            System.out.println(p.getProductID());
-//        }
+        List<Product> list = dc.getProductList();
+        for(Product p : list) {
+            System.out.println(p.getProductID());
+        }
     }
 }

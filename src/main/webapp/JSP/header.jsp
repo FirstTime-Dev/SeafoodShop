@@ -84,7 +84,7 @@
 
             </ul>
             <ul class="header_icon-list">
-                <li class="shopping-icon"><a href="<%= request.getContextPath() %>/cartController"><i
+                <li class="shopping-icon"><a href="<%= request.getContextPath() %>/JSP/cart.jsp"><i
                         class="fa-solid fa-cart-shopping"></i></a></li>
                 </li>
             </ul>

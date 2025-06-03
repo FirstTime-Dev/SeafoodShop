@@ -21,31 +21,23 @@
 
 <jsp:include page="header.jsp"/>
 
-<div class="breadcrumb">
-    <div class="breadcrumb-container">
-        <ul>
-            <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
-        </ul>
-    </div>
-</div>
-
 <div class="home-slide-show">
     <div class="owl-carousel owl-theme">
         <div class="item">
-            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg"  alt="">
+            <img src="<%= request.getContextPath() %>/IMG/hai_san_background.jpg"  alt="">
         </div>
         <div class="item">
-            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/hai_san_background1.jpg" alt="">
         </div>
         <div class="item">
-            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/hai_san_background2.jpg" alt="">
 
         </div>
         <div class="item">
-            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/hai_san_background3.jpg" alt="">
         </div>
         <div class="item">
-            <img src="<%= request.getContextPath() %>/IMG/homepageBackground.jpg" alt="">
+            <img src="<%= request.getContextPath() %>/IMG/hai_san_background4.jpg" alt="">
         </div>
     </div>
 </div>
@@ -55,10 +47,12 @@
         <%DataConnect dao = new DataConnect();
         for(Product pr : dao.getProductList()){
             String productName= pr.getName();
-            BigDecimal productPrice = pr.getPrice();%>
+            BigDecimal productPrice = pr.getPrice();
+            String productImgUrl = pr.getImgUrl();
+        %>
         <div class="products1">
             <div class="products_img">
-                <img src="" alt="">
+                <img src="<%=request.getContextPath()%>/<%=productImgUrl%>" class="product-image">
             </div>
             <div class="products_name">
                 <h3><%=productName%></h3>
