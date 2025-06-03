@@ -7,6 +7,11 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/cart.css">
     <link rel="stylesheet"  href="<%=request.getContextPath() %>/CSS/breadcrumb.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script>
+        window.contextPath = "<%= request.getContextPath() %>";
+    </script>
     <script src="<%= request.getContextPath() %>/JS/cart.js"></script>
     <title>Cart</title>
 </head>
@@ -32,7 +37,10 @@
                     String productImgUrl = c.getProductImageURL();
                     String productName = c.getProductName();
                     BigDecimal productPrice = c.getProductPrice();
-                    totalPrice = totalPrice.add(productPrice);%>
+                    totalPrice = totalPrice.add(productPrice);
+                    int cartId = c.getCartId();
+                    int quantity = c.getQuantity();
+            %>
             <div class="product-item">
                 <div class="product-select">
                     <input type="checkbox" class="choose-button" >
@@ -43,17 +51,19 @@
                         <h3 class="product-name"><%=productName%></h3>
                         <p class="product-price"><%=productPrice%>₫</p>
                         <div class="quantity-control">
-                            <button class="quantity-btn" >-</button>
-                            <input type="number" class="quantity-input" value="1" min="1">
-                            <button class="quantity-btn">+</button>
+                            <input type="hidden" value="<%=cartId%>,<%=quantity%>,state" class="hidden-info" >
+                            <input type="number" class="quantity-input" value="<%=quantity%>" min="1">
                         </div>
                     </div>
                 </div>
+                <input type="hidden" class="cart-id" value="<%=cartId%>">
                 <button class="delete-btn">×</button>
             </div>
+
             <%
                 }
             %>
+            <div class="save"><button class="save-btn">lưu</button></div>
         </div>
 
         <div class="order-summary">
@@ -71,5 +81,4 @@
 </div>
 <jsp:include page="footer.jsp" />
 </body>
-<script src="<%= request.getContextPath() %>/JS/cart.js"></script>
 </html>

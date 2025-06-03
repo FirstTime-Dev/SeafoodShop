@@ -24,7 +24,7 @@
 <div class="breadcrumb">
     <div class="breadcrumb-container">
         <ul>
-            <li><a href="<%= request.getContextPath() %>JSP/home.jsp">Trang chủ</a></li>
+            <li><a href="<%= request.getContextPath() %>/JSP/home.jsp">Trang chủ</a></li>
         </ul>
     </div>
 </div>
