@@ -50,6 +50,16 @@ public class DataConnect {
         return -1;
     }
 
+    public boolean isExistUser(String username) throws SQLException {
+        String sql = "select UserID from Users where Username=?";
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+    }
+
     public User getUserById(int userID) throws SQLException {
         String sql = "select * from Users where UserID = ?";
         try (Connection conn = getConnection();
