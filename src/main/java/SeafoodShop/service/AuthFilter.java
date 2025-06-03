@@ -17,21 +17,14 @@ public class AuthFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         HttpSession session = req.getSession(false);
-        String role = (session != null) ? (String) session.getAttribute("role") : null;
 
-//        String uri = req.getRequestURI();
-
-        // Bỏ qua trang public hoặc login
-//        if (uri.contains("/login") || uri.contains("/otp")) {
-//            chain.doFilter(request, response);
-//            return;
-//        }
-
-        // Kiểm tra vai trò
-        if (role == null ) {
-            res.sendRedirect(req.getContextPath() +"/JSP/login.jsp");
-        } else{
-            chain.doFilter(request, response);
+        if (session == null || session.getAttribute("role") == null) {
+            res.sendRedirect(req.getContextPath() + "/JSP/login.jsp");
+            return;
         }
+
+        Integer role = (Integer) session.getAttribute("role");
+
+        chain.doFilter(request, response);
     }
 }

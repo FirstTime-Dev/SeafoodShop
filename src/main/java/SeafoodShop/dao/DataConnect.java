@@ -23,6 +23,19 @@ public class DataConnect {
         }
     }
 
+    public void createLog(String userId, String action, String resource) {
+        String sql = "INSERT INTO LogActivity (user_id, action, resource) VALUES (?, ?, ?)";
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            ps.setString(2, action);
+            ps.setString(3, resource);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int getUserIDByEmail(String email) throws SQLException {
         String sql = "select UserID from Users where email = ? ";
         try (Connection conn = getConnection();
@@ -225,7 +238,7 @@ public class DataConnect {
 
     public List<Cart> getCartList(int user_id) throws SQLException {
         List<Cart> cartList = new ArrayList<>();
-        String sql = "SELECT c.*,p.Name,p.Price, img.ImageURL FROM Cart c JOIN Images img ON c.ProductID = img.ProductID JOIN Products p ON c.ProductID = p.ProductID WHERE c.UserID = ?";
+        String sql = "SELECT c.*,p.Name,p.Price, img.ImageURL FROM Cart c JOIN Images img ON c.ProductID = img.ProductID JOIN Products p ON c.ProductID = p.ProductID WHERE c.UserID = ? AND c.State = 1";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, user_id);
@@ -262,6 +275,18 @@ public class DataConnect {
         }
         return false;
     }
+
+    public boolean removeProductFromCart(int cartId) throws SQLException {
+        String sql = "UPDATE Cart SET State = 0 WHERE CartID = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, cartId);
+            ps.executeUpdate();
+            return true;
+        }
+    }
+
+
 
     public static void main(String[] args) throws SQLException {
         DataConnect dc = new DataConnect();
