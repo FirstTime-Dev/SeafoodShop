@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
           integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
             integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="<%= request.getContextPath() %>/JS/home.js"></script>
@@ -24,7 +24,7 @@
 <div class="home-slide-show">
     <div class="owl-carousel owl-theme">
         <div class="item">
-            <img src="<%= request.getContextPath() %>/IMG/hai_san_background.jpg"  alt="">
+            <img src="<%= request.getContextPath() %>/IMG/hai_san_background.jpg" alt="">
         </div>
         <div class="item">
             <img src="<%= request.getContextPath() %>/IMG/hai_san_background1.jpg" alt="">
@@ -41,21 +41,23 @@
         </div>
     </div>
 </div>
-<div id="products"  class="products">
+<div id="products" class="products">
     <div class="products_main">
 
-        <%DataConnect dao = new DataConnect();
-        for(Product pr : dao.getProductList()){
-            String productName= pr.getName();
-            BigDecimal productPrice = pr.getPrice();
-            String productImgUrl = pr.getImgUrl();
+        <%
+            DataConnect dao = new DataConnect();
+            for (Product pr : dao.getProductList()) {
+                String productName = pr.getName();
+                BigDecimal productPrice = pr.getPrice();
+                String productImgUrl = pr.getImgUrl();
         %>
         <div class="products1">
             <div class="products_img">
                 <img src="<%=request.getContextPath()%>/<%=productImgUrl%>" class="product-image">
             </div>
             <div class="products_name">
-                <h3><%=productName%></h3>
+                <h3><%=productName%>
+                </h3>
                 <p><%=productPrice%>đ/1kg</p>
             </div>
             <div class="products_buttons">
@@ -63,11 +65,16 @@
                     <input type="hidden" id="product_id" name="product_id" value="<%=pr.getProductID()%>">
                     <button type="submit" class="add_to_cart" id="addToCartBtn">Thêm vào giỏ hàng</button>
                 </form>
-                <button class="buy-now" >mua ngay</button>
+
+                <form action="<%= request.getContextPath() %>/Payment" method="get">
+                    <input type="hidden" name="product_id" value="<%= pr.getProductID() %>">
+                    <button type="submit" class="buy-now">Mua ngay</button>
+                </form>
+
             </div>
         </div>
         <%
-        }
+            }
         %>
 
     </div>

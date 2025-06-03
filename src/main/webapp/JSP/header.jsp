@@ -1,4 +1,6 @@
-<%--
+<%@ page import="SeafoodShop.dao.DataConnect" %>
+<%@ page import="java.util.List" %>
+<%@ page import="SeafoodShop.model.Category" %><%--
   Created by IntelliJ IDEA.
   User: hieul
   Date: 3/12/2025
@@ -23,8 +25,10 @@
                     <option>VN</option>
                 </select>
             </div>
-            <form action="<%= request.getContextPath() %>/searchProduct" method="get" id="search-bar" class="search-bar">
-                <input type="text" id="search-text" name="query" placeholder="What are you looking for?" required autocomplete="off">
+            <form action="<%= request.getContextPath() %>/searchProduct" method="get" id="search-bar"
+                  class="search-bar">
+                <input type="text" id="search-text" name="query" placeholder="What are you looking for?" required
+                       autocomplete="off">
                 <button id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
 
@@ -57,32 +61,23 @@
         </div>
         <!-- header chính -->
         <nav class="Bottom-nav">
-            <div class="logo"><img src="<%= request.getContextPath() %>/IMG/logo.png" alt=""></div>
+            <a href="/SeafoodShop_war_exploded/homeController" class="logo"><img
+                    src="<%= request.getContextPath() %>/IMG/logo.png" alt=""></a>
+            <%
+                DataConnect dao = new DataConnect();
+                List<Category> categories = dao.getAllCategories(); // List<Category> với (CategoryID, CategoryName)
+            %>
 
             <ul class="header_tag-list">
-                <li class="tag-name"><a href="#">CÁ</a></li>
-                <li class="tag-name"><a href="#">TÔM</a></li>
-                <li class="tag-name"><a href="#">CUA</a></li>
-                <li class="tag-name"><a href="#">MỰC</a></li>
-                <li class="tag-name"><a href="#">ỐC</a></li>
-                <li class="tag-name tag-name-other"><a href="#">KHÁC</a>
-                    <ul class="other">
-                        <ul class="other-list">
-                            <li class="other-list-header"><a href="#">mực khô</a></li>
-                            <li class="other-list-text"><a href="#">mực khô</a></li>
-                            <li class="other-list-text"><a href="#">mực 1 nắng</a></li>
-                            <li class="other-list-text"><a href="#">mực 2 nắng</a></li>
-                        </ul>
-                        <ul class="other-list">
-                            <li class="other-list-header"><a href="#"> chả cá </a></li>
-                            <li class="other-list-text"><a href="#">chả cá thát lát </a></li>
-                            <li class="other-list-text"><a href="#">chả cá rô phi </a></li>
-                        </ul>
-                    </ul>
-
+                <% for (Category cat : categories) { %>
+                <li class="tag-name">
+                    <a href="<%= request.getContextPath() %>/searchProduct?catId=<%= cat.getCategoryID() %>">
+                        <%= cat.getCategoryName().toUpperCase() %>
+                    </a>
                 </li>
-
+                <% } %>
             </ul>
+
             <ul class="header_icon-list">
                 <li class="shopping-icon"><a href="<%= request.getContextPath() %>/JSP/cart.jsp"><i
                         class="fa-solid fa-cart-shopping"></i></a></li>

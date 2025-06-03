@@ -18,17 +18,33 @@ public class SearchProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String query = request.getParameter("query");
+        String catIdStr = request.getParameter("catId");
+
         DataConnect dao = new DataConnect();
-        List<Product> results = dao.searchProductsWithImage(query == null ? "" : query);
+        List<Product> results = null;
+
+        try {
+            if (catIdStr != null && !catIdStr.isEmpty()) {
+                int catId = Integer.parseInt(catIdStr);
+                results = dao.getProductsByCategory(catId);
+                request.setAttribute("selectedCatId", catId);
+            } else {
+                String keyword = (query == null) ? "" : query.trim();
+                results = dao.searchProductsWithImage(keyword);
+                request.setAttribute("searchQuery", keyword);
+            }
+        } catch (NumberFormatException ex) {
+            results = dao.searchProductsWithImage("");
+        }
 
         request.setAttribute("searchResults", results);
-        request.setAttribute("searchQuery", query);
         request.getRequestDispatcher("/JSP/searchProducts.jsp")
                 .forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         doGet(req, resp);
     }
 }
