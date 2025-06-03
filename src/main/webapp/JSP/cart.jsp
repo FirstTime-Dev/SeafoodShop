@@ -7,6 +7,11 @@
 <head>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/cart.css">
     <link rel="stylesheet"  href="<%=request.getContextPath() %>/CSS/breadcrumb.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script>
+        window.contextPath = "<%= request.getContextPath() %>";
+    </script>
     <script src="<%= request.getContextPath() %>/JS/cart.js"></script>
     <title>Cart</title>
 </head>
@@ -32,7 +37,9 @@
                     String productImgUrl = c.getProductImageURL();
                     String productName = c.getProductName();
                     BigDecimal productPrice = c.getProductPrice();
-                    totalPrice = totalPrice.add(productPrice);%>
+                    totalPrice = totalPrice.add(productPrice);
+                    int cartId = c.getCartId();
+            %>
             <div class="product-item">
                 <div class="product-select">
                     <input type="checkbox" class="choose-button" >
@@ -47,12 +54,14 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" class="cart-id" value="<%=cartId%>">
                 <button class="delete-btn">×</button>
             </div>
-            <div class="save"><button class="save-btn">lưu</button></div>
+
             <%
                 }
             %>
+            <div class="save"><button class="save-btn">lưu</button></div>
         </div>
 
         <div class="order-summary">
@@ -70,5 +79,4 @@
 </div>
 <jsp:include page="footer.jsp" />
 </body>
-<script src="<%= request.getContextPath() %>/JS/cart.js"></script>
 </html>
