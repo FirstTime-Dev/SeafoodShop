@@ -116,13 +116,7 @@
 
                             <div class="section-content">
                                 <div class="fieldset">
-                                    <div class="field field-required">
-                                        <div class="field-input-wrapper">
-                                            <label class="field-label" for="billing_address_address1">Địa chỉ</label>
-                                            <input placeholder="Địa chỉ" class="field-input" type="text"
-                                                   id="billing_address_address1" name="billing_address[address1]">
-                                        </div>
-                                    </div>
+
 
                                     <div class="field field-required field-third">
                                         <div class="field-input-wrapper field-input-wrapper-select">
@@ -152,6 +146,13 @@
 
                                                 <option value="null" selected>Chọn phường / xã</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="field field-required">
+                                        <div class="field-input-wrapper">
+                                            <label class="field-label" for="billing_address_address1">ghi chú</label>
+                                            <input placeholder="ghi chú" class="field-input" type="text"
+                                                   id="billing_address_address1" name="billing_address[address1]">
                                         </div>
                                     </div>
                                 </div>

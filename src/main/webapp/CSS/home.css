@@ -68,6 +68,8 @@
 }
 
 .products_buttons .add_to_cart {
+    width: 170px;
+    height: 35px;
     background-color:#ff4d4d;
     color: #fff;
     border: none;
@@ -78,6 +80,8 @@
     transition: background-color 0.3s ease;
 }
 .products_buttons .buy-now{
+    width: 100px;
+    height: 35px;
     background-color:#5376ff;
     color: #fff;
     border: none;
