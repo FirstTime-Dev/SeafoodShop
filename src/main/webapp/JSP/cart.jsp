@@ -39,6 +39,7 @@
                     BigDecimal productPrice = c.getProductPrice();
                     totalPrice = totalPrice.add(productPrice);
                     int cartId = c.getCartId();
+                    int quantity = c.getQuantity();
             %>
             <div class="product-item">
                 <div class="product-select">
@@ -50,7 +51,8 @@
                         <h3 class="product-name"><%=productName%></h3>
                         <p class="product-price"><%=productPrice%>₫</p>
                         <div class="quantity-control">
-                            <input type="number" class="quantity-input" value="1" min="1">
+                            <input type="hidden" value="<%=cartId%>,<%=quantity%>,state" class="hidden-info" >
+                            <input type="number" class="quantity-input" value="<%=quantity%>" min="1">
                         </div>
                     </div>
                 </div>
