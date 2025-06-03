@@ -1,16 +1,17 @@
 package SeafoodShop.servlet;
 
 import SeafoodShop.dao.DataConnect;
+import SeafoodShop.service.EmailService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet("/login")
 public class Login extends HttpServlet {
@@ -21,31 +22,55 @@ public class Login extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        String username = req.getParameter("login_username");
-        String password = req.getParameter("login_password");
-        DataConnect dc = new DataConnect();
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json; charset=UTF-8");
+
+        JSONObject jsonResponse = new JSONObject();
+
         try {
-            dc.getConnection();
-            int role;
-            int user_id;
-            if((role = dc.getUserRole(username,password)) != -1){
-                user_id = dc.getUserID(username,password);
-                session.setAttribute("user_id",user_id);
-                session.setAttribute("role",role);
-                resp.setContentType("text/plain");
-                PrintWriter out = resp.getWriter();
-                out.print("success");
-            }else{
-                resp.setContentType("text/plain");
-                PrintWriter out = resp.getWriter();
-                out.print("non exist");
+            // Đọc JSON từ body
+            StringBuilder sb = new StringBuilder();
+            BufferedReader reader = req.getReader();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+            JSONObject json = new JSONObject(sb.toString());
+            String username = json.getString("username");
+            String password = json.getString("password");
+
+            DataConnect dao = new DataConnect();
+            int userId = dao.getUserID(username, password);
+            int role = dao.getUserRole(username, password);
+            String email = dao.getEmailByUsername(username);
+
+            if (userId != -1 && role != -1 && email != null) {
+                // Gửi OTP và lưu trong session
+                String otp = EmailService.generateOTP();
+                EmailService.sendEmail(email, otp);
+
+                HttpSession session = req.getSession();
+                session.setAttribute("otpUserId", userId);
+                session.setAttribute("otp", otp); // dùng trực tiếp trong OTP.java
+                session.setAttribute("otp_type", "normalLogin");
+
+                jsonResponse.put("status", "success");
+            } else {
+                jsonResponse.put("status", "invalid");
+                jsonResponse.put("message", "Sai username hoặc password");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonResponse.put("status", "error");
+            jsonResponse.put("message", e.getMessage());
         }
 
+        resp.getWriter().write(jsonResponse.toString());
     }
 }

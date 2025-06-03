@@ -48,7 +48,7 @@ async function submitOTP() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ otp: otp })
+                body: JSON.stringify({otp: otp})
             });
 
             const result = await response.json();

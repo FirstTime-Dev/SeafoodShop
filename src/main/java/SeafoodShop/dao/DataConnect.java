@@ -1,6 +1,7 @@
 package SeafoodShop.dao;
 
 import SeafoodShop.model.Cart;
+import SeafoodShop.model.Category;
 import SeafoodShop.model.Product;
 import SeafoodShop.model.User;
 
@@ -20,19 +21,6 @@ public class DataConnect {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
             throw new SQLException("Không tìm thấy driver JDBC", e);
-        }
-    }
-
-    public void createLog(String userId, String action, String resource) {
-        String sql = "INSERT INTO LogActivity (user_id, action, resource) VALUES (?, ?, ?)";
-        try (Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, userId);
-            ps.setString(2, action);
-            ps.setString(3, resource);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -238,7 +226,7 @@ public class DataConnect {
 
     public List<Cart> getCartList(int user_id) throws SQLException {
         List<Cart> cartList = new ArrayList<>();
-        String sql = "SELECT c.*,p.Name,p.Price, img.ImageURL FROM Cart c JOIN Images img ON c.ProductID = img.ProductID JOIN Products p ON c.ProductID = p.ProductID WHERE c.UserID = ? AND c.State = 1";
+        String sql = "SELECT c.*,p.Name,p.Price, img.ImageURL FROM Cart c JOIN Images img ON c.ProductID = img.ProductID JOIN Products p ON c.ProductID = p.ProductID WHERE c.UserID = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, user_id);
@@ -298,6 +286,108 @@ public class DataConnect {
     }
 
 
+
+    public String getEmailByUsername(String username) throws SQLException {
+        Connection conn = getConnection();
+        String email = null;
+        String sql = "SELECT email FROM Users WHERE username = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            email = rs.getString("email");
+        }
+        rs.close();
+        ps.close();
+        return email;
+    }
+
+    public List<Product> getProductsByCategory(int categoryId) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM Products WHERE CategoryID = ? AND State = 1";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductID(rs.getInt("ProductID"));
+                p.setName(rs.getString("ProductName"));
+                p.setPrice(rs.getBigDecimal("Price"));
+                p.setImgUrl(rs.getString("Image")); // giả sử có trường Image
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Category> getAllCategories() {
+        List<Category> categories = new ArrayList<>();
+        String sql = "SELECT * FROM Categories WHERE State = 1";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Category c = new Category();
+                c.setCategoryID(rs.getInt("CategoryID"));
+                c.setCategoryName(rs.getString("CategoryName"));
+                categories.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
+
+    public List<Product> searchProductsWithImage(String keyword) {
+        List<Product> list = new ArrayList<>();
+        String sql =
+                "SELECT "
+                        + "  p.ProductID, p.Name, p.CategoryID, p.Price, p.StockQuantity, "
+                        + "  p.SupplierID, p.Description, p.Origin, p.StorageCondition, "
+                        + "  p.ExpiryDate, p.Weight, p.State, "
+                        + "  i.ImageURL "
+                        + "FROM Products AS p "
+                        + "LEFT JOIN Images AS i "
+                        + "  ON p.ProductID = i.ProductID "
+                        + "WHERE p.State = 1 "
+                        + "  AND (p.Name LIKE ? OR p.Description LIKE ?);";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            String pattern = "%" + keyword + "%";
+            ps.setString(1, pattern);
+            ps.setString(2, pattern);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductID(rs.getInt("ProductID"));
+                p.setName(rs.getString("Name"));
+                p.setCategoryID(rs.getInt("CategoryID"));
+                p.setPrice(rs.getBigDecimal("Price"));
+                p.setStockQuantity(rs.getInt("StockQuantity"));
+                p.setSupplierID(rs.getString("SupplierID"));
+                p.setDescription(rs.getString("Description"));
+                p.setOrigin(rs.getString("Origin"));
+                p.setStorageCondition(rs.getString("StorageCondition"));
+                p.setExpiryDate(rs.getDate("ExpiryDate"));
+                p.setWeight(rs.getBigDecimal("Weight"));
+                p.setState(rs.getInt("State"));
+
+                String img = rs.getString("ImageURL");
+                p.setImgUrl(img != null ? img : "");
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public static void main(String[] args) throws SQLException {
         DataConnect dc = new DataConnect();
