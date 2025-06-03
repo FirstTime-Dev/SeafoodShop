@@ -286,6 +286,17 @@ public class DataConnect {
         }
     }
 
+    public boolean updateCartQuantity(int cartId, int quantity) throws SQLException {
+        String sql = "UPDATE Cart SET Quantity = ? WHERE CartID = ?";
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, quantity);
+            ps.setInt(2, cartId);
+            ps.executeUpdate();
+            return true;
+        }
+    }
+
 
 
     public static void main(String[] args) throws SQLException {

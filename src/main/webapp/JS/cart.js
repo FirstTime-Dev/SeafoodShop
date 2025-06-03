@@ -85,27 +85,72 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    $(".quantity-input").on("input", function () {
+        const newQuantity = $(this).val();
+
+        const productItem = $(this).closest(".product-item");
+        const hiddenInput = productItem.find("input[type=hidden]").first();
+
+        const currentValue = hiddenInput.val();
+        const parts = currentValue.split(",");
+
+        const cartId = parts[0];
+        const newState = "change";
+
+        hiddenInput.val(`${cartId},${newQuantity},${newState}`);
+    });
+
     $(".save-btn").click(function () {
-        if (deletedCartIds.length === 0) {
-            alert("Không có sản phẩm nào để xóa.");
-            return;
-        }
-        const contextPath = window.contextPath;
+        sendDeletedItems();
+        sendUpdatedItems();
+        location.reload();
+    });
+
+    // Gửi dữ liệu xóa
+    function sendDeletedItems() {
+        if (deletedCartIds.length === 0) return;
+
         $.ajax({
-            url: contextPath +"/removeFromCart",
+            url: contextPath + "/removeFromCart",
             method: "POST",
             data: {
                 deletedIds: JSON.stringify(deletedCartIds)
             },
             success: function () {
-                alert("Đã lưu thay đổi giỏ hàng!");
-                location.reload();
+                console.log("Xóa sản phẩm thành công.");
             },
             error: function () {
-                alert("Có lỗi xảy ra khi lưu giỏ hàng.");
+                alert("Lỗi khi xóa sản phẩm.");
             }
         });
-    });
+    }
 
+    // Gửi dữ liệu cập nhật
+    function sendUpdatedItems() {
+        const updatedItems = [];
+
+        $(".hidden-info").each(function () {
+            const value = $(this).val();
+            const parts = value.split(",");
+            if (parts[2] === "change") {
+                updatedItems.push(value);
+            }
+        });
+
+        if (updatedItems.length === 0) return;
+
+        $.ajax({
+            url: contextPath + "/editCart",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ cartItems: updatedItems }),
+            success: function () {
+                console.log("Cập nhật giỏ hàng thành công.");
+            },
+            error: function () {
+                alert("Lỗi khi cập nhật giỏ hàng.");
+            }
+        });
+    }
 });
 
