@@ -43,9 +43,7 @@
                         <h3 class="product-name"><%=productName%></h3>
                         <p class="product-price"><%=productPrice%>₫</p>
                         <div class="quantity-control">
-                            <button class="quantity-btn" >-</button>
                             <input type="number" class="quantity-input" value="1" min="1">
-                            <button class="quantity-btn">+</button>
                         </div>
                     </div>
                 </div>
